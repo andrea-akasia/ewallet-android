@@ -1,5 +1,6 @@
 package com.mobile.ewallet.feature.auth
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import com.mobile.ewallet.R
@@ -17,5 +18,14 @@ class AuthActivity: BaseActivity<AuthViewModel>() {
         setContentView(binding.root)
 
         window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary)
+
+        binding.btnLogin.setOnClickListener {
+            startActivity(
+                Intent(
+                    this,
+                    LoginActivity::class.java
+                )
+            )
+        }
     }
 }

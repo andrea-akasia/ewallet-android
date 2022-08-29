@@ -30,6 +30,7 @@
         <activity
             android:name=".feature.detailpokemon.DetailPokemonActivity"
             android:exported="false" />
+        <activity android:name=".feature.auth.LoginActivity" />
     </application>
 
 </manifest>
