@@ -8,12 +8,17 @@ import dagger.multibindings.IntoMap
 import dagger.Binds
 import com.mobile.ewallet.base.AppViewModelFactory
 import androidx.lifecycle.ViewModelProvider
+import com.mobile.ewallet.feature.auth.AuthViewModel
 import com.mobile.ewallet.feature.detailpokemon.DetailPokemonViewModel
 import com.mobile.ewallet.feature.detailpokemon.basestat.BaseStatViewModel
 import com.mobile.ewallet.feature.detailpokemon.moves.MovesViewModel
 
 @Module
 abstract class ViewModelModule {
+    @Binds
+    @IntoMap
+    @ViewModelKey(AuthViewModel::class)
+    abstract fun bindAuthViewModel(authViewModel: AuthViewModel): ViewModel
 
     @Binds
     @IntoMap

@@ -1,12 +1,12 @@
 package com.mobile.ewallet.base
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.ComponentActivity
 import androidx.lifecycle.ViewModelProvider
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
-abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity(){
+abstract class BaseComposeActivity<T : BaseViewModel> : ComponentActivity(){
 
     @Inject lateinit var factory: ViewModelProvider.Factory
     protected lateinit var viewModel: T
