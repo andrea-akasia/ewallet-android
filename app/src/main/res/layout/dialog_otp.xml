@@ -64,6 +64,9 @@
         android:letterSpacing="0.4"
         android:textSize="21sp"
         android:textStyle="bold"
+        android:maxLength="6"
+        android:inputType="numberSigned"
+        android:imeOptions="actionDone"
         android:hint="000000"/>
 
     <LinearLayout

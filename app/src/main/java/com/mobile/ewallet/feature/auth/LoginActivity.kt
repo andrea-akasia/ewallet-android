@@ -1,5 +1,6 @@
 package com.mobile.ewallet.feature.auth
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.ViewGroup
@@ -10,7 +11,7 @@ import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityLoginBinding
 
-class LoginActivity: BaseActivity<AuthViewModel>() {
+class LoginActivity: BaseActivity<AuthViewModel>(), OTPDialog.OTPListener {
 
     override val viewModelClass: Class<AuthViewModel> get() = AuthViewModel::class.java
     private lateinit var binding: ActivityLoginBinding
@@ -30,8 +31,18 @@ class LoginActivity: BaseActivity<AuthViewModel>() {
 
         binding.btnSubmit.setOnClickListener {
             val otpDialog = OTPDialog().newInstance()
+            otpDialog.listener = this@LoginActivity
             otpDialog.isCancelable = true
             otpDialog.show(supportFragmentManager, null)
         }
+    }
+
+    override fun onInputComplete(otp: String) {
+        startActivity(
+            Intent(
+                this@LoginActivity,
+                StartupActivity::class.java
+            )
+        )
     }
 }
