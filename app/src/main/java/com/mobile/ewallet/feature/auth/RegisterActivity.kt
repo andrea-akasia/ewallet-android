@@ -38,11 +38,11 @@ class RegisterActivity: BaseActivity<AuthViewModel>(), OTPDialog.OTPListener {
     }
 
     override fun onInputComplete(otp: String) {
-//        startActivity(
-//            Intent(
-//                this@RegisterActivity,
-//                StartupActivity::class.java
-//            )
-//        )
+        startActivity(
+            Intent(
+                this@RegisterActivity,
+                CreateAccountActivity::class.java
+            )
+        )
     }
 }

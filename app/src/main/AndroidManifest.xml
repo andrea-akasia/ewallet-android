@@ -33,6 +33,7 @@
         <activity android:name=".feature.auth.LoginActivity" />
         <activity android:name=".feature.auth.StartupActivity" />
         <activity android:name=".feature.auth.RegisterActivity" />
+        <activity android:name=".feature.auth.CreateAccountActivity" />
     </application>
 
 </manifest>

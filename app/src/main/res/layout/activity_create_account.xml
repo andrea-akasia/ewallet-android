@@ -5,11 +5,11 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
-    android:background="@color/colorPrimary">
+    android:background="@android:color/white">
 
     <include
         android:id="@+id/topbar"
-        layout="@layout/view_app_bar"
+        layout="@layout/view_app_bar_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Pendaftaran Akun"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -37,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Lengkapi isian berikut ini untuk melanjutkan\npendaftaran akun kamu"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
             android:textSize="14sp" />
 
         <TextView
@@ -45,34 +45,55 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Nomor Ponsel"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
             android:textSize="12sp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_phone"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_32sdp"
+            android:layout_marginTop="@dimen/_2sdp"
             app:hintEnabled="false"
             app:prefixText="+62"
             app:expandedHintEnabled="false"
             app:hintAnimationEnabled="false"
-            android:hint="81234567890"
             app:startIconDrawable="@drawable/indonesia"
             app:startIconTint="@null"
             android:gravity="center_vertical">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_phone"
+                android:focusable="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="81234567890"
+                android:text="81234567890"
                 android:maxLength="12"
                 android:textSize="14sp"
-                android:imeOptions="actionDone"
                 android:inputType="phone"
-                android:background="@drawable/textfield_bg"/>
+                android:background="@drawable/textfield_disabled_bg"/>
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nama Lengkap"
+            android:textColor="@android:color/black"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/et_name"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_32sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:paddingStart="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_8sdp"
+            android:hint="Contoh: John Doe"
+            android:textSize="14sp"
+            android:inputType="textPersonName"
+            android:imeOptions="actionDone"
+            android:background="@drawable/textfield_border_bg"/>
 
     </LinearLayout>
 
@@ -83,10 +104,10 @@
         android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_10sdp"
-        android:background="@drawable/white_button_bg"
-        android:text="Lanjutkan"
+        android:background="@drawable/orange_button_bg"
+        android:text="Selesaikan"
         android:textAllCaps="false"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@android:color/white"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent" />
 
