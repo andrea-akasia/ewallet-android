@@ -28,5 +28,10 @@ class LoginActivity: BaseActivity<AuthViewModel>() {
 
         binding.topbar.actionBack.setOnClickListener { onBackPressed() }
 
+        binding.btnSubmit.setOnClickListener {
+            val otpDialog = OTPDialog().newInstance()
+            otpDialog.isCancelable = true
+            otpDialog.show(supportFragmentManager, null)
+        }
     }
 }
