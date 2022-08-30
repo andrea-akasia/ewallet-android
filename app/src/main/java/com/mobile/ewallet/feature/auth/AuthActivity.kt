@@ -27,5 +27,14 @@ class AuthActivity: BaseActivity<AuthViewModel>() {
                 )
             )
         }
+
+        binding.actionRegister.setOnClickListener {
+            startActivity(
+                Intent(
+                    this,
+                    RegisterActivity::class.java
+                )
+            )
+        }
     }
 }
