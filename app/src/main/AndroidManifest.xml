@@ -17,10 +17,7 @@
         <activity
             android:name=".feature.auth.AuthActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity
             android:name=".feature.listpokemon.ListPokemonActivity"
@@ -34,6 +31,15 @@
         <activity android:name=".feature.auth.StartupActivity" />
         <activity android:name=".feature.auth.RegisterActivity" />
         <activity android:name=".feature.auth.CreateAccountActivity" />
+        <activity
+            android:name=".feature.home.HomeActivity"
+            android:theme="@style/AppMaterialTheme.NoActionBar"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

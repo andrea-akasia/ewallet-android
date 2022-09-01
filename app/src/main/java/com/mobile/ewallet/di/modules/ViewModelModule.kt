@@ -12,9 +12,15 @@ import com.mobile.ewallet.feature.auth.AuthViewModel
 import com.mobile.ewallet.feature.detailpokemon.DetailPokemonViewModel
 import com.mobile.ewallet.feature.detailpokemon.basestat.BaseStatViewModel
 import com.mobile.ewallet.feature.detailpokemon.moves.MovesViewModel
+import com.mobile.ewallet.feature.home.HomeViewModel
 
 @Module
 abstract class ViewModelModule {
+    @Binds
+    @IntoMap
+    @ViewModelKey(HomeViewModel::class)
+    abstract fun bindHomeViewModel(homeViewModel: HomeViewModel): ViewModel
+
     @Binds
     @IntoMap
     @ViewModelKey(AuthViewModel::class)
