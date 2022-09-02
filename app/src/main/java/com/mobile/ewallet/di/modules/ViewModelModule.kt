@@ -8,6 +8,7 @@ import dagger.multibindings.IntoMap
 import dagger.Binds
 import com.mobile.ewallet.base.AppViewModelFactory
 import androidx.lifecycle.ViewModelProvider
+import com.mobile.ewallet.feature.profile.ProfileViewModel
 import com.mobile.ewallet.feature.auth.AuthViewModel
 import com.mobile.ewallet.feature.detailpokemon.DetailPokemonViewModel
 import com.mobile.ewallet.feature.detailpokemon.basestat.BaseStatViewModel
@@ -16,6 +17,11 @@ import com.mobile.ewallet.feature.home.HomeViewModel
 
 @Module
 abstract class ViewModelModule {
+    @Binds
+    @IntoMap
+    @ViewModelKey(ProfileViewModel::class)
+    abstract fun bindProfileViewModel(profileViewModel: ProfileViewModel): ViewModel
+
     @Binds
     @IntoMap
     @ViewModelKey(HomeViewModel::class)

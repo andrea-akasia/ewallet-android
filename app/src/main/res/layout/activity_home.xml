@@ -24,6 +24,7 @@
             app:srcCompat="@drawable/logo_home" />
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/action_profile"
             android:layout_width="@dimen/_28sdp"
             android:layout_height="@dimen/_28sdp"
             app:cardCornerRadius="@dimen/_40sdp"

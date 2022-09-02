@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityHomeBinding
+import com.mobile.ewallet.feature.profile.ProfileActivity
 
 class HomeActivity: BaseActivity<HomeViewModel>() {
 
@@ -29,5 +30,14 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
         adapter = TransactionAdapter(viewModel.dummyData())
         binding.rv.layoutManager = LinearLayoutManager(this)
         binding.rv.adapter = adapter
+
+        binding.actionProfile.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@HomeActivity,
+                    ProfileActivity::class.java
+                )
+            )
+        }
     }
 }
