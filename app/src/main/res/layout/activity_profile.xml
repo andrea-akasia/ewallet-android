@@ -256,6 +256,7 @@
                     android:layout_marginBottom="@dimen/_10sdp"/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/action_update_profile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -441,7 +442,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_30sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_20sdp"
                     android:background="@drawable/outline_button_bg"
                     android:text="Keluar"
                     android:textAllCaps="false"

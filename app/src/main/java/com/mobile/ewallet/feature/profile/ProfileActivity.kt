@@ -1,5 +1,6 @@
 package com.mobile.ewallet.feature.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.WindowInsetsController
 import androidx.core.content.ContextCompat
@@ -23,5 +24,14 @@ class ProfileActivity: BaseActivity<ProfileViewModel>() {
 
         binding.topbar.title.text = "Profile Pengguna"
         binding.topbar.actionBack.setOnClickListener { onBackPressed() }
+
+        binding.actionUpdateProfile.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@ProfileActivity,
+                    UpdateProfileActivity::class.java
+                )
+            )
+        }
     }
 }

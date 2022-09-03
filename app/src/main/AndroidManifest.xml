@@ -41,6 +41,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".feature.profile.ProfileActivity" android:theme="@style/AppMaterialTheme.NoActionBar" />
+        <activity android:name=".feature.profile.UpdateProfileActivity" />
     </application>
 
 </manifest>
