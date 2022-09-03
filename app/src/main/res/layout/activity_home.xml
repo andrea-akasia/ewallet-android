@@ -182,6 +182,7 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/action_scan"
             android:orientation="vertical"
             android:layout_weight="0.25"
             android:layout_width="0dp"

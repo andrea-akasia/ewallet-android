@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:background="@android:color/white">
+
+    <include
+        android:id="@+id/topbar"
+        layout="@layout/view_app_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/_14sdp"
+        app:layout_constraintTop_toBottomOf="@+id/topbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/view_child_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/profile_name_bg"
+            android:padding="@dimen/_8sdp">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardview_image"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                app:cardCornerRadius="@dimen/_40sdp"
+                app:cardElevation="0dp"
+                app:cardPreventCornerOverlap="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/sample_avatar" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <LinearLayout
+                android:id="@+id/name_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_14sdp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@+id/cardview_image"
+                app:layout_constraintStart_toEndOf="@+id/cardview_image"
+                app:layout_constraintTop_toTopOf="@+id/cardview_image">
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fer D Sambo"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="081234567890"
+                    android:textColor="#A7A7A7"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Masukkan Nominal"
+            android:textColor="@android:color/black"
+            android:textSize="13sp" />
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/_2sdp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_36sdp"
+            android:gravity="bottom">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rp"
+                android:textColor="#7A7A7A"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/et_amount"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="numberSigned"
+                android:imeOptions="actionDone"
+                android:textCursorDrawable="@null"
+                android:textColor="@android:color/black"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:background="@android:color/transparent"/>
+
+        </LinearLayout>
+
+        <View
+            android:background="#EDEDED"
+            android:layout_width = "match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="@dimen/_4sdp"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Minimal pengiriman adalah "
+                android:textColor="#7A7A7A"
+                android:textSize="11sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rp10.000"
+                android:textColor="@color/colorPrimary"
+                android:textSize="11sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_14sdp"
+        android:layout_marginEnd="@dimen/_14sdp"
+        android:layout_marginBottom="@dimen/_14sdp"
+        android:background="@drawable/orange_button_bg"
+        android:text="Kirim"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -43,6 +43,7 @@
         <activity android:name=".feature.profile.ProfileActivity" android:theme="@style/AppMaterialTheme.NoActionBar" />
         <activity android:name=".feature.profile.UpdateProfileActivity" />
         <activity android:name=".feature.moneyreq.MoneyRequestActivity" android:theme="@style/AppMaterialTheme.NoActionBar"/>
+        <activity android:name=".feature.pay.PayInputActivity" android:theme="@style/AppMaterialTheme.NoActionBar"/>
     </application>
 
 </manifest>
