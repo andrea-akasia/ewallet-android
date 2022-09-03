@@ -1,5 +1,6 @@
 package com.mobile.ewallet.feature.pay
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -29,6 +30,11 @@ class PayInputActivity: BaseActivity<PayViewModel>() {
             val viewDialog = layoutInflater.inflate(R.layout.dialog_pay_confirmation, null)
             viewDialog.findViewById<TextView>(R.id.action_cancel).setOnClickListener {
                 dialog.dismiss()
+            }
+            viewDialog.findViewById<TextView>(R.id.btn_confirm).setOnClickListener {
+                startActivity(
+                    Intent(this@PayInputActivity, PayResultActivity::class.java)
+                )
             }
             dialog.setContentView(viewDialog)
 

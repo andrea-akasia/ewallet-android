@@ -6,6 +6,7 @@ import com.mobile.ewallet.feature.detailpokemon.DetailPokemonActivity
 import com.mobile.ewallet.feature.home.HomeActivity
 import com.mobile.ewallet.feature.moneyreq.MoneyRequestActivity
 import com.mobile.ewallet.feature.pay.PayInputActivity
+import com.mobile.ewallet.feature.pay.PayResultActivity
 import com.mobile.ewallet.feature.profile.ProfileActivity
 import com.mobile.ewallet.feature.profile.UpdateProfileActivity
 import dagger.Module
@@ -13,6 +14,9 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class BuildersModule{
+    @ContributesAndroidInjector(modules = [FragmentBuildersModule::class])
+    abstract fun bindPayResultActivity(): PayResultActivity
+
     @ContributesAndroidInjector(modules = [FragmentBuildersModule::class])
     abstract fun bindPayInputActivity(): PayInputActivity
 
