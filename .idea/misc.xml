@@ -15,6 +15,7 @@
         <entry key="app/src/main/res/drawable/ic_pause.xml" value="0.237" />
         <entry key="app/src/main/res/drawable/orange_button_bg.xml" value="0.237" />
         <entry key="app/src/main/res/drawable/otp_input_bg.xml" value="0.237" />
+        <entry key="app/src/main/res/drawable/outline_button_bg.xml" value="0.188" />
         <entry key="app/src/main/res/drawable/profile_balance_in.xml" value="0.1645" />
         <entry key="app/src/main/res/drawable/profile_balance_out_bg.xml" value="0.1645" />
         <entry key="app/src/main/res/drawable/profile_name_bg.xml" value="0.1645" />
@@ -26,7 +27,7 @@
         <entry key="app/src/main/res/layout/activity_create_account.xml" value="0.29635416666666664" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.31406707763671876" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.27643178304036464" />
-        <entry key="app/src/main/res/layout/activity_profile.xml" value="0.3047976736295021" />
+        <entry key="app/src/main/res/layout/activity_profile.xml" value="0.2958514456021584" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.29635416666666664" />
         <entry key="app/src/main/res/layout/activity_startup.xml" value="0.29739583333333336" />
         <entry key="app/src/main/res/layout/dialog_otp.xml" value="0.29635416666666664" />
