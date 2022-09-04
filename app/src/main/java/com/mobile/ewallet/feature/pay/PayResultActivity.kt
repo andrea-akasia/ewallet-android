@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityPayResultBinding
 import com.mobile.ewallet.feature.home.HomeActivity
+import com.mobile.ewallet.feature.home.TransactionDetailActivity
 
 class PayResultActivity: BaseActivity<PayViewModel>() {
 
@@ -33,6 +34,12 @@ class PayResultActivity: BaseActivity<PayViewModel>() {
                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             )
             this@PayResultActivity.finish()
+        }
+
+        binding.btnDetail.setOnClickListener {
+            startActivity(
+                Intent(this@PayResultActivity, TransactionDetailActivity::class.java)
+            )
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.mobile.ewallet.feature.home
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -33,6 +34,15 @@ class TransactionAdapter(
             }else{
                 binding.balance.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.colorTrxPending))
                 binding.iconTrx.setImageDrawable(ContextCompat.getDrawable(holder.itemView.context, R.drawable.ic_pause))
+            }
+
+            holder.itemView.setOnClickListener {
+                holder.itemView.context.startActivity(
+                    Intent(
+                        holder.itemView.context,
+                        TransactionDetailActivity::class.java
+                    )
+                )
             }
         }
     }
