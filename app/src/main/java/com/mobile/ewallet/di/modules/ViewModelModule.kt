@@ -15,10 +15,16 @@ import com.mobile.ewallet.feature.detailpokemon.basestat.BaseStatViewModel
 import com.mobile.ewallet.feature.detailpokemon.moves.MovesViewModel
 import com.mobile.ewallet.feature.home.HomeViewModel
 import com.mobile.ewallet.feature.moneyreq.MoneyRequestViewModel
+import com.mobile.ewallet.feature.moneysend.SendMoneyViewModel
 import com.mobile.ewallet.feature.pay.PayViewModel
 
 @Module
 abstract class ViewModelModule {
+    @Binds
+    @IntoMap
+    @ViewModelKey(SendMoneyViewModel::class)
+    abstract fun bindSendMoneyViewModel(sendMoneyViewModel: SendMoneyViewModel): ViewModel
+
     @Binds
     @IntoMap
     @ViewModelKey(PayViewModel::class)

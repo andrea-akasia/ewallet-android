@@ -9,6 +9,7 @@ import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityHomeBinding
 import com.mobile.ewallet.feature.moneyreq.MoneyRequestActivity
+import com.mobile.ewallet.feature.moneysend.MoneySendTypeActivity
 import com.mobile.ewallet.feature.pay.PayInputActivity
 import com.mobile.ewallet.feature.profile.ProfileActivity
 
@@ -51,6 +52,12 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
         binding.actionMoneyReq.setOnClickListener {
             startActivity(
                 Intent(this@HomeActivity, MoneyRequestActivity::class.java)
+            )
+        }
+
+        binding.actionSend.setOnClickListener {
+            startActivity(
+                Intent(this@HomeActivity, MoneySendTypeActivity::class.java)
             )
         }
     }

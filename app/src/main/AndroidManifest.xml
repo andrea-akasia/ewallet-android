@@ -46,6 +46,7 @@
         <activity android:name=".feature.pay.PayInputActivity" android:theme="@style/AppMaterialTheme.NoActionBar"/>
         <activity android:name=".feature.pay.PayResultActivity" />
         <activity android:name=".feature.home.TransactionDetailActivity" android:theme="@style/AppMaterialTheme.NoActionBar"/>
+        <activity android:name=".feature.moneysend.MoneySendTypeActivity" android:theme="@style/AppMaterialTheme.NoActionBar"/>
     </application>
 
 </manifest>
