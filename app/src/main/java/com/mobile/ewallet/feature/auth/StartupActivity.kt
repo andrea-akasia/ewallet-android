@@ -1,11 +1,15 @@
 package com.mobile.ewallet.feature.auth
 
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.core.content.ContextCompat
 import com.mobile.ewallet.BuildConfig
 import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityStartupBinding
+import com.mobile.ewallet.feature.home.HomeActivity
 
 class StartupActivity: BaseActivity<AuthViewModel>() {
 
@@ -20,5 +24,17 @@ class StartupActivity: BaseActivity<AuthViewModel>() {
         window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary)
 
         binding.version.text = "V${BuildConfig.VERSION_NAME}"
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            startActivity(
+                Intent(
+                    this@StartupActivity,
+                    HomeActivity::class.java
+                )
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            )
+            this@StartupActivity.finish()
+        }, 3000)
     }
 }
