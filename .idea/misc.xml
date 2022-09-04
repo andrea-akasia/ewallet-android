@@ -37,14 +37,17 @@
         <entry key="app/src/main/res/layout/activity_pay_result.xml" value="0.24270833333333333" />
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.2958514456021584" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.29635416666666664" />
+        <entry key="app/src/main/res/layout/activity_send_bank.xml" value="0.29739583333333336" />
         <entry key="app/src/main/res/layout/activity_send_type.xml" value="0.29635416666666664" />
         <entry key="app/src/main/res/layout/activity_startup.xml" value="0.29739583333333336" />
         <entry key="app/src/main/res/layout/activity_update_profile.xml" value="0.29635416666666664" />
         <entry key="app/src/main/res/layout/dialog_otp.xml" value="0.29635416666666664" />
         <entry key="app/src/main/res/layout/dialog_pay_confirmation.xml" value="0.18209788004557287" />
+        <entry key="app/src/main/res/layout/spinner_bg.xml" value="0.29635416666666664" />
         <entry key="app/src/main/res/layout/view_app_bar.xml" value="0.29635416666666664" />
         <entry key="app/src/main/res/layout/view_app_bar_white.xml" value="0.29635416666666664" />
         <entry key="app/src/main/res/layout/view_item_history_account.xml" value="0.29635416666666664" />
+        <entry key="app/src/main/res/layout/view_item_spinner_bank.xml" value="0.29635416666666664" />
         <entry key="app/src/main/res/layout/view_item_transaction.xml" value="0.33227437337239585" />
       </map>
     </option>

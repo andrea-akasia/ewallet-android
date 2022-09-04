@@ -22,4 +22,14 @@ class SendMoneyViewModel
         return result
     }
 
+    fun getDummyBank(): MutableList<String>{
+        val result = mutableListOf<String>()
+        result.add("BCA")
+        result.add("BNI")
+        result.add("Mandiri")
+        result.add("BRI")
+        result.add("BTPN")
+        return result
+    }
+
 }

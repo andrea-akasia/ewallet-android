@@ -1,5 +1,6 @@
 package com.mobile.ewallet.feature.moneysend
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
@@ -27,5 +28,11 @@ class MoneySendTypeActivity: BaseActivity<SendMoneyViewModel>() {
         historyAdapter = HistoryAdapter(viewModel.getDummy())
         binding.rv.layoutManager = GridLayoutManager(this, 3)
         binding.rv.adapter = historyAdapter
+
+        binding.actionFromBank.setOnClickListener {
+            startActivity(
+                Intent(this@MoneySendTypeActivity, MoneySendBankActivity::class.java)
+            )
+        }
     }
 }
