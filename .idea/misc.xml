@@ -9,10 +9,12 @@
         <entry key="app/src/main/res/drawable/art_card_bg.xml" value="0.237" />
         <entry key="app/src/main/res/drawable/card_bg.xml" value="0.237" />
         <entry key="app/src/main/res/drawable/dialog_rounded_white_bg.xml" value="0.237" />
+        <entry key="app/src/main/res/drawable/home_in_out_bg.xml" value="0.1935" />
         <entry key="app/src/main/res/drawable/ic_arrow_down_green.xml" value="0.215" />
         <entry key="app/src/main/res/drawable/ic_arrow_left_black.xml" value="0.237" />
         <entry key="app/src/main/res/drawable/ic_arrow_left_white.xml" value="0.237" />
         <entry key="app/src/main/res/drawable/ic_arrow_up_red.xml" value="0.215" />
+        <entry key="app/src/main/res/drawable/ic_chevron_right.xml" value="0.224" />
         <entry key="app/src/main/res/drawable/ic_pause.xml" value="0.237" />
         <entry key="app/src/main/res/drawable/orange_button_bg.xml" value="0.237" />
         <entry key="app/src/main/res/drawable/orange_button_bg_2.xml" value="0.1935" />
@@ -32,7 +34,7 @@
         <entry key="app/src/main/res/layout/activity_create_account.xml" value="0.29635416666666664" />
         <entry key="app/src/main/res/layout/activity_detail_pokemon.xml" value="0.29739583333333336" />
         <entry key="app/src/main/res/layout/activity_detail_transaction.xml" value="0.3254745483398438" />
-        <entry key="app/src/main/res/layout/activity_home.xml" value="0.3625747680664063" />
+        <entry key="app/src/main/res/layout/activity_home.xml" value="0.41081428942063725" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.27643178304036464" />
         <entry key="app/src/main/res/layout/activity_money_request.xml" value="0.29739583333333336" />
         <entry key="app/src/main/res/layout/activity_pay_input.xml" value="0.3108393351236979" />
