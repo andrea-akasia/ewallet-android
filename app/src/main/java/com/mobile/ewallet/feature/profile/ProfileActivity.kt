@@ -3,6 +3,7 @@ package com.mobile.ewallet.feature.profile
 import android.content.Intent
 import android.os.Bundle
 import android.view.WindowInsetsController
+import androidx.activity.OnBackPressedDispatcher
 import androidx.core.content.ContextCompat
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityProfileBinding
@@ -23,9 +24,9 @@ class ProfileActivity: BaseActivity<ProfileViewModel>() {
             WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
 
         binding.topbar.title.text = "Profile Pengguna"
-        binding.topbar.actionBack.setOnClickListener { onBackPressed() }
+        binding.topbar.actionBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
-        binding.actionUpdateProfile.setOnClickListener {
+        binding.viewName.setOnClickListener {
             startActivity(
                 Intent(
                     this@ProfileActivity,

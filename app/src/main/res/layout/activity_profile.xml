@@ -29,23 +29,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/view_name"
+            <LinearLayout
+                android:orientation="vertical"
                 android:background="@android:color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/_14sdp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/view_child_name"
+                    android:id="@+id/view_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/profile_name_bg"
-                    android:padding="@dimen/_8sdp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:padding="@dimen/_8sdp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_chevron_right" />
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/cardview_image"
@@ -98,7 +102,165 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <LinearLayout
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:id="@+id/view_credit_identity"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:visibility="visible">
+
+                    <View
+                        android:background="#EDEDED"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="@dimen/_10sdp"/>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/img_shield"
+                            android:layout_width="@dimen/_24sdp"
+                            android:layout_height="@dimen/_24sdp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_shield" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:text="Informasi Identitas Diri"
+                            android:textColor="@color/colorTextBlack"
+                            android:textSize="13sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/img_shield"
+                            app:layout_constraintStart_toEndOf="@+id/img_shield"
+                            app:layout_constraintTop_toTopOf="@+id/img_shield" />
+
+                        <ImageView
+                            android:id="@+id/action_credit_identity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_chevron_right"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <View
+                        android:background="#EDEDED"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/_10sdp"/>
+
+                </LinearLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/view_credit_req_prompt"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/_4sdp">
+
+                    <LinearLayout
+                        android:background="@drawable/apply_credit_bg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/_14sdp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/home_apply_credit_desc"
+                            android:textColor="@color/colorTextBlack"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_marginTop="@dimen/_4sdp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="+ Rp50.000.000"
+                            android:textColor="@color/colorTrxIn"
+                            android:textStyle="bold"
+                            android:textSize="18sp" />
+
+                        <Button
+                            android:id="@+id/btn_apply_credit"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_26sdp"
+                            android:layout_marginTop="@dimen/_12sdp"
+                            android:background="@drawable/orange_button_bg_2"
+                            android:text="Ajukan Sekarang"
+                            android:textAllCaps="false"
+                            android:textColor="@android:color/white"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    android:id="@+id/view_credit_req_status"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/_4sdp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:background="@drawable/apply_credit_bg"
+                        android:padding="@dimen/_14sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_chevron_right" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Kamu telah mengajukan kredit pinjaman"
+                                android:textColor="@color/colorTextBlack"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_4sdp"
+                                android:text="Sedang Diproses"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_marginTop="@dimen/_10sdp"
@@ -204,6 +366,124 @@
 
                 </LinearLayout>
 
+                <androidx.cardview.widget.CardView
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    android:id="@+id/view_credit_info"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/_4sdp"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:background="@drawable/home_in_out_bg"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_8sdp">
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="0dp"
+                                android:layout_weight="0.4"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Limit Pinjaman"
+                                    android:textColor="@color/colorTextBlack"
+                                    android:textSize="11sp" />
+
+                                <TextView
+                                    android:id="@+id/value_limit_credit"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Rp12.000.000"
+                                    android:textColor="@color/colorTextBlack"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"/>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_weight="0.1"
+                                android:gravity="center_horizontal"
+                                android:layout_height="match_parent">
+
+                                <View
+                                    android:layout_width="1dp"
+                                    android:layout_height="match_parent"
+                                    android:background="#E9E9E9" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="0dp"
+                                android:layout_weight="0.4"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Pinjaman Aktif"
+                                    android:textColor="@color/colorTextBlack"
+                                    android:textSize="11sp" />
+
+                                <TextView
+                                    android:id="@+id/value_active_credit"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Rp0"
+                                    android:textColor="@color/colorTextBlack"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/btn_detail_credit"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_26sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:padding="@dimen/_8sdp"
+                            android:background="@drawable/orange_button_bg_2">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Lihat Detal"
+                                android:textColor="@android:color/white"
+                                android:textSize="11sp"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:srcCompat="@drawable/ic_arrow_right_white" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
                 <View
                     android:background="#EDEDED"
                     android:layout_width = "match_parent"
@@ -242,49 +522,6 @@
                         android:text="Rp999.999.999"
                         android:textColor="@android:color/black"
                         android:textSize="13sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <View
-                    android:background="#EDEDED"
-                    android:layout_width = "match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"/>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/action_update_profile"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/img_profile"
-                        android:layout_width="@dimen/_24sdp"
-                        android:layout_height="@dimen/_24sdp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_profile" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:text="Ubah Profil"
-                        android:textColor="@android:color/black"
-                        android:textSize="13sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/img_profile"
-                        app:layout_constraintStart_toEndOf="@+id/img_profile"
-                        app:layout_constraintTop_toTopOf="@+id/img_profile" />
-
-                    <ImageView
-                        android:id="@+id/action_change_profile"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_chevron_right"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
