@@ -2,4 +2,6 @@
     <string name="app_name">ewallet</string>
     <string name="success">success</string>
     <string name="running">running</string>
+
+    <string name="home_apply_credit_desc">Ajukan pinjaman, lengkapi data diri dan dapatkan limit pinjaman hingga</string>
 </resources>

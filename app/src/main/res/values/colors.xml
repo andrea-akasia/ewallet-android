@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#FF8C32</color>
     <color name="colorAccent">#FFFFFF</color>
 
+    <color name="colorTextBlack">#242323</color>
+
     <color name="colorTrxOut">#E51515</color>
     <color name="colorTrxIn">#41B92A</color>
     <color name="colorTrxPending">#FF8C32</color>
