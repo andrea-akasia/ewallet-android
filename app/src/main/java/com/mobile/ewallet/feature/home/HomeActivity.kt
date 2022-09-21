@@ -43,6 +43,15 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
             )
         }
 
+        binding.viewBadge.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@HomeActivity,
+                    BadgeActivity::class.java
+                )
+            )
+        }
+
         binding.actionScan.setOnClickListener {
             startActivity(
                 Intent(this@HomeActivity, PayInputActivity::class.java)

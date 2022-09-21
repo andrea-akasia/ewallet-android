@@ -10,6 +10,8 @@
     <color name="colorTrxIn">#41B92A</color>
     <color name="colorTrxPending">#FF8C32</color>
 
+    <color name="colorPrimaryPercent10">#0DF7931D</color>
+
     <color name="colorBadgeGreen">#F6FCF4</color>
 
     <color name="colorBadgeTextGreen">#41B92A</color>
