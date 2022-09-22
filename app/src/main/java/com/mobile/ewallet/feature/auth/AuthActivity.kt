@@ -2,6 +2,7 @@ package com.mobile.ewallet.feature.auth
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
@@ -35,6 +36,28 @@ class AuthActivity: BaseActivity<AuthViewModel>() {
                     RegisterActivity::class.java
                 )
             )
+        }
+
+        observeViewModel()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadSplashScreen()
+    }
+
+    private fun observeViewModel(){
+        viewModel.onSplashscreenLoaded.observe(this){
+            binding.title.text = it.title
+            binding.subtitle.text = it.message
+        }
+
+        viewModel.isLoading.observe(this){
+
+        }
+
+        viewModel.warningMessage.observe(this){
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
     }
 }

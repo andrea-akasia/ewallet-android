@@ -5,6 +5,10 @@ apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion 33
     buildToolsVersion "33.0.0"
+
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file("local.properties").newDataInputStream())
+
     defaultConfig {
         applicationId "com.mobile.ewallet"
         minSdkVersion 26
@@ -51,14 +55,18 @@ android {
         prod {
             dimension "mode"
             applicationId "com.mobile.ewallet"
-            buildConfigField "String", "BASE_URL", '"https://pokeapi.co/api/v2/"'
+            buildConfigField "String", "BASE_URL", '"https://dev.bangsatangiawan.com/E-WALLET/"'
             buildConfigField "boolean", "ENABLE_CRASH_REPORT", "true"
+            buildConfigField "String", "AUTH_USERNAME", properties.getProperty("AUTH_USERNAME", "")
+            buildConfigField "String", "AUTH_PASSWORD", properties.getProperty("AUTH_PASSWORD", "")
         }
         dev {
             dimension "mode"
             applicationId "com.mobile.ewallet.dev"
-            buildConfigField "String", "BASE_URL", '"https://pokeapi.co/api/v2/"'
+            buildConfigField "String", "BASE_URL", '"https://dev.bangsatangiawan.com/E-WALLET/"'
             buildConfigField "boolean", "ENABLE_CRASH_REPORT", "false"
+            buildConfigField "String", "AUTH_USERNAME", properties.getProperty("AUTH_USERNAME", "")
+            buildConfigField "String", "AUTH_PASSWORD", properties.getProperty("AUTH_PASSWORD", "")
         }
     }
 

@@ -11,6 +11,7 @@ import io.reactivex.schedulers.Schedulers
 import retrofit2.Response
 import androidx.paging.DataSource
 import com.mobile.ewallet.model.api.detailpokemon.DetailPokemonResponse
+import com.mobile.ewallet.model.api.splashscreen.SplashscreenAPIResponse
 
 
 @Singleton
@@ -33,6 +34,11 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun splashscreen(): Single<Response<MutableList<SplashscreenAPIResponse>>> {
+        return api.splashscreen()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
 
     suspend fun reqPokemon(page: Int, limit: Int) = api.requestListPokemon(limit, page)
 

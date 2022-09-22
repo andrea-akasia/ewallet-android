@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -21,28 +22,27 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_20sdp"
-        android:paddingStart="@dimen/_10sdp"
-        android:paddingEnd="@dimen/_10sdp"
-        android:text="#SimpanUang Kamu Disini"
+        tools:text="#SimpanUang Kamu Disini"
         android:textColor="@android:color/white"
         android:textSize="26sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/subtitle"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/btn_login" />
 
     <TextView
         android:id="@+id/subtitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:paddingStart="@dimen/_10sdp"
-        android:paddingEnd="@dimen/_10sdp"
-        android:text="Mudah menyimpan uang hanya mulai dari"
+        android:layout_marginBottom="@dimen/_40sdp"
+        tools:text="Mudah menyimpan uang hanya mulai dari Rp10.000 saja, yuk cobain langsung"
         android:textColor="@android:color/white"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/minimum"
-        app:layout_constraintStart_toStartOf="@+id/minimum" />
+        app:layout_constraintBottom_toTopOf="@+id/btn_login"
+        app:layout_constraintEnd_toEndOf="@+id/btn_login"
+        app:layout_constraintStart_toStartOf="@+id/btn_login" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/minimum"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -56,6 +56,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/subtitle_2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
