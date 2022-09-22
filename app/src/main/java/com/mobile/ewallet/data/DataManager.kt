@@ -10,6 +10,7 @@ import javax.inject.Inject
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Response
 import androidx.paging.DataSource
+import com.mobile.ewallet.model.api.BaseAPIResponse
 import com.mobile.ewallet.model.api.detailpokemon.DetailPokemonResponse
 import com.mobile.ewallet.model.api.splashscreen.SplashscreenAPIResponse
 
@@ -34,6 +35,12 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun requestOTPRegister(phone: String, uuid: String): Single<Response<MutableList<BaseAPIResponse>>> {
+        return api.reqOTPRegister(phone, uuid)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun splashscreen(): Single<Response<MutableList<SplashscreenAPIResponse>>> {
         return api.splashscreen()
             .subscribeOn(Schedulers.io())

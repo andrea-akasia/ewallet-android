@@ -15,6 +15,37 @@ class AuthViewModel
     internal var isLoading = MutableLiveData<Boolean>()
     internal var warningMessage = MutableLiveData<String>()
     internal var onSplashscreenLoaded = MutableLiveData<SplashscreenAPIResponse>()
+    internal var onReqOTPRegisterSuccess = MutableLiveData<String>()
+
+    fun requestOTPRegister(phone: String, uuid: String) {
+        isLoading.postValue(true)
+        dataManager.requestOTPRegister(phone, uuid)
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    isLoading.postValue(false)
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            if(response.isNotEmpty()){
+                                onReqOTPRegisterSuccess.postValue(response[0].message!!)
+                            }else{
+                                warningMessage.postValue("empty data")
+                            }
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    isLoading.postValue(false)
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun loadSplashScreen() {
         isLoading.postValue(true)
