@@ -54,18 +54,38 @@ class RegisterActivity: BaseActivity<AuthViewModel>(), OTPDialog.OTPListener {
     }
 
     override fun onInputComplete(otp: String) {
-        startActivity(
-            Intent(
-                this@RegisterActivity,
-                CreateAccountActivity::class.java
-            )
+        viewModel.confirmOTPRegister(
+            phone = "0${binding.etPhone.text}",
+            uuid = DeviceUuidFactory(applicationContext).getDeviceUuid().toString(),
+            otp = otp
+        )
+
+    }
+
+    override fun onResendTrigger() {
+        viewModel.resendOTPRegister(
+            phone = "0${binding.etPhone.text}",
+            uuid = DeviceUuidFactory(applicationContext).getDeviceUuid().toString()
         )
     }
 
     private fun observeViewModel(){
+        viewModel.onConfirmOTPSuccess.observe(this){
+            startActivity(
+                Intent(
+                    this@RegisterActivity,
+                    CreateAccountActivity::class.java
+                )
+            )
+        }
+
+        viewModel.onResendOTPRegisterSuccess.observe(this){
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        }
+
         viewModel.onReqOTPRegisterSuccess.observe(this){
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-            val otpDialog = OTPDialog().newInstance()
+            val otpDialog = OTPDialog().newInstance("0${binding.etPhone.text}")
             otpDialog.listener = this@RegisterActivity
             otpDialog.isCancelable = true
             otpDialog.show(supportFragmentManager, null)

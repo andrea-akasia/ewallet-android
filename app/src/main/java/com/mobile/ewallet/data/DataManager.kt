@@ -12,6 +12,7 @@ import retrofit2.Response
 import androidx.paging.DataSource
 import com.mobile.ewallet.model.api.BaseAPIResponse
 import com.mobile.ewallet.model.api.detailpokemon.DetailPokemonResponse
+import com.mobile.ewallet.model.api.register.ConfirmOTPAPIResponse
 import com.mobile.ewallet.model.api.splashscreen.SplashscreenAPIResponse
 
 
@@ -35,6 +36,18 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun confirmOTPRegister(phone: String, uuid: String, otp: String): Single<Response<MutableList<ConfirmOTPAPIResponse>>> {
+        return api.confirmOtpRegister(phone, uuid, otp)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun requestResendOTPRegister(phone: String, uuid: String): Single<Response<MutableList<BaseAPIResponse>>> {
+        return api.reqResendOTPRegister(phone, uuid)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun requestOTPRegister(phone: String, uuid: String): Single<Response<MutableList<BaseAPIResponse>>> {
         return api.reqOTPRegister(phone, uuid)
             .subscribeOn(Schedulers.io())

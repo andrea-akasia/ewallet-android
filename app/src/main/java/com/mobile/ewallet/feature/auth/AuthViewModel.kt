@@ -16,6 +16,73 @@ class AuthViewModel
     internal var warningMessage = MutableLiveData<String>()
     internal var onSplashscreenLoaded = MutableLiveData<SplashscreenAPIResponse>()
     internal var onReqOTPRegisterSuccess = MutableLiveData<String>()
+    internal var onResendOTPRegisterSuccess = MutableLiveData<String>()
+    internal var onConfirmOTPSuccess = MutableLiveData<Boolean>()
+
+    fun confirmOTPRegister(phone: String, uuid: String, otp: String) {
+        isLoading.postValue(true)
+        dataManager.confirmOTPRegister(phone, uuid, otp)
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    isLoading.postValue(false)
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            if(response.isNotEmpty()){
+                                if(response[0].message!!.lowercase() == "success"){
+                                    Timber.i("idmember: ${response[0].iDMember}")
+                                    onConfirmOTPSuccess.postValue(true)
+                                }else{
+                                    warningMessage.postValue(response[0].message!!)
+                                }
+                            }else{
+                                warningMessage.postValue("empty data")
+                            }
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    isLoading.postValue(false)
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
+
+    fun resendOTPRegister(phone: String, uuid: String) {
+        isLoading.postValue(true)
+        dataManager.requestResendOTPRegister(phone, uuid)
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    isLoading.postValue(false)
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            if(response.isNotEmpty()){
+                                onResendOTPRegisterSuccess.postValue(response[0].message!!)
+                            }else{
+                                warningMessage.postValue("empty data")
+                            }
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    isLoading.postValue(false)
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun requestOTPRegister(phone: String, uuid: String) {
         isLoading.postValue(true)

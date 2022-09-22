@@ -30,7 +30,7 @@ class LoginActivity: BaseActivity<AuthViewModel>(), OTPDialog.OTPListener {
         binding.topbar.actionBack.setOnClickListener { onBackPressed() }
 
         binding.btnSubmit.setOnClickListener {
-            val otpDialog = OTPDialog().newInstance()
+            val otpDialog = OTPDialog().newInstance("")
             otpDialog.listener = this@LoginActivity
             otpDialog.isCancelable = true
             otpDialog.show(supportFragmentManager, null)
@@ -44,5 +44,9 @@ class LoginActivity: BaseActivity<AuthViewModel>(), OTPDialog.OTPListener {
                 StartupActivity::class.java
             )
         )
+    }
+
+    override fun onResendTrigger() {
+
     }
 }

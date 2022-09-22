@@ -3,6 +3,7 @@ package com.mobile.ewallet.network
 import com.mobile.ewallet.model.api.BaseAPIResponse
 import com.mobile.ewallet.model.api.pokemon.PokemonResponse
 import com.mobile.ewallet.model.api.detailpokemon.DetailPokemonResponse
+import com.mobile.ewallet.model.api.register.ConfirmOTPAPIResponse
 import com.mobile.ewallet.model.api.splashscreen.SplashscreenAPIResponse
 import io.reactivex.Single
 import retrofit2.Response
@@ -10,6 +11,20 @@ import retrofit2.http.*
 
 
 interface APIService {
+    @FormUrlEncoded
+    @POST("Login_First_OTP.aspx")
+    fun confirmOtpRegister(
+        @Field("NOWA") phone: String,
+        @Field("RegID") uuid: String,
+        @Field("OTP") otp: String
+    ): Single<Response<MutableList<ConfirmOTPAPIResponse>>>
+
+    @FormUrlEncoded
+    @POST("Login_First_Resend.aspx")
+    fun reqResendOTPRegister(
+        @Field("NOWA") phone: String,
+        @Field("RegID") uuid: String
+    ): Single<Response<MutableList<BaseAPIResponse>>>
 
     @FormUrlEncoded
     @POST("Login_First.aspx")

@@ -37,7 +37,7 @@
             android:id="@+id/value_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=" 081234567890"
+            tools:text=" 081234567890"
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="14sp"
@@ -64,10 +64,10 @@
         android:letterSpacing="0.4"
         android:textSize="21sp"
         android:textStyle="bold"
-        android:maxLength="6"
+        android:maxLength="5"
         android:inputType="numberSigned"
         android:imeOptions="actionDone"
-        android:hint="000000"/>
+        android:hint="00000"/>
 
     <LinearLayout
         android:layout_marginTop="@dimen/_8sdp"
