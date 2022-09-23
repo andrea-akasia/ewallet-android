@@ -7,4 +7,8 @@ import javax.inject.Inject
 class ProfileViewModel
 @Inject constructor(private val dataManager: DataManager) : BaseViewModel(){
 
+    fun logout(){
+        dataManager.clearPrefs()
+    }
+
 }
