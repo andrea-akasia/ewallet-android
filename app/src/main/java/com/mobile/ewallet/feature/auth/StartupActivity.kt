@@ -27,10 +27,7 @@ class StartupActivity: BaseActivity<AuthViewModel>() {
 
         Handler(Looper.getMainLooper()).postDelayed({
             startActivity(
-                Intent(
-                    this@StartupActivity,
-                    HomeActivity::class.java
-                )
+                Intent(this@StartupActivity, HomeActivity::class.java)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             )

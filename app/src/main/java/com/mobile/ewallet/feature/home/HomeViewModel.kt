@@ -21,4 +21,6 @@ class HomeViewModel
         return result
     }
 
+    internal fun isLoggedIn(): Boolean = dataManager.getLoginState()
+
 }

@@ -18,6 +18,42 @@ class AuthViewModel
     internal var onReqOTPRegisterSuccess = MutableLiveData<String>()
     internal var onResendOTPRegisterSuccess = MutableLiveData<String>()
     internal var onConfirmOTPSuccess = MutableLiveData<Boolean>()
+    internal var onRegisterFinished = MutableLiveData<Boolean>()
+
+    fun finishRegister(phone: String, fullName: String) {
+        isLoading.postValue(true)
+        dataManager.finishRegister(phone, fullName)
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    isLoading.postValue(false)
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            if(response.isNotEmpty()){
+                                if(response[0].status == "1"){
+                                    dataManager.setLoginState(true)
+                                    onRegisterFinished.postValue(true)
+                                }else{
+                                    warningMessage.postValue(response[0].message!!)
+                                }
+                            }else{
+                                warningMessage.postValue("empty data")
+                            }
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    isLoading.postValue(false)
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun confirmOTPRegister(phone: String, uuid: String, otp: String) {
         isLoading.postValue(true)
@@ -31,6 +67,7 @@ class AuthViewModel
                             if(response.isNotEmpty()){
                                 if(response[0].message!!.lowercase() == "success"){
                                     Timber.i("idmember: ${response[0].iDMember}")
+                                    dataManager.setIdMember(response[0].iDMember!!)
                                     onConfirmOTPSuccess.postValue(true)
                                 }else{
                                     warningMessage.postValue(response[0].message!!)

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityHomeBinding
+import com.mobile.ewallet.feature.auth.AuthActivity
 import com.mobile.ewallet.feature.moneyreq.MoneyRequestActivity
 import com.mobile.ewallet.feature.moneysend.MoneySendTypeActivity
 import com.mobile.ewallet.feature.pay.PayInputActivity
@@ -68,6 +69,18 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
             startActivity(
                 Intent(this@HomeActivity, MoneySendTypeActivity::class.java)
             )
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(!viewModel.isLoggedIn()){
+            startActivity(
+                Intent(this@HomeActivity, AuthActivity::class.java)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            )
+            this@HomeActivity.finish()
         }
     }
 }

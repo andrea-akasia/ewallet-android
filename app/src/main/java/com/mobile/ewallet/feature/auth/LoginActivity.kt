@@ -39,10 +39,9 @@ class LoginActivity: BaseActivity<AuthViewModel>(), OTPDialog.OTPListener {
 
     override fun onInputComplete(otp: String) {
         startActivity(
-            Intent(
-                this@LoginActivity,
-                StartupActivity::class.java
-            )
+            Intent(this@LoginActivity, StartupActivity::class.java)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         )
     }
 

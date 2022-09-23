@@ -1,11 +1,13 @@
 package com.mobile.ewallet.feature.auth
 
-import android.graphics.Color
+import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.ViewGroup
 import android.view.WindowInsetsController
 import android.widget.LinearLayout
+import android.widget.Toast
+import androidx.activity.OnBackPressedDispatcher
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import com.mobile.ewallet.base.BaseActivity
@@ -32,10 +34,40 @@ class CreateAccountActivity: BaseActivity<AuthViewModel>() {
         )
         prefixView.gravity = Gravity.CENTER
 
-        binding.topbar.actionBack.setOnClickListener { onBackPressed() }
+        binding.topbar.actionBack.setOnClickListener { OnBackPressedDispatcher().onBackPressed() }
 
-        binding.btnSubmit.setOnClickListener {
+        intent.getStringExtra("PHONE")?.let { phone ->
+            binding.etPhone.setText(phone.substring(1, phone.length))
+            binding.btnSubmit.setOnClickListener {
+                validateForm(phone)
+            }
+        }
 
+        observeViewModel()
+    }
+
+    private fun validateForm(phone: String){
+        if(binding.etName.text.toString().isEmpty()){
+            Toast.makeText(this, "Nama harus diisi", Toast.LENGTH_SHORT).show()
+            return
+        }
+        viewModel.finishRegister(
+            phone = phone,
+            fullName = binding.etName.text.toString()
+        )
+    }
+
+    private fun observeViewModel(){
+        viewModel.onRegisterFinished.observe(this){
+            startActivity(
+                Intent(this@CreateAccountActivity, StartupActivity::class.java)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            )
+        }
+
+        viewModel.warningMessage.observe(this){
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
     }
 }

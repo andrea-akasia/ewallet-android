@@ -12,6 +12,14 @@ import retrofit2.http.*
 
 interface APIService {
     @FormUrlEncoded
+    @POST("Login_First_SimpanData.aspx")
+    fun finishRegister(
+        @Field("NOWA") phone: String,
+        @Field("IDMember") idmember: String,
+        @Field("NamaLengkap") fullName: String
+    ): Single<Response<MutableList<BaseAPIResponse>>>
+
+    @FormUrlEncoded
     @POST("Login_First_OTP.aspx")
     fun confirmOtpRegister(
         @Field("NOWA") phone: String,

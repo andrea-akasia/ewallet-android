@@ -72,10 +72,8 @@ class RegisterActivity: BaseActivity<AuthViewModel>(), OTPDialog.OTPListener {
     private fun observeViewModel(){
         viewModel.onConfirmOTPSuccess.observe(this){
             startActivity(
-                Intent(
-                    this@RegisterActivity,
-                    CreateAccountActivity::class.java
-                )
+                Intent(this@RegisterActivity, CreateAccountActivity::class.java)
+                    .putExtra("PHONE", "0${binding.etPhone.text}")
             )
         }
 
