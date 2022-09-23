@@ -54,6 +54,24 @@ class DataManager
 
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun confirmOTPLogin(phone: String, uuid: String = "", otp: String): Single<Response<MutableList<ConfirmOTPAPIResponse>>> {
+        return api.confirmOtpLogin(phone, uuid, otp)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun resendOTPLogin(phone: String, uuid: String = ""): Single<Response<MutableList<BaseAPIResponse>>> {
+        return api.resendOTPLogin(phone, uuid)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun reqOTPLogin(phone: String, uuid: String = ""): Single<Response<MutableList<BaseAPIResponse>>> {
+        return api.reqOTPLogin(phone, uuid)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun finishRegister(phone: String, fullName: String): Single<Response<MutableList<BaseAPIResponse>>> {
         return api.finishRegister(phone, getIdMember(), fullName)
             .subscribeOn(Schedulers.io())

@@ -14,5 +14,8 @@ data class ConfirmOTPAPIResponse(
 	val message: String? = null,
 
 	@field:SerializedName("NOWA")
-	val nOWA: String? = null
+	val nOWA: String? = null,
+
+	@field:SerializedName("Nama")
+	val name: String? = null
 )
