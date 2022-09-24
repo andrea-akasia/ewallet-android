@@ -2,9 +2,12 @@ package com.mobile.ewallet.feature.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.view.WindowInsetsController
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityHomeBinding
@@ -70,6 +73,8 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
                 Intent(this@HomeActivity, MoneySendTypeActivity::class.java)
             )
         }
+
+        observeViewModel()
     }
 
     override fun onResume() {
@@ -81,6 +86,21 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             )
             this@HomeActivity.finish()
+        }else{
+            viewModel.loadProfile()
+        }
+    }
+
+    private fun observeViewModel(){
+        viewModel.onProfileLoaded.observe(this){
+            Glide.with(this)
+                .load(it.photoProfileThumbnail)
+                .placeholder(R.drawable.user_placeholder)
+                .into(binding.userImage)
+        }
+
+        viewModel.warningMessage.observe(this){
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
     }
 }

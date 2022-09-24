@@ -1,12 +1,14 @@
 package com.mobile.ewallet.feature.profile
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.view.WindowInsetsController
-import androidx.activity.OnBackPressedDispatcher
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
+import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityProfileBinding
 import com.mobile.ewallet.feature.auth.AuthActivity
@@ -56,6 +58,35 @@ class ProfileActivity: BaseActivity<ProfileViewModel>() {
                 d.dismiss()
             }
             logoutDialog.show()
+        }
+
+        observeViewModel()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadProfile()
+    }
+
+    private fun observeViewModel(){
+        viewModel.onProfileLoaded.observe(this){
+            Glide.with(this)
+                .load(it.photoProfileThumbnail)
+                .placeholder(R.drawable.user_placeholder)
+                .into(binding.image)
+            binding.name.text = it.nama
+            binding.phone.text = it.nOWA
+        }
+        viewModel.isProfileLoading.observe(this){
+            if(it){
+                binding.viewName.visibility = View.GONE
+            }else{
+                binding.viewName.visibility = View.VISIBLE
+            }
+        }
+
+        viewModel.warningMessage.observe(this){
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
     }
 }

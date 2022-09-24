@@ -37,10 +37,11 @@
             app:cardPreventCornerOverlap="true">
 
             <ImageView
+                android:id="@+id/user_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/sample_avatar" />
+                tools:srcCompat="@drawable/sample_avatar" />
 
         </com.google.android.material.card.MaterialCardView>
 

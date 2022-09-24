@@ -12,6 +12,7 @@ import retrofit2.Response
 import androidx.paging.DataSource
 import com.mobile.ewallet.model.api.BaseAPIResponse
 import com.mobile.ewallet.model.api.detailpokemon.DetailPokemonResponse
+import com.mobile.ewallet.model.api.profile.ProfileAPIResponse
 import com.mobile.ewallet.model.api.register.ConfirmOTPAPIResponse
 import com.mobile.ewallet.model.api.splashscreen.SplashscreenAPIResponse
 import com.mobile.ewallet.util.Constant.Companion.KEY_ID_MEMBER
@@ -54,6 +55,12 @@ class DataManager
 
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun loadUserProfile(): Single<Response<MutableList<ProfileAPIResponse>>> {
+        return api.loadUserProfile(getIdMember())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun confirmOTPLogin(phone: String, uuid: String = "", otp: String): Single<Response<MutableList<ConfirmOTPAPIResponse>>> {
         return api.confirmOtpLogin(phone, uuid, otp)
             .subscribeOn(Schedulers.io())
