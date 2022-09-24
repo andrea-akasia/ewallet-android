@@ -7,8 +7,12 @@ import android.view.WindowInsetsController
 import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
+import com.google.gson.Gson
+import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityUpdateProfileBinding
+import com.mobile.ewallet.model.api.profile.ProfileAPIResponse
 
 class UpdateProfileActivity: BaseActivity<ProfileViewModel>() {
 
@@ -31,8 +35,18 @@ class UpdateProfileActivity: BaseActivity<ProfileViewModel>() {
         )
         prefixView.gravity = Gravity.CENTER
 
-        binding.topbar.actionBack.setOnClickListener { onBackPressed() }
+        binding.topbar.actionBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
         binding.topbar.title.text = "Ubah Profile"
+
+        intent.getStringExtra("PROFILE")?.let {
+            viewModel.profileData = Gson().fromJson(it, ProfileAPIResponse::class.java)
+            Glide.with(this)
+                .load(viewModel.profileData!!.photoProfileThumbnail)
+                .placeholder(R.drawable.user_placeholder)
+                .into(binding.image)
+            binding.etPhone.setText(viewModel.profileData!!.nOWA!!.substring(1, viewModel.profileData!!.nOWA!!.length))
+            binding.etName.setText(viewModel.profileData!!.nama)
+        }
 
     }
 }

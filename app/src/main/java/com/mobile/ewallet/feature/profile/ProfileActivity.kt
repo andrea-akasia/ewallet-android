@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
+import com.google.gson.Gson
 import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityProfileBinding
@@ -32,12 +33,12 @@ class ProfileActivity: BaseActivity<ProfileViewModel>() {
         binding.topbar.actionBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
         binding.viewName.setOnClickListener {
-            startActivity(
-                Intent(
-                    this@ProfileActivity,
-                    UpdateProfileActivity::class.java
+            viewModel.profileData?.let { profileData ->
+                startActivity(
+                    Intent(this@ProfileActivity, UpdateProfileActivity::class.java)
+                        .putExtra("PROFILE", Gson().toJson(profileData))
                 )
-            )
+            }
         }
 
         binding.btnLogout.setOnClickListener {
