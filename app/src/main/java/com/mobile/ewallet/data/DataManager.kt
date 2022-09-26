@@ -17,6 +17,8 @@ import com.mobile.ewallet.model.api.register.ConfirmOTPAPIResponse
 import com.mobile.ewallet.model.api.splashscreen.SplashscreenAPIResponse
 import com.mobile.ewallet.util.Constant.Companion.KEY_ID_MEMBER
 import com.mobile.ewallet.util.Constant.Companion.KEY_IS_LOGGED_IN
+import com.mobile.ewallet.util.createStringReqBody
+import okhttp3.MultipartBody
 
 
 @Singleton
@@ -55,6 +57,19 @@ class DataManager
 
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun saveProfile(name: String, phone: String, birthDate: String = "", nik: String = "")
+    : Single<Response<MutableList<BaseAPIResponse>>> {
+        return api.saveProfile(getIdMember(), phone, name, birthDate, nik)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun uploadPhotoProfile(image: MultipartBody.Part): Single<Response<MutableList<BaseAPIResponse>>> {
+        return api.uploadPhotoProfile(createStringReqBody(getIdMember()), image)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun loadUserProfile(): Single<Response<MutableList<ProfileAPIResponse>>> {
         return api.loadUserProfile(getIdMember())
             .subscribeOn(Schedulers.io())

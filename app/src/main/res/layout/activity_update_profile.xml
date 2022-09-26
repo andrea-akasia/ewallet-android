@@ -34,6 +34,7 @@
             android:textStyle="bold" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/action_select_photo"
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -163,7 +164,7 @@
                 android:background="@drawable/textfield_border_bg"
                 android:imeOptions="actionDone"
                 android:inputType="date"
-                android:maxLength="12"
+                android:focusable="false"
                 android:paddingStart="@dimen/_8sdp"
                 android:paddingEnd="@dimen/_8sdp"
                 android:textSize="14sp" />

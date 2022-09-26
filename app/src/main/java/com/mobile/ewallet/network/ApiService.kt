@@ -1,17 +1,36 @@
 package com.mobile.ewallet.network
 
 import com.mobile.ewallet.model.api.BaseAPIResponse
-import com.mobile.ewallet.model.api.pokemon.PokemonResponse
 import com.mobile.ewallet.model.api.detailpokemon.DetailPokemonResponse
+import com.mobile.ewallet.model.api.pokemon.PokemonResponse
 import com.mobile.ewallet.model.api.profile.ProfileAPIResponse
 import com.mobile.ewallet.model.api.register.ConfirmOTPAPIResponse
 import com.mobile.ewallet.model.api.splashscreen.SplashscreenAPIResponse
 import io.reactivex.Single
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
 
 
 interface APIService {
+    @FormUrlEncoded
+    @POST("Profile_SimpanData.aspx")
+    fun saveProfile(
+        @Field("IDMember") idMember: String,
+        @Field("NOWA") phone: String,
+        @Field("NamaLengkap") name: String,
+        @Field("TanggalLahir") birthDate: String,
+        @Field("NIK") nik: String
+    ): Single<Response<MutableList<BaseAPIResponse>>>
+
+    @Multipart
+    @POST("Profile_Photo_Update.aspx")
+    fun uploadPhotoProfile(
+        @Part("IDMember") idMember: RequestBody,
+        @Part file: MultipartBody.Part
+    ): Single<Response<MutableList<BaseAPIResponse>>>
+
     @FormUrlEncoded
     @POST("Profile_DATA.aspx")
     fun loadUserProfile(

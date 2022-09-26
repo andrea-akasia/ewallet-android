@@ -108,6 +108,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+    implementation 'androidx.activity:activity:1.6.0'
 
     //compose
     implementation "androidx.compose.ui:ui:$compose"
@@ -182,4 +183,5 @@ dependencies {
     kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
 
     implementation 'com.airbnb.android:lottie:5.2.0'
+    implementation 'id.zelory:compressor:3.0.1'
 }
