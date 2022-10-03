@@ -116,13 +116,13 @@
 
                 <ImageView
                     android:id="@+id/action_toggle_balance_visibility"
-                    android:layout_width="@dimen/_12sdp"
-                    android:layout_height="@dimen/_12sdp"
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
                     android:layout_marginStart="@dimen/_10sdp"
                     app:layout_constraintBottom_toBottomOf="@+id/balance_total"
                     app:layout_constraintStart_toEndOf="@+id/balance_total"
                     app:layout_constraintTop_toTopOf="@+id/balance_total"
-                    app:srcCompat="@drawable/ic_balance_visible" />
+                    app:srcCompat="@drawable/ic_balance_hide" />
 
                 <TextView
                     android:id="@+id/label_1"
@@ -136,7 +136,8 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
+                <EditText
+                    android:background="@android:color/transparent"
                     android:id="@+id/balance_total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -146,6 +147,9 @@
                     android:textColor="@android:color/white"
                     android:textSize="26sp"
                     android:textStyle="bold"
+                    android:inputType="textPassword"
+                    android:focusable="false"
+                    android:clickable="false"
                     app:layout_constraintBottom_toTopOf="@+id/label_last_topup"
                     app:layout_constraintStart_toStartOf="@+id/label_last_topup" />
 

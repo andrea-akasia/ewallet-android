@@ -2,6 +2,8 @@ package com.mobile.ewallet.feature.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
+import android.text.method.PasswordTransformationMethod
 import android.view.View
 import android.view.WindowInsetsController
 import android.widget.Toast
@@ -25,6 +27,7 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
     private lateinit var binding: ActivityHomeBinding
 
     private var adapter: TransactionAdapter? = null
+    private var isBalanceHidden: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,6 +75,17 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
             )
         }
 
+        binding.actionToggleBalanceVisibility.setOnClickListener {
+            isBalanceHidden = !isBalanceHidden
+            if(isBalanceHidden){
+                binding.balanceTotal.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                binding.actionToggleBalanceVisibility.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_balance_hide))
+            }else{
+                binding.balanceTotal.inputType = InputType.TYPE_CLASS_TEXT
+                binding.actionToggleBalanceVisibility.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_balance_visible))
+            }
+        }
+
         observeViewModel()
     }
 
@@ -104,7 +118,7 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
                 .into(binding.imgBadge)
-            binding.balanceTotal.text = it.sisaSaldo
+            binding.balanceTotal.setText(it.sisaSaldo)
             binding.valueLastTopup.text = "+${it.lastTopup}"
             binding.statusBadge.text = it.badge
             binding.balanceIn.text = it.dATAIN
