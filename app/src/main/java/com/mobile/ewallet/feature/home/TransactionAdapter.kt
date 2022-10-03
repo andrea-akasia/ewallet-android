@@ -7,7 +7,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.mobile.ewallet.R
 import com.mobile.ewallet.databinding.ViewItemTransactionBinding
-import com.mobile.ewallet.model.api.TransactionItem
+import com.mobile.ewallet.model.api.dashboard.TransactionItem
+import com.mobile.ewallet.util.GlideApp
 
 class TransactionAdapter(
     val data: MutableList<TransactionItem>
@@ -25,16 +26,19 @@ class TransactionAdapter(
     override fun onBindViewHolder(holder: TransactionHolder, position: Int) {
         with(holder){
             val item = data[bindingAdapterPosition]
-            if(item.type == "IN"){
+            GlideApp.with(holder.itemView.context)
+                .load(item.icon)
+                .into(binding.icon)
+            if(item.debitCredit == "Debit"){
                 binding.balance.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.colorTrxIn))
-                binding.iconTrx.setImageDrawable(ContextCompat.getDrawable(holder.itemView.context, R.drawable.ic_arrow_down_green))
-            }else if(item.type == "OUT"){
+            }else if(item.debitCredit == "Credit"){
                 binding.balance.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.colorTrxOut))
-                binding.iconTrx.setImageDrawable(ContextCompat.getDrawable(holder.itemView.context, R.drawable.ic_arrow_up_red))
             }else{
                 binding.balance.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.colorTrxPending))
-                binding.iconTrx.setImageDrawable(ContextCompat.getDrawable(holder.itemView.context, R.drawable.ic_pause))
             }
+            binding.balance.text = item.nominal
+            binding.timestamp.text = item.timestamp
+            binding.description.text = item.title
 
             holder.itemView.setOnClickListener {
                 holder.itemView.context.startActivity(

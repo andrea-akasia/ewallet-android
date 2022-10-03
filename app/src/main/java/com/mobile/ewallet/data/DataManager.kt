@@ -12,6 +12,7 @@ import retrofit2.Response
 import androidx.paging.DataSource
 import com.mobile.ewallet.model.api.BaseAPIResponse
 import com.mobile.ewallet.model.api.dashboard.DashboardBalance
+import com.mobile.ewallet.model.api.dashboard.TransactionItem
 import com.mobile.ewallet.model.api.detailpokemon.DetailPokemonResponse
 import com.mobile.ewallet.model.api.profile.ProfileAPIResponse
 import com.mobile.ewallet.model.api.register.ConfirmOTPAPIResponse
@@ -58,6 +59,12 @@ class DataManager
 
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun loadHistoryTransaction(): Single<Response<MutableList<TransactionItem>>> {
+        return api.transactionHistory(getIdMember())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun loadDashboardBalance(): Single<Response<MutableList<DashboardBalance>>> {
         return api.dashboardBalance(getIdMember())
             .subscribeOn(Schedulers.io())

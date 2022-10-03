@@ -10,26 +10,14 @@
     android:paddingEnd="@dimen/_10sdp"
     android:background="@android:color/white">
 
-    <androidx.cardview.widget.CardView
+    <ImageView
         android:id="@+id/icon"
         android:layout_width="@dimen/_40sdp"
         android:layout_height="@dimen/_40sdp"
         android:layout_gravity="center"
-        app:cardBackgroundColor="#F4F4F4"
-        app:cardCornerRadius="@dimen/_100sdp"
-        app:cardElevation="0dp"
-        app:contentPadding="@dimen/_4sdp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/icon_trx"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            app:srcCompat="@drawable/ic_arrow_down_green" />
-
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/ic_arrow_down_green" />
 
     <TextView
         android:id="@+id/balance"

@@ -2,6 +2,7 @@ package com.mobile.ewallet.network
 
 import com.mobile.ewallet.model.api.BaseAPIResponse
 import com.mobile.ewallet.model.api.dashboard.DashboardBalance
+import com.mobile.ewallet.model.api.dashboard.TransactionItem
 import com.mobile.ewallet.model.api.detailpokemon.DetailPokemonResponse
 import com.mobile.ewallet.model.api.pokemon.PokemonResponse
 import com.mobile.ewallet.model.api.profile.ProfileAPIResponse
@@ -15,6 +16,12 @@ import retrofit2.http.*
 
 
 interface APIService {
+    @FormUrlEncoded
+    @POST("HISTORY_Transaksi.aspx")
+    fun transactionHistory(
+        @Field("IDMember") idMember: String
+    ): Single<Response<MutableList<TransactionItem>>>
+
     @FormUrlEncoded
     @POST("DASHBOARD.aspx")
     fun dashboardBalance(

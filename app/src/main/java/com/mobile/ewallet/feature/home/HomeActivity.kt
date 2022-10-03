@@ -36,10 +36,6 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
             WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
             WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
 
-        adapter = TransactionAdapter(viewModel.dummyData())
-        binding.rv.layoutManager = LinearLayoutManager(this)
-        binding.rv.adapter = adapter
-
         binding.actionProfile.setOnClickListener {
             startActivity(
                 Intent(
@@ -91,10 +87,17 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
         }else{
             viewModel.loadProfile()
             viewModel.loadDashboardBalance()
+            viewModel.loadHistoryTransaction()
         }
     }
 
     private fun observeViewModel(){
+        viewModel.onHistoryTransactionLoaded.observe(this){
+            adapter = TransactionAdapter(it)
+            binding.rv.layoutManager = LinearLayoutManager(this)
+            binding.rv.adapter = adapter
+        }
+
         viewModel.onDashboardBalanceLoaded.observe(this){
             GlideApp.with(this)
                 .load(it.badgeImage)
