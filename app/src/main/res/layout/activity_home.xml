@@ -85,14 +85,14 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_badge_green" />
+                            tools:srcCompat="@drawable/ic_badge_green" />
 
                         <TextView
                             android:id="@+id/status_badge"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_4sdp"
-                            android:text="Green"
+                            tools:text="Green"
                             android:textColor="@color/colorBadgeTextGreen"
                             android:textSize="12sp"
                             android:textStyle="bold"
@@ -141,7 +141,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/_10sdp"
-                    android:text="Rp54.000.000"
+                    tools:text="Rp54.000.000"
+                    android:text="Rp0"
                     android:textColor="@android:color/white"
                     android:textSize="26sp"
                     android:textStyle="bold"
@@ -164,7 +165,7 @@
                     android:id="@+id/value_last_topup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="+Rp10.000.000"
+                    tools:text="+Rp10.000.000"
                     android:textColor="@android:color/white"
                     android:textSize="14sp"
                     android:textStyle="bold"
@@ -213,7 +214,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_2sdp"
-                            android:text="Rp16.000"
+                            tools:text="Rp16.000"
                             android:textColor="@color/colorTextBlack"
                             android:textSize="12sp" />
 
@@ -248,7 +249,7 @@
                             android:id="@+id/balance_out"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Rp16.000"
+                            tools:text="Rp16.000"
                             android:textColor="@color/colorTextBlack"
                             android:textSize="12sp" />
 

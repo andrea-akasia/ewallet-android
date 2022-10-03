@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.mobile.ewallet.base.BaseViewModel
 import com.mobile.ewallet.data.DataManager
 import com.mobile.ewallet.model.api.TransactionItem
+import com.mobile.ewallet.model.api.dashboard.DashboardBalance
 import com.mobile.ewallet.model.api.profile.ProfileAPIResponse
 import timber.log.Timber
 import javax.inject.Inject
@@ -15,6 +16,34 @@ class HomeViewModel
 
     internal var onProfileLoaded = MutableLiveData<ProfileAPIResponse>()
     internal var warningMessage = MutableLiveData<String>()
+    internal var onDashboardBalanceLoaded = MutableLiveData<DashboardBalance>()
+
+    fun loadDashboardBalance() {
+        dataManager.loadDashboardBalance()
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            if(response.isNotEmpty()){
+                                onDashboardBalanceLoaded.postValue(response[0])
+                            }else{
+                                warningMessage.postValue("empty data dashboard")
+                            }
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun loadProfile() {
         dataManager.loadUserProfile()

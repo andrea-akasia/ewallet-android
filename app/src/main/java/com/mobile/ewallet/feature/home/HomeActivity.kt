@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityHomeBinding
@@ -16,6 +17,7 @@ import com.mobile.ewallet.feature.moneyreq.MoneyRequestActivity
 import com.mobile.ewallet.feature.moneysend.MoneySendTypeActivity
 import com.mobile.ewallet.feature.pay.PayInputActivity
 import com.mobile.ewallet.feature.profile.ProfileActivity
+import com.mobile.ewallet.util.GlideApp
 
 class HomeActivity: BaseActivity<HomeViewModel>() {
 
@@ -88,10 +90,37 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
             this@HomeActivity.finish()
         }else{
             viewModel.loadProfile()
+            viewModel.loadDashboardBalance()
         }
     }
 
     private fun observeViewModel(){
+        viewModel.onDashboardBalanceLoaded.observe(this){
+            GlideApp.with(this)
+                .load(it.badgeImage)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .into(binding.imgBadge)
+            binding.balanceTotal.text = it.sisaSaldo
+            binding.valueLastTopup.text = "+${it.lastTopup}"
+            binding.statusBadge.text = it.badge
+            binding.balanceIn.text = it.dATAIN
+            binding.balanceOut.text = it.dATAOUT
+
+            it.iDPendanaanDisetujui?.let { approvedPendanaanId ->
+                if(approvedPendanaanId != "0"){
+                    //show credit info
+                    binding.viewCreditReqPrompt.visibility = View.GONE
+                    binding.viewCreditInfo.visibility = View.VISIBLE
+                    binding.valueLimitCredit.text = it.limitPinjaman
+                    binding.valueActiveCredit.text = it.pinjamanAktif
+                }else{
+                    binding.viewCreditInfo.visibility = View.GONE
+                    binding.viewCreditReqPrompt.visibility = View.VISIBLE
+                }
+            }
+        }
+
         viewModel.onProfileLoaded.observe(this){
             Glide.with(this)
                 .load(it.photoProfileThumbnail)

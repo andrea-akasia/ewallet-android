@@ -11,6 +11,7 @@ import io.reactivex.schedulers.Schedulers
 import retrofit2.Response
 import androidx.paging.DataSource
 import com.mobile.ewallet.model.api.BaseAPIResponse
+import com.mobile.ewallet.model.api.dashboard.DashboardBalance
 import com.mobile.ewallet.model.api.detailpokemon.DetailPokemonResponse
 import com.mobile.ewallet.model.api.profile.ProfileAPIResponse
 import com.mobile.ewallet.model.api.register.ConfirmOTPAPIResponse
@@ -57,6 +58,12 @@ class DataManager
 
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun loadDashboardBalance(): Single<Response<MutableList<DashboardBalance>>> {
+        return api.dashboardBalance(getIdMember())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun saveProfile(name: String, phone: String, birthDate: String = "", nik: String = "")
     : Single<Response<MutableList<BaseAPIResponse>>> {
         return api.saveProfile(getIdMember(), phone, name, birthDate, nik)

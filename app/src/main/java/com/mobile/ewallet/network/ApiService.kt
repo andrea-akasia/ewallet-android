@@ -1,6 +1,7 @@
 package com.mobile.ewallet.network
 
 import com.mobile.ewallet.model.api.BaseAPIResponse
+import com.mobile.ewallet.model.api.dashboard.DashboardBalance
 import com.mobile.ewallet.model.api.detailpokemon.DetailPokemonResponse
 import com.mobile.ewallet.model.api.pokemon.PokemonResponse
 import com.mobile.ewallet.model.api.profile.ProfileAPIResponse
@@ -14,6 +15,12 @@ import retrofit2.http.*
 
 
 interface APIService {
+    @FormUrlEncoded
+    @POST("DASHBOARD.aspx")
+    fun dashboardBalance(
+        @Field("IDMember") idMember: String
+    ): Single<Response<MutableList<DashboardBalance>>>
+
     @FormUrlEncoded
     @POST("Profile_SimpanData.aspx")
     fun saveProfile(
