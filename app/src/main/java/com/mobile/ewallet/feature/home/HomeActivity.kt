@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.gson.Gson
 import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityHomeBinding
@@ -42,12 +43,12 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
 
         binding.balanceTotal.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
         binding.actionProfile.setOnClickListener {
-            startActivity(
-                Intent(
-                    this@HomeActivity,
-                    ProfileActivity::class.java
+            viewModel.balanceData?.let {
+                startActivity(
+                    Intent(this@HomeActivity, ProfileActivity::class.java)
+                        .putExtra("DASHBOARD_DATA", Gson().toJson(it))
                 )
-            )
+            }
         }
 
         binding.viewBadge.setOnClickListener {

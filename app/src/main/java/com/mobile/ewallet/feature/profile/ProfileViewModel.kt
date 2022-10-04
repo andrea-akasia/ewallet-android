@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import com.mobile.ewallet.base.BaseViewModel
 import com.mobile.ewallet.data.DataManager
+import com.mobile.ewallet.model.api.dashboard.DashboardBalance
 import com.mobile.ewallet.model.api.profile.ProfileAPIResponse
 import com.mobile.ewallet.util.createMultipartFromImageFile
 import timber.log.Timber
@@ -23,6 +24,7 @@ class ProfileViewModel
     var profileData: ProfileAPIResponse? = null
     var isNeedUpdatePhoto: Boolean = false
     var photoFile: File? = null
+    lateinit var dashboardData: DashboardBalance
 
     fun save(phone: String, name: String, birthDate: String = ""){
         isLoading.postValue(true)

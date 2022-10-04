@@ -23,6 +23,8 @@ class HomeViewModel
     internal var onBadgesLoaded = MutableLiveData<MutableList<Badge>>()
     internal var onBadgeStatusLoaded = MutableLiveData<BadgeStatus>()
 
+    var balanceData: DashboardBalance? = null
+
     fun loadBadgeStatus() {
         dataManager.loadBadgeStatus()
             .doOnSubscribe(this::addDisposable)
@@ -104,6 +106,7 @@ class HomeViewModel
                     if (res.isSuccessful) {
                         res.body()?.let { response ->
                             if(response.isNotEmpty()){
+                                balanceData = response[0]
                                 onDashboardBalanceLoaded.postValue(response[0])
                             }else{
                                 warningMessage.postValue("empty data dashboard")

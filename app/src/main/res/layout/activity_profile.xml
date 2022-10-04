@@ -310,10 +310,11 @@
                                 app:srcCompat="@drawable/ic_arrow_up_red" />
 
                             <TextView
+                                android:id="@+id/balance_out"
                                 android:layout_marginStart="@dimen/_8sdp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Rp16.000"
+                                tools:text="Rp16.000"
                                 android:textColor="#E51515"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
@@ -352,10 +353,11 @@
                                 app:srcCompat="@drawable/ic_arrow_down_green" />
 
                             <TextView
+                                android:id="@+id/balance_in"
                                 android:layout_marginStart="@dimen/_8sdp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Rp16.000"
+                                tools:text="Rp16.000"
                                 android:textColor="#41B92A"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
@@ -519,7 +521,7 @@
                         android:id="@+id/balance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Rp999.999.999"
+                        tools:text="Rp999.999.999"
                         android:textColor="@android:color/black"
                         android:textSize="13sp"
                         app:layout_constraintBottom_toBottomOf="parent"

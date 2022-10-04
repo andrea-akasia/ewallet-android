@@ -13,6 +13,8 @@ import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityProfileBinding
 import com.mobile.ewallet.feature.auth.AuthActivity
+import com.mobile.ewallet.feature.credit.CreditDetailActivity
+import com.mobile.ewallet.model.api.dashboard.DashboardBalance
 
 class ProfileActivity: BaseActivity<ProfileViewModel>() {
 
@@ -28,6 +30,30 @@ class ProfileActivity: BaseActivity<ProfileViewModel>() {
         window.insetsController?.setSystemBarsAppearance(
             WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
             WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
+
+        intent.getStringExtra("DASHBOARD_DATA")?.let {
+            viewModel.dashboardData = Gson().fromJson(it, DashboardBalance::class.java)
+
+            binding.balance.text = viewModel.dashboardData.sisaSaldo
+            binding.balanceIn.text = viewModel.dashboardData.dATAIN
+            binding.balanceOut.text = viewModel.dashboardData.dATAOUT
+
+            if(viewModel.dashboardData.iDPendanaanDisetujui != "0"){
+                //has credit approved
+                binding.viewCreditIdentity.visibility = View.VISIBLE
+                binding.viewCreditReqPrompt.visibility = View.GONE
+                binding.viewCreditInfo.visibility = View.VISIBLE
+                binding.valueActiveCredit.text = viewModel.dashboardData.pinjamanAktif
+                binding.valueLimitCredit.text = viewModel.dashboardData.limitPinjaman
+                binding.btnDetailCredit.setOnClickListener {
+                    startActivity(
+                        Intent(this@ProfileActivity, CreditDetailActivity::class.java)
+                            .putExtra("BALANCE", viewModel.dashboardData.pinjamanAktif)
+                            .putExtra("LIMIT", viewModel.dashboardData.limitPinjaman)
+                    )
+                }
+            }
+        }
 
         binding.topbar.title.text = "Profile Pengguna"
         binding.topbar.actionBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
