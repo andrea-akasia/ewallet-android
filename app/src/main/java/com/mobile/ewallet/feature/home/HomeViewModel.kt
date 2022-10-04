@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import com.mobile.ewallet.base.BaseViewModel
 import com.mobile.ewallet.data.DataManager
+import com.mobile.ewallet.model.api.badge.Badge
+import com.mobile.ewallet.model.api.badge.BadgeStatus
 import com.mobile.ewallet.model.api.dashboard.DashboardBalance
 import com.mobile.ewallet.model.api.dashboard.TransactionItem
 import com.mobile.ewallet.model.api.profile.ProfileAPIResponse
@@ -18,6 +20,58 @@ class HomeViewModel
     internal var warningMessage = MutableLiveData<String>()
     internal var onDashboardBalanceLoaded = MutableLiveData<DashboardBalance>()
     internal var onHistoryTransactionLoaded = MutableLiveData<MutableList<TransactionItem>>()
+    internal var onBadgesLoaded = MutableLiveData<MutableList<Badge>>()
+    internal var onBadgeStatusLoaded = MutableLiveData<BadgeStatus>()
+
+    fun loadBadgeStatus() {
+        dataManager.loadBadgeStatus()
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            if(response.isNotEmpty()){
+                                onBadgeStatusLoaded.postValue(response[0])
+                            }else{
+                                warningMessage.postValue("empty data badge box")
+                            }
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
+
+    fun loadBadges() {
+        dataManager.loadListBadge()
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            onBadgesLoaded.postValue(response)
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun loadHistoryTransaction() {
         dataManager.loadHistoryTransaction()

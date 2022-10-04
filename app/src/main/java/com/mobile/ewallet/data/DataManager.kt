@@ -11,6 +11,8 @@ import io.reactivex.schedulers.Schedulers
 import retrofit2.Response
 import androidx.paging.DataSource
 import com.mobile.ewallet.model.api.BaseAPIResponse
+import com.mobile.ewallet.model.api.badge.Badge
+import com.mobile.ewallet.model.api.badge.BadgeStatus
 import com.mobile.ewallet.model.api.dashboard.DashboardBalance
 import com.mobile.ewallet.model.api.dashboard.TransactionItem
 import com.mobile.ewallet.model.api.detailpokemon.DetailPokemonResponse
@@ -59,6 +61,18 @@ class DataManager
 
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun loadBadgeStatus(): Single<Response<MutableList<BadgeStatus>>> {
+        return api.statusBadge(getIdMember())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun loadListBadge(): Single<Response<MutableList<Badge>>> {
+        return api.listBadge(getIdMember())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun loadHistoryTransaction(): Single<Response<MutableList<TransactionItem>>> {
         return api.transactionHistory(getIdMember())
             .subscribeOn(Schedulers.io())
