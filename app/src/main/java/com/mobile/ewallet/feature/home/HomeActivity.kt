@@ -39,6 +39,7 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
             WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
             WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
 
+        binding.balanceTotal.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
         binding.actionProfile.setOnClickListener {
             startActivity(
                 Intent(
