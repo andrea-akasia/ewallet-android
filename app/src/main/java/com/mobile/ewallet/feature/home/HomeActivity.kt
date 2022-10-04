@@ -15,6 +15,7 @@ import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityHomeBinding
 import com.mobile.ewallet.feature.auth.AuthActivity
+import com.mobile.ewallet.feature.credit.CreditDetailActivity
 import com.mobile.ewallet.feature.moneyreq.MoneyRequestActivity
 import com.mobile.ewallet.feature.moneysend.MoneySendTypeActivity
 import com.mobile.ewallet.feature.pay.PayInputActivity
@@ -132,7 +133,16 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
                     binding.viewCreditInfo.visibility = View.VISIBLE
                     binding.valueLimitCredit.text = it.limitPinjaman
                     binding.valueActiveCredit.text = it.pinjamanAktif
+
+                    binding.btnDetailCredit.setOnClickListener { _ ->
+                        startActivity(
+                            Intent(this@HomeActivity, CreditDetailActivity::class.java)
+                                .putExtra("BALANCE", it.pinjamanAktif)
+                                .putExtra("LIMIT", it.limitPinjaman)
+                        )
+                    }
                 }else{
+                    binding.btnDetailCredit.setOnClickListener(null)
                     binding.viewCreditInfo.visibility = View.GONE
                     binding.viewCreditReqPrompt.visibility = View.VISIBLE
                 }

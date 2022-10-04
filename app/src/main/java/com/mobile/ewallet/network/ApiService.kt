@@ -19,6 +19,12 @@ import retrofit2.http.*
 
 interface APIService {
     @FormUrlEncoded
+    @POST("HISTORY_Transaksi_Kredit.aspx")
+    fun creditTransactionHistory(
+        @Field("IDMember") idMember: String
+    ): Single<Response<MutableList<TransactionItem>>>
+
+    @FormUrlEncoded
     @POST("Badge_Box.aspx")
     fun statusBadge(
         @Field("IDMember") idMember: String

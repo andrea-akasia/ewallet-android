@@ -10,6 +10,7 @@ import com.mobile.ewallet.base.AppViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import com.mobile.ewallet.feature.profile.ProfileViewModel
 import com.mobile.ewallet.feature.auth.AuthViewModel
+import com.mobile.ewallet.feature.credit.CreditViewModel
 import com.mobile.ewallet.feature.detailpokemon.DetailPokemonViewModel
 import com.mobile.ewallet.feature.detailpokemon.basestat.BaseStatViewModel
 import com.mobile.ewallet.feature.detailpokemon.moves.MovesViewModel
@@ -20,6 +21,11 @@ import com.mobile.ewallet.feature.pay.PayViewModel
 
 @Module
 abstract class ViewModelModule {
+    @Binds
+    @IntoMap
+    @ViewModelKey(CreditViewModel::class)
+    abstract fun bindCreditViewModel(creditViewModel: CreditViewModel): ViewModel
+
     @Binds
     @IntoMap
     @ViewModelKey(SendMoneyViewModel::class)

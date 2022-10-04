@@ -61,6 +61,12 @@ class DataManager
 
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun loadCreditHistoryTransaction(): Single<Response<MutableList<TransactionItem>>> {
+        return api.creditTransactionHistory(getIdMember())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun loadBadgeStatus(): Single<Response<MutableList<BadgeStatus>>> {
         return api.statusBadge(getIdMember())
             .subscribeOn(Schedulers.io())

@@ -51,6 +51,7 @@
         <activity android:name=".feature.moneysend.MoneySendTypeActivity" android:theme="@style/AppMaterialTheme.NoActionBar"/>
         <activity android:name=".feature.moneysend.MoneySendBankActivity" android:theme="@style/AppMaterialTheme.NoActionBar"/>
         <activity android:name=".feature.home.BadgeActivity" />
+        <activity android:name=".feature.credit.CreditDetailActivity" />
     </application>
 
 </manifest>
