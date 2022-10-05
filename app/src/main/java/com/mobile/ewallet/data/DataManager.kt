@@ -16,6 +16,7 @@ import com.mobile.ewallet.model.api.badge.BadgeStatus
 import com.mobile.ewallet.model.api.dashboard.DashboardBalance
 import com.mobile.ewallet.model.api.dashboard.TransactionItem
 import com.mobile.ewallet.model.api.detailpokemon.DetailPokemonResponse
+import com.mobile.ewallet.model.api.moneyrequest.MoneyRequestData
 import com.mobile.ewallet.model.api.profile.ProfileAPIResponse
 import com.mobile.ewallet.model.api.register.ConfirmOTPAPIResponse
 import com.mobile.ewallet.model.api.splashscreen.SplashscreenAPIResponse
@@ -61,6 +62,12 @@ class DataManager
 
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun loadMoneyRequest(): Single<Response<MutableList<MoneyRequestData>>> {
+        return api.moneyRequest(getIdMember())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun loadCreditHistoryTransaction(): Single<Response<MutableList<TransactionItem>>> {
         return api.creditTransactionHistory(getIdMember())
             .subscribeOn(Schedulers.io())

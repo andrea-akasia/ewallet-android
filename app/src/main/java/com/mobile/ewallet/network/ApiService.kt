@@ -6,6 +6,7 @@ import com.mobile.ewallet.model.api.badge.BadgeStatus
 import com.mobile.ewallet.model.api.dashboard.DashboardBalance
 import com.mobile.ewallet.model.api.dashboard.TransactionItem
 import com.mobile.ewallet.model.api.detailpokemon.DetailPokemonResponse
+import com.mobile.ewallet.model.api.moneyrequest.MoneyRequestData
 import com.mobile.ewallet.model.api.pokemon.PokemonResponse
 import com.mobile.ewallet.model.api.profile.ProfileAPIResponse
 import com.mobile.ewallet.model.api.register.ConfirmOTPAPIResponse
@@ -18,6 +19,12 @@ import retrofit2.http.*
 
 
 interface APIService {
+    @FormUrlEncoded
+    @POST("MINTA_UANG.aspx")
+    fun moneyRequest(
+        @Field("IDMember") idMember: String
+    ): Single<Response<MutableList<MoneyRequestData>>>
+
     @FormUrlEncoded
     @POST("HISTORY_Transaksi_Kredit.aspx")
     fun creditTransactionHistory(

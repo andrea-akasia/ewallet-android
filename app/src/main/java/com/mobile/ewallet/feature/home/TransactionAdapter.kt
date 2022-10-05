@@ -40,14 +40,14 @@ class TransactionAdapter(
             binding.timestamp.text = item.timestamp
             binding.description.text = item.title
 
-            holder.itemView.setOnClickListener {
+            /*holder.itemView.setOnClickListener {
                 holder.itemView.context.startActivity(
                     Intent(
                         holder.itemView.context,
                         TransactionDetailActivity::class.java
                     )
                 )
-            }
+            }*/
         }
     }
 

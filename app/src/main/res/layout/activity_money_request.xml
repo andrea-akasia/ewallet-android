@@ -54,11 +54,11 @@
         app:layout_constraintTop_toBottomOf="@+id/title_2">
 
         <ImageView
-            android:id="@+id/image"
+            android:id="@+id/user_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/sample_avatar" />
+            tools:srcCompat="@drawable/sample_avatar" />
 
     </com.google.android.material.card.MaterialCardView>
 
@@ -90,21 +90,21 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_20sdp"
             android:background="@drawable/qr_bg"
-            android:padding="@dimen/_10sdp"
+            android:padding="@dimen/_4sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:id="@+id/qr_image"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_150sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/sample_qr" />
+                tools:srcCompat="@drawable/sample_qr" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -115,7 +115,7 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:paddingStart="@dimen/_14sdp"
             android:paddingEnd="@dimen/_14sdp"
-            android:text="Fer D Sambo"
+            tools:text="Fer D Sambo"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -130,7 +130,7 @@
             android:layout_marginTop="@dimen/_2sdp"
             android:paddingStart="@dimen/_14sdp"
             android:paddingEnd="@dimen/_14sdp"
-            android:text="081234567890"
+            tools:text="081234567890"
             android:textColor="@android:color/white"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="@+id/constraintLayout"

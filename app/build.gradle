@@ -184,4 +184,5 @@ dependencies {
 
     implementation 'com.airbnb.android:lottie:5.2.0'
     implementation 'id.zelory:compressor:3.0.1'
+    implementation 'com.google.zxing:core:3.5.0'
 }
