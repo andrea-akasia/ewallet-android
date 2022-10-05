@@ -10,6 +10,9 @@ import com.mobile.ewallet.model.api.moneyrequest.MoneyRequestData
 import com.mobile.ewallet.model.api.pokemon.PokemonResponse
 import com.mobile.ewallet.model.api.profile.ProfileAPIResponse
 import com.mobile.ewallet.model.api.register.ConfirmOTPAPIResponse
+import com.mobile.ewallet.model.api.sendmoney.AdminFeeResponse
+import com.mobile.ewallet.model.api.sendmoney.MinimumNominalResponse
+import com.mobile.ewallet.model.api.sendmoney.SendMoneyResult
 import com.mobile.ewallet.model.api.splashscreen.SplashscreenAPIResponse
 import io.reactivex.Single
 import okhttp3.MultipartBody
@@ -19,6 +22,31 @@ import retrofit2.http.*
 
 
 interface APIService {
+    @FormUrlEncoded
+    @POST("SCAN_Step3.aspx")
+    fun scanSendMoney(
+        @Field("IDMember") idMember: String,
+        @Field("QRCode") qr: String,
+        @Field("Jumlah") amount: String,
+        @Field("BiayaAdmin") adminFee: String,
+        @Field("TotalPembayaran") total: String
+    ): Single<Response<MutableList<SendMoneyResult>>>
+
+    @FormUrlEncoded
+    @POST("SCAN_Step2.aspx")
+    fun scanAdminFee(
+        @Field("IDMember") idMember: String,
+        @Field("QRCode") qr: String,
+        @Field("Jumlah") amount: String
+    ): Single<Response<MutableList<AdminFeeResponse>>>
+
+    @FormUrlEncoded
+    @POST("SCAN_Step1.aspx")
+    fun scanLoadNominal(
+        @Field("IDMember") idMember: String,
+        @Field("QRCode") qr: String
+    ): Single<Response<MutableList<MinimumNominalResponse>>>
+
     @FormUrlEncoded
     @POST("MINTA_UANG.aspx")
     fun moneyRequest(

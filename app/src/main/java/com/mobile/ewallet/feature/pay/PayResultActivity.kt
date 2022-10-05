@@ -4,10 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.WindowInsetsController
 import androidx.core.content.ContextCompat
+import com.google.gson.Gson
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityPayResultBinding
 import com.mobile.ewallet.feature.home.HomeActivity
 import com.mobile.ewallet.feature.home.TransactionDetailActivity
+import com.mobile.ewallet.model.api.sendmoney.SendMoneyResult
 
 class PayResultActivity: BaseActivity<PayViewModel>() {
 
@@ -24,6 +26,15 @@ class PayResultActivity: BaseActivity<PayViewModel>() {
             WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
             WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
 
+        intent.getStringExtra("DATA")?.let {
+            val data = Gson().fromJson(it, SendMoneyResult::class.java)
+            binding.total.text = "Rp${data.total}"
+            binding.time.text = data.time
+            binding.type.text = data.transactionType
+            binding.method.text = data.metodeBayar
+            binding.reff.text  =data.reffNumber
+        }
+
         binding.actionClose.setOnClickListener {
             startActivity(
                 Intent(
@@ -37,9 +48,9 @@ class PayResultActivity: BaseActivity<PayViewModel>() {
         }
 
         binding.btnDetail.setOnClickListener {
-            startActivity(
+            /*startActivity(
                 Intent(this@PayResultActivity, TransactionDetailActivity::class.java)
-            )
+            )*/
         }
     }
 }

@@ -13,6 +13,8 @@ import timber.log.Timber
 
 class QrCodeAnalyzer(private val listener: BarcodeDetector) : ImageAnalysis.Analyzer {
 
+    private var hasTrigerred = false
+
     @SuppressLint("UnsafeOptInUsageError")
     override fun analyze(image: ImageProxy) {
         val img = image.image
@@ -28,10 +30,12 @@ class QrCodeAnalyzer(private val listener: BarcodeDetector) : ImageAnalysis.Anal
 
             scanner.process(inputImage)
                 .addOnSuccessListener { barcodes ->
-                    for (barcode in barcodes) {
-                        // Handle received barcodes...
-                        //Timber.i("BARCODE: ${barcode.rawValue}")
-                        barcode.rawValue?.let { listener.onBarcodeDetected(it) }
+                    if(barcodes.isNotEmpty()){
+                        if(!hasTrigerred){
+                            hasTrigerred = true
+                            Timber.i("addOnSuccessListener trigerred")
+                            barcodes[0].rawValue?.let { listener.onBarcodeDetected(it) }
+                        }
                     }
                     image.close()
                 }

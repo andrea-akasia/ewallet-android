@@ -19,6 +19,9 @@ import com.mobile.ewallet.model.api.detailpokemon.DetailPokemonResponse
 import com.mobile.ewallet.model.api.moneyrequest.MoneyRequestData
 import com.mobile.ewallet.model.api.profile.ProfileAPIResponse
 import com.mobile.ewallet.model.api.register.ConfirmOTPAPIResponse
+import com.mobile.ewallet.model.api.sendmoney.AdminFeeResponse
+import com.mobile.ewallet.model.api.sendmoney.MinimumNominalResponse
+import com.mobile.ewallet.model.api.sendmoney.SendMoneyResult
 import com.mobile.ewallet.model.api.splashscreen.SplashscreenAPIResponse
 import com.mobile.ewallet.util.Constant.Companion.KEY_ID_MEMBER
 import com.mobile.ewallet.util.Constant.Companion.KEY_IS_LOGGED_IN
@@ -62,6 +65,24 @@ class DataManager
 
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun scanSendMoney(qr: String, amount: String, adminFee: String, total: String): Single<Response<MutableList<SendMoneyResult>>> {
+        return api.scanSendMoney(getIdMember(), qr, amount, adminFee, total)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun scanLoadAdminFee(qr: String, amount: String): Single<Response<MutableList<AdminFeeResponse>>> {
+        return api.scanAdminFee(getIdMember(), qr, amount)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun scanLoadMinimumNominal(qr: String): Single<Response<MutableList<MinimumNominalResponse>>> {
+        return api.scanLoadNominal(getIdMember(), qr)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun loadMoneyRequest(): Single<Response<MutableList<MoneyRequestData>>> {
         return api.moneyRequest(getIdMember())
             .subscribeOn(Schedulers.io())

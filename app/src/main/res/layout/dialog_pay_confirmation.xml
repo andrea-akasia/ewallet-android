@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     android:background="@android:color/white"
@@ -52,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/sample_avatar" />
+                tools:srcCompat="@drawable/sample_avatar" />
 
         </com.google.android.material.card.MaterialCardView>
 
@@ -70,7 +70,7 @@
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Fer D Sambo"
+                tools:text="Fer D Sambo"
                 android:textColor="@android:color/black"
                 android:textSize="14sp" />
 
@@ -78,7 +78,7 @@
                 android:id="@+id/phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="081234567890"
+                tools:text="081234567890"
                 android:textColor="#A7A7A7"
                 android:textSize="12sp" />
 
@@ -112,10 +112,10 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Rp20.000"
+            tools:text="Rp20.000"
             android:textColor="@android:color/black"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -144,7 +144,7 @@
             android:id="@+id/admin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Gratis"
+            tools:text="Gratis"
             android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -173,7 +173,7 @@
             android:id="@+id/total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Rp20.000"
+            tools:text="Rp20.000"
             android:textColor="@android:color/black"
             android:textSize="12sp"
             android:textStyle="bold"

@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityScannerBinding
 import com.mobile.ewallet.feature.moneysend.SendMoneyViewModel
+import com.mobile.ewallet.feature.pay.PayInputActivity
 import com.mobile.ewallet.util.Constant
 import com.mobile.ewallet.util.camera.QrCodeAnalyzer
 import java.util.concurrent.ExecutorService
@@ -117,7 +118,12 @@ class ScannerActivity: BaseActivity<SendMoneyViewModel>(), QrCodeAnalyzer.Barcod
     }
 
     override fun onBarcodeDetected(data: String) {
-        Toast.makeText(this, "BARCODE: $data", Toast.LENGTH_SHORT).show()
-        onBackPressedDispatcher.onBackPressed()
+        //Toast.makeText(this, "BARCODE: $data", Toast.LENGTH_SHORT).show()
+        //onBackPressedDispatcher.onBackPressed()
+        startActivity(
+            Intent(this, PayInputActivity::class.java)
+                .putExtra("QR", data)
+        )
+        this@ScannerActivity.finish()
     }
 }
