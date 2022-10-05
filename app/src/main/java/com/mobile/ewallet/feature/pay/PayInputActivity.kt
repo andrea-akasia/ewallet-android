@@ -14,6 +14,7 @@ import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityPayInputBinding
 import com.mobile.ewallet.model.api.sendmoney.AdminFeeResponse
 import com.mobile.ewallet.util.GlideApp
+import com.mobile.ewallet.util.formatToCurrency
 
 class PayInputActivity: BaseActivity<PayViewModel>() {
 
@@ -71,9 +72,9 @@ class PayInputActivity: BaseActivity<PayViewModel>() {
             .into(viewDialog.findViewById(R.id.image))
         viewDialog.findViewById<TextView>(R.id.name).text = data.destinationName
         viewDialog.findViewById<TextView>(R.id.phone).text = data.destinationPhone
-        viewDialog.findViewById<TextView>(R.id.amount).text = "Rp ${data.amount}"
-        viewDialog.findViewById<TextView>(R.id.admin).text = if(data.adminFee == "0") "Gratis" else "Rp ${data.adminFee}"
-        viewDialog.findViewById<TextView>(R.id.total).text = "Rp ${data.total}"
+        viewDialog.findViewById<TextView>(R.id.amount).text = data.amount.formatToCurrency()
+        viewDialog.findViewById<TextView>(R.id.admin).text = if(data.adminFee == "0") "Gratis" else data.adminFee.formatToCurrency()
+        viewDialog.findViewById<TextView>(R.id.total).text = data.total.formatToCurrency()
 
 
         viewDialog.findViewById<TextView>(R.id.action_cancel).setOnClickListener {

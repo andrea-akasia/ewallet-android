@@ -13,6 +13,9 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -70,4 +73,14 @@ private fun queryName(context: Context, uri: Uri): String {
     val name: String = returnCursor.getString(nameIndex)
     returnCursor.close()
     return name
+}
+
+fun String.formatToCurrency(): String {
+    val nf = NumberFormat.getCurrencyInstance()
+    val decimalFormatSymbols: DecimalFormatSymbols = (nf as DecimalFormat).decimalFormatSymbols
+    decimalFormatSymbols.currencySymbol = "Rp"
+    nf.decimalFormatSymbols = decimalFormatSymbols
+    val result =  nf.format(this.toDouble()).trim { it <= ' ' }
+    return result.substring(0, result.length-3).replace(',', '.')
+
 }

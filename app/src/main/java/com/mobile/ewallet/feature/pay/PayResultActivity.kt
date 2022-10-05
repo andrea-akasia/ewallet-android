@@ -10,6 +10,7 @@ import com.mobile.ewallet.databinding.ActivityPayResultBinding
 import com.mobile.ewallet.feature.home.HomeActivity
 import com.mobile.ewallet.feature.home.TransactionDetailActivity
 import com.mobile.ewallet.model.api.sendmoney.SendMoneyResult
+import com.mobile.ewallet.util.formatToCurrency
 
 class PayResultActivity: BaseActivity<PayViewModel>() {
 
@@ -28,7 +29,7 @@ class PayResultActivity: BaseActivity<PayViewModel>() {
 
         intent.getStringExtra("DATA")?.let {
             val data = Gson().fromJson(it, SendMoneyResult::class.java)
-            binding.total.text = "Rp${data.total}"
+            binding.total.text = data.total.formatToCurrency()
             binding.time.text = data.time
             binding.type.text = data.transactionType
             binding.method.text = data.metodeBayar
