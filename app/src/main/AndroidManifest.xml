@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
         tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".App"
@@ -52,6 +53,7 @@
         <activity android:name=".feature.moneysend.MoneySendBankActivity" android:theme="@style/AppMaterialTheme.NoActionBar"/>
         <activity android:name=".feature.home.BadgeActivity" />
         <activity android:name=".feature.credit.CreditDetailActivity" />
+        <activity android:name=".feature.scantosendmoney.ScannerActivity" />
     </application>
 
 </manifest>

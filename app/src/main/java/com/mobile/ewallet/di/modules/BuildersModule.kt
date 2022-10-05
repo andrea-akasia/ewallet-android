@@ -14,11 +14,16 @@ import com.mobile.ewallet.feature.pay.PayInputActivity
 import com.mobile.ewallet.feature.pay.PayResultActivity
 import com.mobile.ewallet.feature.profile.ProfileActivity
 import com.mobile.ewallet.feature.profile.UpdateProfileActivity
+import com.mobile.ewallet.feature.scantosendmoney.ScannerActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class BuildersModule{
+
+    @ContributesAndroidInjector(modules = [FragmentBuildersModule::class])
+    abstract fun bindScannerActivity(): ScannerActivity
+
     @ContributesAndroidInjector(modules = [FragmentBuildersModule::class])
     abstract fun bindCreditDetailActivity(): CreditDetailActivity
 

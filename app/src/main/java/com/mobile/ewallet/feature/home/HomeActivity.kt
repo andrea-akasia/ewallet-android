@@ -1,12 +1,14 @@
 package com.mobile.ewallet.feature.home
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.InputType
-import android.text.method.PasswordTransformationMethod
 import android.view.View
 import android.view.WindowInsetsController
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -21,6 +23,8 @@ import com.mobile.ewallet.feature.moneyreq.MoneyRequestActivity
 import com.mobile.ewallet.feature.moneysend.MoneySendTypeActivity
 import com.mobile.ewallet.feature.pay.PayInputActivity
 import com.mobile.ewallet.feature.profile.ProfileActivity
+import com.mobile.ewallet.feature.scantosendmoney.ScannerActivity
+import com.mobile.ewallet.util.Constant.Companion.RC_PERMISSIONS
 import com.mobile.ewallet.util.GlideApp
 
 class HomeActivity: BaseActivity<HomeViewModel>() {
@@ -30,6 +34,37 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
 
     private var adapter: TransactionAdapter? = null
     private var isBalanceHidden: Boolean = true
+
+    private val REQUIRED_PERMISSIONS = arrayOf(
+        Manifest.permission.CAMERA
+    )
+
+    private fun allPermissionsGranted(): Boolean {
+        for (permission in REQUIRED_PERMISSIONS) {
+            if (ContextCompat.checkSelfPermission(
+                    this, permission
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                return false
+            }
+        }
+        return true
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == RC_PERMISSIONS) {
+            if (!allPermissionsGranted()) {
+                Toast.makeText(
+                    this,
+                    "Izin penggunakan kamera harus diberikan untuk dapat melanjutkan!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                startActivity(Intent(this@HomeActivity, ScannerActivity::class.java))
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,9 +96,17 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
         }
 
         binding.actionScan.setOnClickListener {
-            startActivity(
+            if (allPermissionsGranted()) {
+                startActivity(Intent(this@HomeActivity, ScannerActivity::class.java))
+            } else {
+                ActivityCompat.requestPermissions(
+                    this@HomeActivity, REQUIRED_PERMISSIONS, RC_PERMISSIONS
+                )
+            }
+
+            /*startActivity(
                 Intent(this@HomeActivity, PayInputActivity::class.java)
-            )
+            )*/
         }
 
         binding.actionMoneyReq.setOnClickListener {
