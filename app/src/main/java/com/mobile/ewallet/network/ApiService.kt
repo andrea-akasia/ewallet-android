@@ -12,6 +12,7 @@ import com.mobile.ewallet.model.api.profile.ProfileAPIResponse
 import com.mobile.ewallet.model.api.register.ConfirmOTPAPIResponse
 import com.mobile.ewallet.model.api.sendmoney.HistoryTransferTransaction
 import com.mobile.ewallet.model.api.sendmoney.banktransfer.Bank
+import com.mobile.ewallet.model.api.sendmoney.banktransfer.MinimumNominalTrfResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.AdminFeeResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.MinimumNominalResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.SendMoneyResult
@@ -25,6 +26,14 @@ import retrofit2.http.*
 
 
 interface APIService {
+    @FormUrlEncoded
+    @POST("KIRIMUANG_BANK_Step1.aspx")
+    fun trfLoadNominal(
+        @Field("IDMember") idMember: String,
+        @Field("IDBank") idBank: String,
+        @Field("NomorRekening") accountNumber: String
+    ): Single<Response<MutableList<MinimumNominalTrfResponse>>>
+
     @POST("DD_BANK.aspx")
     fun listBank(): Single<Response<MutableList<Bank>>>
 

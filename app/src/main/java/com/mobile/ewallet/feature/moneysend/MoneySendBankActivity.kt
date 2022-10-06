@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.gson.Gson
 import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivitySendBankBinding
@@ -33,10 +34,6 @@ class MoneySendBankActivity: BaseActivity<SendMoneyViewModel>() {
 
         binding.btnSubmit.setOnClickListener {
             validateForm()
-
-            /*startActivity(
-                Intent(this@MoneySendBankActivity, PayInputActivity::class.java)
-            )*/
         }
 
         observeViewModel()
@@ -53,10 +50,22 @@ class MoneySendBankActivity: BaseActivity<SendMoneyViewModel>() {
             return
         }
 
-
+        viewModel.loadMinimumNominalTransferBank(
+            idBank = viewModel.selectedBank!!.iD!!,
+            accountNumber = binding.accountNumber.text.toString()
+        )
     }
 
     private fun observeViewModel(){
+        viewModel.onTransferBankMinimumNominalLoaded.observe(this){
+            startActivity(
+                Intent(this@MoneySendBankActivity, PayInputActivity::class.java)
+                    .putExtra("ACTION", "BANK")
+                    .putExtra("ID_BANK", viewModel.selectedBank!!.iD)
+                    .putExtra("DATA", Gson().toJson(it))
+            )
+        }
+
         viewModel.onBankListLoaded.observe(this){
             ArrayAdapter(
                 this,

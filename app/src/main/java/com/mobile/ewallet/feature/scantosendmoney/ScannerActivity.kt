@@ -123,6 +123,7 @@ class ScannerActivity: BaseActivity<SendMoneyViewModel>(), QrCodeAnalyzer.Barcod
         startActivity(
             Intent(this, PayInputActivity::class.java)
                 .putExtra("QR", data)
+                .putExtra("ACTION", "QR")
         )
         this@ScannerActivity.finish()
     }

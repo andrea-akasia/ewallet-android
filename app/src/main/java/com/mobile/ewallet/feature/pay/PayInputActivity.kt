@@ -11,6 +11,7 @@ import com.google.gson.Gson
 import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityPayInputBinding
+import com.mobile.ewallet.model.api.sendmoney.banktransfer.MinimumNominalTrfResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.AdminFeeResponse
 import com.mobile.ewallet.util.GlideApp
 import com.mobile.ewallet.util.formatToCurrency
@@ -33,10 +34,32 @@ class PayInputActivity: BaseActivity<PayViewModel>() {
         binding.topbar.title.text = "Detail Pembayaran"
 
         observeViewModel()
-        intent.getStringExtra("QR")?.let {
-            qr = it
-            viewModel.loadMinimumNominal(qr)
+        intent.getStringExtra("ACTION")?.let { action ->
+            if(action == "QR"){
+                intent.getStringExtra("QR")?.let {
+                    viewModel.action = "QR"
+                    qr = it
+                    viewModel.loadMinimumNominal(qr)
+                }
+            }else if(action == "BANK"){
+                viewModel.action = "BANK"
+                val data = Gson().fromJson(intent.getStringExtra("DATA"), MinimumNominalTrfResponse::class.java)
+                GlideApp.with(this)
+                    .load(data.photo)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .placeholder(R.drawable.user_placeholder)
+                    .into(binding.image)
+                binding.name.text = data.namaRekening
+                binding.phone.text = "${data.nomorRekening} (${data.namaBank})"
+                viewModel.minimumAmount = data.minimalPengiriman!!.toInt()
+                binding.minimum.text = data.minimalPengiriman.formatToCurrency()
+            } else {
+
+            }
         }
+
+
 
         binding.btnSubmit.setOnClickListener {
             validateForm()

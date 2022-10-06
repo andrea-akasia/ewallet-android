@@ -20,6 +20,7 @@ class PayViewModel
     internal var onAdminFeeLoaded = MutableLiveData<AdminFeeResponse>()
     internal var onTransactionSuccess = MutableLiveData<SendMoneyResult>()
 
+    var action = "QR" //QR,BANK
     var minimumAmount = 0
     var adminFee = 0
     var total = 0

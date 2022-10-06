@@ -9,6 +9,7 @@ import com.mobile.ewallet.model.api.dashboard.DashboardBalance
 import com.mobile.ewallet.model.api.dashboard.TransactionItem
 import com.mobile.ewallet.model.api.sendmoney.HistoryTransferTransaction
 import com.mobile.ewallet.model.api.sendmoney.banktransfer.Bank
+import com.mobile.ewallet.model.api.sendmoney.banktransfer.MinimumNominalTrfResponse
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -19,9 +20,37 @@ class SendMoneyViewModel
     internal var warningMessage = MutableLiveData<String>()
     internal var onHistoryTransactionLoaded = MutableLiveData<MutableList<HistoryTransferTransaction>>()
     internal var onBankListLoaded = MutableLiveData<MutableList<String>>()
+    internal var onTransferBankMinimumNominalLoaded = MutableLiveData<MinimumNominalTrfResponse>()
 
     var banks = mutableListOf<Bank>()
     var selectedBank: Bank? = null
+
+    fun loadMinimumNominalTransferBank(idBank: String, accountNumber: String){
+        dataManager.transferLoadMinimumNominal(idBank, accountNumber)
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            if(response.isNotEmpty()){
+                                onTransferBankMinimumNominalLoaded.postValue(response[0])
+                            }else{
+                                warningMessage.postValue("data is empty")
+                            }
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun loadBankList(){
         banks.clear()

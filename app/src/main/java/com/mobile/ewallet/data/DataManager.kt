@@ -21,6 +21,7 @@ import com.mobile.ewallet.model.api.profile.ProfileAPIResponse
 import com.mobile.ewallet.model.api.register.ConfirmOTPAPIResponse
 import com.mobile.ewallet.model.api.sendmoney.HistoryTransferTransaction
 import com.mobile.ewallet.model.api.sendmoney.banktransfer.Bank
+import com.mobile.ewallet.model.api.sendmoney.banktransfer.MinimumNominalTrfResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.AdminFeeResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.MinimumNominalResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.SendMoneyResult
@@ -68,6 +69,12 @@ class DataManager
 
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun transferLoadMinimumNominal(idBank: String, accountNumber: String): Single<Response<MutableList<MinimumNominalTrfResponse>>> {
+        return api.trfLoadNominal(getIdMember(), idBank, accountNumber)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun loadBankList(): Single<Response<MutableList<Bank>>> {
         return api.listBank()
             .subscribeOn(Schedulers.io())
