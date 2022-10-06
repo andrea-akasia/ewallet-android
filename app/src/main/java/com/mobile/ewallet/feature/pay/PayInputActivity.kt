@@ -50,8 +50,8 @@ class PayInputActivity: BaseActivity<PayViewModel>() {
                     .skipMemoryCache(true)
                     .placeholder(R.drawable.user_placeholder)
                     .into(binding.image)
-                binding.name.text = data.namaRekening
-                binding.phone.text = "${data.nomorRekening} (${data.namaBank})"
+                binding.name.text = data.name
+                binding.phone.text = "${data.norek} (${data.bank})"
                 viewModel.minimumAmount = data.minimalPengiriman!!.toInt()
                 binding.minimum.text = data.minimalPengiriman.formatToCurrency()
             } else {
