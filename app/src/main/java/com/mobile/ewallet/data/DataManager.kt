@@ -22,6 +22,7 @@ import com.mobile.ewallet.model.api.register.ConfirmOTPAPIResponse
 import com.mobile.ewallet.model.api.sendmoney.AdminFeeResponse
 import com.mobile.ewallet.model.api.sendmoney.MinimumNominalResponse
 import com.mobile.ewallet.model.api.sendmoney.SendMoneyResult
+import com.mobile.ewallet.model.api.sendmoney.TransactionDetail
 import com.mobile.ewallet.model.api.splashscreen.SplashscreenAPIResponse
 import com.mobile.ewallet.util.Constant.Companion.KEY_ID_MEMBER
 import com.mobile.ewallet.util.Constant.Companion.KEY_IS_LOGGED_IN
@@ -65,6 +66,12 @@ class DataManager
 
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun loadTransactionDetail(id: String): Single<Response<MutableList<TransactionDetail>>> {
+        return api.transactionDetail(getIdMember(), id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun scanSendMoney(qr: String, amount: String, adminFee: String, total: String): Single<Response<MutableList<SendMoneyResult>>> {
         return api.scanSendMoney(getIdMember(), qr, amount, adminFee, total)
             .subscribeOn(Schedulers.io())

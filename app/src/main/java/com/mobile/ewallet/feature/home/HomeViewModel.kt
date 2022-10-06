@@ -9,6 +9,7 @@ import com.mobile.ewallet.model.api.badge.BadgeStatus
 import com.mobile.ewallet.model.api.dashboard.DashboardBalance
 import com.mobile.ewallet.model.api.dashboard.TransactionItem
 import com.mobile.ewallet.model.api.profile.ProfileAPIResponse
+import com.mobile.ewallet.model.api.sendmoney.TransactionDetail
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -22,8 +23,36 @@ class HomeViewModel
     internal var onHistoryTransactionLoaded = MutableLiveData<MutableList<TransactionItem>>()
     internal var onBadgesLoaded = MutableLiveData<MutableList<Badge>>()
     internal var onBadgeStatusLoaded = MutableLiveData<BadgeStatus>()
+    internal var onTransactionDetailLoaded = MutableLiveData<TransactionDetail>()
 
     var balanceData: DashboardBalance? = null
+
+    fun loadTransactionDetail(id: String) {
+        dataManager.loadTransactionDetail(id)
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            if(response.isNotEmpty()){
+                                onTransactionDetailLoaded.postValue(response[0])
+                            }else{
+                                warningMessage.postValue("empty data")
+                            }
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun loadBadgeStatus() {
         dataManager.loadBadgeStatus()

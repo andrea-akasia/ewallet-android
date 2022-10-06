@@ -13,6 +13,7 @@ import com.mobile.ewallet.model.api.register.ConfirmOTPAPIResponse
 import com.mobile.ewallet.model.api.sendmoney.AdminFeeResponse
 import com.mobile.ewallet.model.api.sendmoney.MinimumNominalResponse
 import com.mobile.ewallet.model.api.sendmoney.SendMoneyResult
+import com.mobile.ewallet.model.api.sendmoney.TransactionDetail
 import com.mobile.ewallet.model.api.splashscreen.SplashscreenAPIResponse
 import io.reactivex.Single
 import okhttp3.MultipartBody
@@ -22,6 +23,13 @@ import retrofit2.http.*
 
 
 interface APIService {
+    @FormUrlEncoded
+    @POST("SCAN_Detail.aspx")
+    fun transactionDetail(
+        @Field("IDMember") idMember: String,
+        @Field("IDTransaksi") idTransaction: String
+    ): Single<Response<MutableList<TransactionDetail>>>
+
     @FormUrlEncoded
     @POST("SCAN_Step3.aspx")
     fun scanSendMoney(

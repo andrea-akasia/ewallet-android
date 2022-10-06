@@ -17,6 +17,8 @@ class PayResultActivity: BaseActivity<PayViewModel>() {
     override val viewModelClass: Class<PayViewModel> get() = PayViewModel::class.java
     private lateinit var binding: ActivityPayResultBinding
 
+    private var transactionId: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPayResultBinding.inflate(layoutInflater)
@@ -29,6 +31,7 @@ class PayResultActivity: BaseActivity<PayViewModel>() {
 
         intent.getStringExtra("DATA")?.let {
             val data = Gson().fromJson(it, SendMoneyResult::class.java)
+            transactionId = data.idTransaction
             binding.total.text = data.total.formatToCurrency()
             binding.time.text = data.time
             binding.type.text = data.transactionType
@@ -49,9 +52,12 @@ class PayResultActivity: BaseActivity<PayViewModel>() {
         }
 
         binding.btnDetail.setOnClickListener {
-            /*startActivity(
-                Intent(this@PayResultActivity, TransactionDetailActivity::class.java)
-            )*/
+            transactionId?.let { id ->
+                startActivity(
+                    Intent(this@PayResultActivity, TransactionDetailActivity::class.java)
+                        .putExtra("ID", id)
+                )
+            }
         }
     }
 }

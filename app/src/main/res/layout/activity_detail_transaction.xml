@@ -50,7 +50,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:text="ID Transaksi #41414141"
+                        tools:text="ID Transaksi #41414141"
                         android:textColor="@android:color/black"
                         android:textSize="14sp" />
 
@@ -117,7 +117,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/sample_avatar" />
+                        tools:srcCompat="@drawable/sample_avatar" />
 
                 </com.google.android.material.card.MaterialCardView>
 
@@ -135,7 +135,7 @@
                         android:id="@+id/name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Fer D Sambo"
+                        tools:text="Fer D Sambo"
                         android:textColor="@android:color/black"
                         android:textSize="14sp" />
 
@@ -143,7 +143,7 @@
                         android:id="@+id/phone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="081234567890"
+                        tools:text="081234567890"
                         android:textColor="#A7A7A7"
                         android:textSize="12sp" />
 
@@ -187,7 +187,7 @@
                     android:id="@+id/type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Scan QR"
+                    tools:text="Scan QR"
                     android:textColor="@android:color/black"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -216,7 +216,7 @@
                     android:id="@+id/method"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Saldo Utama"
+                    tools:text="Saldo Utama"
                     android:textColor="@android:color/black"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -245,7 +245,7 @@
                     android:id="@+id/reff"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="#F4G414148881"
+                    tools:text="#F4G414148881"
                     android:textColor="@android:color/black"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -274,7 +274,7 @@
                     android:id="@+id/time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="29 April 2020, 13:00"
+                    tools:text="29 April 2020, 13:00"
                     android:textColor="@android:color/black"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -320,7 +320,7 @@
                     android:id="@+id/amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Rp20.000"
+                    tools:text="Rp20.000"
                     android:textColor="@android:color/black"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -349,7 +349,7 @@
                     android:id="@+id/admin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Gratis"
+                    tools:text="Gratis"
                     android:textColor="@color/colorPrimary"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -378,7 +378,7 @@
                     android:id="@+id/total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Rp20.000"
+                    tools:text="Rp20.000"
                     android:textColor="@android:color/black"
                     android:textSize="12sp"
                     android:textStyle="bold"
