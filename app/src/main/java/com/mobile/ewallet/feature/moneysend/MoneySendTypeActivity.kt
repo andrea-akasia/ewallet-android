@@ -2,6 +2,8 @@ package com.mobile.ewallet.feature.moneysend
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mobile.ewallet.R
@@ -22,17 +24,39 @@ class MoneySendTypeActivity: BaseActivity<SendMoneyViewModel>() {
 
         window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary)
 
-        binding.topbar.actionBack.setOnClickListener { onBackPressed() }
+        binding.topbar.actionBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
         binding.topbar.title.text = "Kirim Uang"
-
-        historyAdapter = HistoryAdapter(viewModel.getDummy())
-        binding.rv.layoutManager = GridLayoutManager(this, 3)
-        binding.rv.adapter = historyAdapter
 
         binding.actionFromBank.setOnClickListener {
             startActivity(
                 Intent(this@MoneySendTypeActivity, MoneySendBankActivity::class.java)
             )
+        }
+
+        observeViewModel()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadHistoryTransfer()
+    }
+
+    private fun observeViewModel(){
+        viewModel.onHistoryTransactionLoaded.observe(this){
+            if(it.isNotEmpty()){
+                binding.emptyView.visibility = View.GONE
+                binding.rv.visibility = View.VISIBLE
+                historyAdapter = HistoryAdapter(it)
+                binding.rv.layoutManager = GridLayoutManager(this, 3)
+                binding.rv.adapter = historyAdapter
+            }else{
+                binding.emptyView.visibility = View.VISIBLE
+                binding.rv.visibility = View.GONE
+            }
+        }
+
+        viewModel.warningMessage.observe(this){
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
     }
 }

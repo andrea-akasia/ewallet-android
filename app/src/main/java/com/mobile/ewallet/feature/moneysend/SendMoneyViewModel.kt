@@ -1,25 +1,44 @@
 package com.mobile.ewallet.feature.moneysend
 
+import android.annotation.SuppressLint
+import androidx.lifecycle.MutableLiveData
 import com.mobile.ewallet.base.BaseViewModel
 import com.mobile.ewallet.data.DataManager
 import com.mobile.ewallet.model.api.AccountItem
+import com.mobile.ewallet.model.api.dashboard.DashboardBalance
+import com.mobile.ewallet.model.api.dashboard.TransactionItem
+import com.mobile.ewallet.model.api.sendmoney.HistoryTransferTransaction
+import timber.log.Timber
 import javax.inject.Inject
 
+@SuppressLint("CheckResult")
 class SendMoneyViewModel
 @Inject constructor(private val dataManager: DataManager) : BaseViewModel(){
 
-    fun getDummy(): MutableList<AccountItem>{
-        val result = mutableListOf<AccountItem>()
-        result.add(AccountItem(name = "Brigadir A"))
-        result.add(AccountItem(name = "Brigadir B"))
-        result.add(AccountItem(name = "Brigadir C"))
-        result.add(AccountItem(name = "Brigadir D"))
-        result.add(AccountItem(name = "Brigadir E"))
-        result.add(AccountItem(name = "Brigadir F"))
-        result.add(AccountItem(name = "Brigadir G"))
-        result.add(AccountItem(name = "Brigadir H"))
-        result.add(AccountItem(name = "Brigadir I"))
-        return result
+    internal var warningMessage = MutableLiveData<String>()
+    internal var onHistoryTransactionLoaded = MutableLiveData<MutableList<HistoryTransferTransaction>>()
+
+    fun loadHistoryTransfer(){
+        dataManager.loadHistoryTransferTransaction()
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            onHistoryTransactionLoaded.postValue(response)
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
     }
 
     fun getDummyBank(): MutableList<String>{

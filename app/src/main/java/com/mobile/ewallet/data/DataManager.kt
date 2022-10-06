@@ -19,6 +19,7 @@ import com.mobile.ewallet.model.api.detailpokemon.DetailPokemonResponse
 import com.mobile.ewallet.model.api.moneyrequest.MoneyRequestData
 import com.mobile.ewallet.model.api.profile.ProfileAPIResponse
 import com.mobile.ewallet.model.api.register.ConfirmOTPAPIResponse
+import com.mobile.ewallet.model.api.sendmoney.HistoryTransferTransaction
 import com.mobile.ewallet.model.api.sendmoney.byscan.AdminFeeResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.MinimumNominalResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.SendMoneyResult
@@ -66,6 +67,12 @@ class DataManager
 
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun loadHistoryTransferTransaction(): Single<Response<MutableList<HistoryTransferTransaction>>> {
+        return api.transferTransactionHistory(getIdMember())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun loadTransactionDetail(id: String): Single<Response<MutableList<TransactionDetail>>> {
         return api.transactionDetail(getIdMember(), id)
             .subscribeOn(Schedulers.io())
