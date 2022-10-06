@@ -8,6 +8,7 @@ import com.mobile.ewallet.model.api.AccountItem
 import com.mobile.ewallet.model.api.dashboard.DashboardBalance
 import com.mobile.ewallet.model.api.dashboard.TransactionItem
 import com.mobile.ewallet.model.api.sendmoney.HistoryTransferTransaction
+import com.mobile.ewallet.model.api.sendmoney.banktransfer.Bank
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -17,6 +18,46 @@ class SendMoneyViewModel
 
     internal var warningMessage = MutableLiveData<String>()
     internal var onHistoryTransactionLoaded = MutableLiveData<MutableList<HistoryTransferTransaction>>()
+    internal var onBankListLoaded = MutableLiveData<MutableList<String>>()
+
+    var banks = mutableListOf<Bank>()
+    var selectedBank: Bank? = null
+
+    fun loadBankList(){
+        banks.clear()
+        selectedBank = null
+        dataManager.loadBankList()
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            if(response.isNotEmpty()){
+                                val filtered = response.filter { b -> b.iD != "0" }
+                                val bankStrings = mutableListOf<String>()
+                                for(bank in filtered){
+                                    banks.add(bank)
+                                    bankStrings.add(bank.keterangan!!)
+                                }
+                                if(filtered.isNotEmpty()){ selectedBank = filtered[0] }
+                                onBankListLoaded.postValue(bankStrings)
+                            }else{
+                                warningMessage.postValue("bank data is empty")
+                            }
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun loadHistoryTransfer(){
         dataManager.loadHistoryTransferTransaction()

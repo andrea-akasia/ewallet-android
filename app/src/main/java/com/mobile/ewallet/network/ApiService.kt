@@ -11,6 +11,7 @@ import com.mobile.ewallet.model.api.pokemon.PokemonResponse
 import com.mobile.ewallet.model.api.profile.ProfileAPIResponse
 import com.mobile.ewallet.model.api.register.ConfirmOTPAPIResponse
 import com.mobile.ewallet.model.api.sendmoney.HistoryTransferTransaction
+import com.mobile.ewallet.model.api.sendmoney.banktransfer.Bank
 import com.mobile.ewallet.model.api.sendmoney.byscan.AdminFeeResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.MinimumNominalResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.SendMoneyResult
@@ -24,6 +25,9 @@ import retrofit2.http.*
 
 
 interface APIService {
+    @POST("DD_BANK.aspx")
+    fun listBank(): Single<Response<MutableList<Bank>>>
+
     @FormUrlEncoded
     @POST("HISTORY_Transaksi_KirimUang.aspx")
     fun transferTransactionHistory(
