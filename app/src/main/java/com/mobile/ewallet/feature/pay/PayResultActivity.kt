@@ -9,7 +9,7 @@ import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityPayResultBinding
 import com.mobile.ewallet.feature.home.HomeActivity
 import com.mobile.ewallet.feature.home.TransactionDetailActivity
-import com.mobile.ewallet.model.api.sendmoney.SendMoneyResult
+import com.mobile.ewallet.model.api.sendmoney.byscan.SendMoneyResult
 import com.mobile.ewallet.util.formatToCurrency
 
 class PayResultActivity: BaseActivity<PayViewModel>() {

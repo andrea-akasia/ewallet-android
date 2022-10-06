@@ -1,4 +1,4 @@
-package com.mobile.ewallet.model.api.sendmoney
+package com.mobile.ewallet.model.api.sendmoney.byscan
 
 import com.google.gson.annotations.SerializedName
 

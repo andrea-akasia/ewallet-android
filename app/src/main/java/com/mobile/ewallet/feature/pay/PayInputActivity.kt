@@ -5,14 +5,13 @@ import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityPayInputBinding
-import com.mobile.ewallet.model.api.sendmoney.AdminFeeResponse
+import com.mobile.ewallet.model.api.sendmoney.byscan.AdminFeeResponse
 import com.mobile.ewallet.util.GlideApp
 import com.mobile.ewallet.util.formatToCurrency
 

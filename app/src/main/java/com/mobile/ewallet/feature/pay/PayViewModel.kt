@@ -4,10 +4,9 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import com.mobile.ewallet.base.BaseViewModel
 import com.mobile.ewallet.data.DataManager
-import com.mobile.ewallet.model.api.profile.ProfileAPIResponse
-import com.mobile.ewallet.model.api.sendmoney.AdminFeeResponse
-import com.mobile.ewallet.model.api.sendmoney.MinimumNominalResponse
-import com.mobile.ewallet.model.api.sendmoney.SendMoneyResult
+import com.mobile.ewallet.model.api.sendmoney.byscan.AdminFeeResponse
+import com.mobile.ewallet.model.api.sendmoney.byscan.MinimumNominalResponse
+import com.mobile.ewallet.model.api.sendmoney.byscan.SendMoneyResult
 import timber.log.Timber
 import javax.inject.Inject
 

@@ -9,7 +9,7 @@ import com.mobile.ewallet.model.api.badge.BadgeStatus
 import com.mobile.ewallet.model.api.dashboard.DashboardBalance
 import com.mobile.ewallet.model.api.dashboard.TransactionItem
 import com.mobile.ewallet.model.api.profile.ProfileAPIResponse
-import com.mobile.ewallet.model.api.sendmoney.TransactionDetail
+import com.mobile.ewallet.model.api.sendmoney.byscan.TransactionDetail
 import timber.log.Timber
 import javax.inject.Inject
 
