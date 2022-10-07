@@ -40,6 +40,8 @@ class TransactionDetailActivity: BaseActivity<HomeViewModel>() {
                 viewModel.loadTransactionDetail(it)
             }else if(action == "BANK"){
                 viewModel.loadTransferTransactionDetail(it)
+            }else if(action == "CONTACT"){
+                viewModel.loadContactTransactionDetail(it)
             }
         }
     }

@@ -27,6 +27,50 @@ class HomeViewModel
 
     var balanceData: DashboardBalance? = null
 
+    fun loadContactTransactionDetail(id: String) {
+        dataManager.loadTransactionDetailContact(id)
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            if(response.isNotEmpty()){
+                                onTransactionDetailLoaded.postValue(
+                                    TransactionDetail(
+                                        idTransaction = response[0].iDTransaksi,
+                                        transactionType = response[0].typeKirimUang,
+                                        metodeBayar = response[0].metodeBayar,
+                                        reffNumber = response[0].nomorReferensi,
+                                        time = response[0].waktuTransaksi,
+                                        amount = response[0].jumlah,
+                                        adminFeeText = response[0].biayaAdmin,
+                                        total = response[0].totalPembayaran,
+                                        name = response[0].namaBeneficiary,
+                                        phone = response[0].phoneBeneficiary
+                                    ).apply {
+                                        destinationName = response[0].namaBeneficiary
+                                        destinationPhone = response[0].phoneBeneficiary
+                                        destinationPhoto = response[0].photo
+                                    }
+                                )
+                            }else{
+                                warningMessage.postValue("empty data")
+                            }
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
+
     fun loadTransferTransactionDetail(id: String) {
         dataManager.loadTransactionDetailTransfer(id)
             .doOnSubscribe(this::addDisposable)
