@@ -12,6 +12,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.gson.Gson
 import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivitySendTypeBinding
@@ -107,6 +108,11 @@ class MoneySendTypeActivity: BaseActivity<SendMoneyViewModel>() {
                     }
                 }
                 Timber.i("total matching contacts: ${viewModel.foundContacts.size}")
+
+                startActivity(
+                    Intent(this@MoneySendTypeActivity, ContactListActivity::class.java)
+                        .putExtra("CONTACTS", Gson().toJson(viewModel.foundContacts))
+                )
             }else{
                 Toast.makeText(this, "No Contact Found Using Ewallet App", Toast.LENGTH_SHORT)
                     .show()
@@ -133,6 +139,7 @@ class MoneySendTypeActivity: BaseActivity<SendMoneyViewModel>() {
 
     private fun fetchContacts() {
         lifecycleScope.launch {
+            viewModel.localContact.clear()
             val contactsListAsync = async { getPhoneContacts() }
             val contactNumbersAsync = async { getContactNumbers() }
 

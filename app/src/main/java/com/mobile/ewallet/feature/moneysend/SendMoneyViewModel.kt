@@ -31,6 +31,7 @@ class SendMoneyViewModel
     var foundContacts = mutableListOf<ContactUser>()
 
     fun loadEwalletUser(){
+        foundContacts.clear()
         dataManager.loadEwalletUser()
             .doOnSubscribe(this::addDisposable)
             .subscribe(

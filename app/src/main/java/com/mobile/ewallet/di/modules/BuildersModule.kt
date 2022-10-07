@@ -8,6 +8,7 @@ import com.mobile.ewallet.feature.home.BadgeActivity
 import com.mobile.ewallet.feature.home.HomeActivity
 import com.mobile.ewallet.feature.home.TransactionDetailActivity
 import com.mobile.ewallet.feature.moneyreq.MoneyRequestActivity
+import com.mobile.ewallet.feature.moneysend.ContactListActivity
 import com.mobile.ewallet.feature.moneysend.MoneySendBankActivity
 import com.mobile.ewallet.feature.moneysend.MoneySendTypeActivity
 import com.mobile.ewallet.feature.pay.PayInputActivity
@@ -20,6 +21,8 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class BuildersModule{
+    @ContributesAndroidInjector(modules = [FragmentBuildersModule::class])
+    abstract fun bindContactListActivity(): ContactListActivity
 
     @ContributesAndroidInjector(modules = [FragmentBuildersModule::class])
     abstract fun bindScannerActivity(): ScannerActivity
