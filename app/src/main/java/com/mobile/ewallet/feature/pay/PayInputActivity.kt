@@ -139,6 +139,13 @@ class PayInputActivity: BaseActivity<PayViewModel>() {
                     adminFee = viewModel.adminFee.toString(),
                     total = viewModel.total.toString()
                 )
+            }else if(viewModel.action == "CONTACT"){
+                viewModel.contactSendMoney(
+                    amount = binding.etAmount.text.toString(),
+                    adminFee = viewModel.adminFee.toString(),
+                    total = viewModel.total.toString(),
+                    idMemberDestination = viewModel.contactUser.iD
+                )
             }
 
         }

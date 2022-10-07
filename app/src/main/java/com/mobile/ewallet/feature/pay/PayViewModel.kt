@@ -35,6 +35,51 @@ class PayViewModel
     var adminFee = 0
     var total = 0
 
+    fun contactSendMoney(idMemberDestination: String, amount: String, adminFee: String, total: String) {
+        isLoading.postValue(true)
+        dataManager.contactSendMoney(idMemberDestination, amount, adminFee, total)
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    isLoading.postValue(false)
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            if(response.isNotEmpty()){
+                                onTransactionSuccess.postValue(
+                                    SendMoneyResult(
+                                        idTransaction = response[0].iDTransaksi,
+                                        transactionType = response[0].typeKirimUang,
+                                        metodeBayar = response[0].metodeBayar,
+                                        reffNumber = response[0].nomorReferensi,
+                                        time = response[0].waktuTransaksi,
+                                        amount = response[0].jumlah,
+                                        adminFeeText = response[0].biayaAdmin,
+                                        total = response[0].totalPembayaran
+                                    ).apply {
+                                        destinationName = response[0].namaBeneficiary
+                                        destinationPhoto = response[0].photo
+                                        destinationPhone = response[0].phoneBeneficiary
+                                    }
+                                )
+                            }else{
+                                warningMessage.postValue("empty data")
+                            }
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    isLoading.postValue(false)
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
+
     fun loadContactAdminFee(idMemberDesetination: String, amount: String) {
         isLoading.postValue(true)
         dataManager.contactLoadAdminFee(idMemberDesetination, amount)

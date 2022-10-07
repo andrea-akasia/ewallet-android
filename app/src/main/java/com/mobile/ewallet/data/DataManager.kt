@@ -23,6 +23,7 @@ import com.mobile.ewallet.model.api.sendmoney.HistoryTransferTransaction
 import com.mobile.ewallet.model.api.sendmoney.banktransfer.*
 import com.mobile.ewallet.model.api.sendmoney.bycontact.ContactUser
 import com.mobile.ewallet.model.api.sendmoney.bycontact.MinimumNominalContactResponse
+import com.mobile.ewallet.model.api.sendmoney.bycontact.SendMoneyContactResult
 import com.mobile.ewallet.model.api.sendmoney.byscan.AdminFeeResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.MinimumNominalResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.SendMoneyResult
@@ -69,6 +70,12 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun contactSendMoney(idMemberDestination: String, amount: String, adminFee: String, total: String): Single<Response<MutableList<SendMoneyContactResult>>> {
+        return api.contactSendMoney(getIdMember(), idMemberDestination, amount, adminFee, total)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun contactLoadAdminFee(idMemberDestination: String, amount: String): Single<Response<MutableList<AdminFeeResponse>>> {
         return api.contactAdminFee(getIdMember(), idMemberDestination, amount)
             .subscribeOn(Schedulers.io())
