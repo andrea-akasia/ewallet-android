@@ -84,3 +84,8 @@ fun String.formatToCurrency(): String {
     return result.substring(0, result.length-3).replace(',', '.')
 
 }
+
+fun String.removeCharExceptNumber(): String {
+    val re = Regex("[^0-9]")
+    return re.replace(this, "")
+}

@@ -11,8 +11,10 @@ import com.mobile.ewallet.model.api.pokemon.PokemonResponse
 import com.mobile.ewallet.model.api.profile.ProfileAPIResponse
 import com.mobile.ewallet.model.api.register.ConfirmOTPAPIResponse
 import com.mobile.ewallet.model.api.sendmoney.HistoryTransferTransaction
+import com.mobile.ewallet.model.api.sendmoney.banktransfer.AdminFeeTrfResponse
 import com.mobile.ewallet.model.api.sendmoney.banktransfer.Bank
 import com.mobile.ewallet.model.api.sendmoney.banktransfer.MinimumNominalTrfResponse
+import com.mobile.ewallet.model.api.sendmoney.banktransfer.SendMoneyResultTrfResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.AdminFeeResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.MinimumNominalResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.SendMoneyResult
@@ -26,6 +28,27 @@ import retrofit2.http.*
 
 
 interface APIService {
+    @FormUrlEncoded
+    @POST("KIRIMUANG_BANK_Step4.aspx")
+    fun trfSendMoney(
+        @Field("IDMember") idMember: String,
+        @Field("IDBank") idBank: String,
+        @Field("NomorRekening") accountNumber: String,
+        @Field("NamaRekening") name: String,
+        @Field("Jumlah") amount: String,
+        @Field("BiayaAdmin") adminFee: String,
+        @Field("TotalPembayaran") total: String
+    ): Single<Response<MutableList<SendMoneyResultTrfResponse>>>
+
+    @FormUrlEncoded
+    @POST("KIRIMUANG_BANK_Step2.aspx")
+    fun trfLoadAdminFee(
+        @Field("IDMember") idMember: String,
+        @Field("IDBank") idBank: String,
+        @Field("NomorRekening") accountNumber: String,
+        @Field("Jumlah") amount: String
+    ): Single<Response<MutableList<AdminFeeTrfResponse>>>
+
     @FormUrlEncoded
     @POST("KIRIMUANG_BANK_Step1.aspx")
     fun trfLoadNominal(

@@ -20,8 +20,10 @@ import com.mobile.ewallet.model.api.moneyrequest.MoneyRequestData
 import com.mobile.ewallet.model.api.profile.ProfileAPIResponse
 import com.mobile.ewallet.model.api.register.ConfirmOTPAPIResponse
 import com.mobile.ewallet.model.api.sendmoney.HistoryTransferTransaction
+import com.mobile.ewallet.model.api.sendmoney.banktransfer.AdminFeeTrfResponse
 import com.mobile.ewallet.model.api.sendmoney.banktransfer.Bank
 import com.mobile.ewallet.model.api.sendmoney.banktransfer.MinimumNominalTrfResponse
+import com.mobile.ewallet.model.api.sendmoney.banktransfer.SendMoneyResultTrfResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.AdminFeeResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.MinimumNominalResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.SendMoneyResult
@@ -67,8 +69,26 @@ class DataManager
         prefs.putString(KEY_ID_MEMBER, "")
     }
 
-
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun transferSendMoney(
+        idBank: String,
+        accountNumber: String,
+        name: String,
+        amount: String,
+        adminFee: String,
+        total: String
+    ): Single<Response<MutableList<SendMoneyResultTrfResponse>>> {
+        return api.trfSendMoney(getIdMember(), idBank, accountNumber, name, amount, adminFee, total)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun transferLoadAdminFee(idBank: String, accountNumber: String, amount: String): Single<Response<MutableList<AdminFeeTrfResponse>>> {
+        return api.trfLoadAdminFee(getIdMember(), idBank, accountNumber, amount)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun transferLoadMinimumNominal(idBank: String, accountNumber: String): Single<Response<MutableList<MinimumNominalTrfResponse>>> {
         return api.trfLoadNominal(getIdMember(), idBank, accountNumber)
             .subscribeOn(Schedulers.io())

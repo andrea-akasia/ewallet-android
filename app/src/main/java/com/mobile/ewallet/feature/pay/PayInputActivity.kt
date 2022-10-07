@@ -43,17 +43,17 @@ class PayInputActivity: BaseActivity<PayViewModel>() {
                 }
             }else if(action == "BANK"){
                 viewModel.action = "BANK"
-                val data = Gson().fromJson(intent.getStringExtra("DATA"), MinimumNominalTrfResponse::class.java)
+                viewModel.transferBankMinimumNominalData = Gson().fromJson(intent.getStringExtra("DATA"), MinimumNominalTrfResponse::class.java)
                 GlideApp.with(this)
-                    .load(data.photo)
+                    .load(viewModel.transferBankMinimumNominalData.photo)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .skipMemoryCache(true)
                     .placeholder(R.drawable.user_placeholder)
                     .into(binding.image)
-                binding.name.text = data.name
-                binding.phone.text = "${data.norek} (${data.bank})"
-                viewModel.minimumAmount = data.minimalPengiriman!!.toInt()
-                binding.minimum.text = data.minimalPengiriman.formatToCurrency()
+                binding.name.text = viewModel.transferBankMinimumNominalData.name
+                binding.phone.text = "${viewModel.transferBankMinimumNominalData.norek} (${viewModel.transferBankMinimumNominalData.bank})"
+                viewModel.minimumAmount = viewModel.transferBankMinimumNominalData.minimalPengiriman!!.toInt()
+                binding.minimum.text = viewModel.transferBankMinimumNominalData.minimalPengiriman!!.formatToCurrency()
             } else {
 
             }
@@ -80,7 +80,15 @@ class PayInputActivity: BaseActivity<PayViewModel>() {
             return
         }
 
-        viewModel.loadAdminFee(qr, binding.etAmount.text.toString())
+        if(viewModel.action == "QR"){
+            viewModel.loadAdminFee(qr, binding.etAmount.text.toString())
+        }else if(viewModel.action == "BANK"){
+            viewModel.loadAdminFeeTransfer(
+                idBank = intent.getStringExtra("ID_BANK")!!,
+                accountNumber = viewModel.transferBankMinimumNominalData.norek,
+                amount = binding.etAmount.text.toString()
+            )
+        }
     }
 
     private fun showConfirmationDialog(data: AdminFeeResponse){
@@ -103,18 +111,44 @@ class PayInputActivity: BaseActivity<PayViewModel>() {
             dialog.dismiss()
         }
         viewDialog.findViewById<TextView>(R.id.btn_confirm).setOnClickListener {
-            viewModel.scanSendMoney(
-                qr = qr,
-                amount = binding.etAmount.text.toString(),
-                adminFee = viewModel.adminFee.toString(),
-                total = viewModel.total.toString()
-            )
+            if(viewModel.action == "QR"){
+                viewModel.scanSendMoney(
+                    qr = qr,
+                    amount = binding.etAmount.text.toString(),
+                    adminFee = viewModel.adminFee.toString(),
+                    total = viewModel.total.toString()
+                )
+            }else if(viewModel.action == "BANK"){
+                viewModel.transferSendMoney(
+                    idBank = intent.getStringExtra("ID_BANK")!!,
+                    accountNumber = viewModel.transferBankMinimumNominalData.norek,
+                    name = viewModel.transferBankMinimumNominalData.name,
+                    amount = binding.etAmount.text.toString(),
+                    adminFee = viewModel.adminFee.toString(),
+                    total = viewModel.total.toString()
+                )
+            }
+
         }
         dialog.setContentView(viewDialog)
         dialog.show()
     }
 
     private fun observeViewModel(){
+        viewModel.onAdminFeeTransferLoaded.observe(this){
+            showConfirmationDialog(
+                AdminFeeResponse(
+                    amount = binding.etAmount.text.toString(),
+                    adminFee = viewModel.adminFee.toString(),
+                    total = viewModel.total.toString(),
+                ).apply {
+                    destinationName = it.name
+                    destinationPhoto = it.photo
+                    destinationPhone = "${it.norek} (${it.bank})"
+                }
+            )
+        }
+
         viewModel.onTransactionSuccess.observe(this){
             startActivity(
                 Intent(this@PayInputActivity, PayResultActivity::class.java)
