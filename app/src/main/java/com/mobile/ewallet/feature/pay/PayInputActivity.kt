@@ -56,10 +56,10 @@ class PayInputActivity: BaseActivity<PayViewModel>() {
                 viewModel.minimumAmount = viewModel.transferBankMinimumNominalData.minimalPengiriman!!.toInt()
                 binding.minimum.text = viewModel.transferBankMinimumNominalData.minimalPengiriman!!.formatToCurrency()
             } else if(action == "CONTACT"){
-                viewModel.action == "CONTACT"
+                viewModel.action = "CONTACT"
                 intent.getStringExtra("DATA")?.let { contactString ->
-                    val contactUser = Gson().fromJson(contactString, ContactUser::class.java)
-                    viewModel.loadContactMinimumNominal(contactUser.iD)
+                    viewModel.contactUser = Gson().fromJson(contactString, ContactUser::class.java)
+                    viewModel.loadContactMinimumNominal(viewModel.contactUser.iD)
                 }
             } else{
 
@@ -96,7 +96,10 @@ class PayInputActivity: BaseActivity<PayViewModel>() {
                 amount = binding.etAmount.text.toString()
             )
         }else if(viewModel.action == "CONTACT"){
-
+            viewModel.loadContactAdminFee(
+                idMemberDesetination = viewModel.contactUser.iD,
+                amount = binding.etAmount.text.toString()
+            )
         }
     }
 

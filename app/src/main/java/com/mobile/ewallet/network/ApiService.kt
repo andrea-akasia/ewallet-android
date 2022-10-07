@@ -28,6 +28,14 @@ import retrofit2.http.*
 
 interface APIService {
     @FormUrlEncoded
+    @POST("KIRIMUANG_Contact_Step2.aspx")
+    fun contactAdminFee(
+        @Field("IDMember") idMember: String,
+        @Field("IDMember_Beneficiary") idMemberDestination: String,
+        @Field("Jumlah") amount: String
+    ): Single<Response<MutableList<AdminFeeResponse>>>
+
+    @FormUrlEncoded
     @POST("KIRIMUANG_Contact_Step1.aspx")
     fun contactLoadNominal(
         @Field("IDMember") idMember: String,

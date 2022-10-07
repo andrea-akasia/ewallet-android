@@ -6,6 +6,7 @@ import com.mobile.ewallet.base.BaseViewModel
 import com.mobile.ewallet.data.DataManager
 import com.mobile.ewallet.model.api.sendmoney.banktransfer.AdminFeeTrfResponse
 import com.mobile.ewallet.model.api.sendmoney.banktransfer.MinimumNominalTrfResponse
+import com.mobile.ewallet.model.api.sendmoney.bycontact.ContactUser
 import com.mobile.ewallet.model.api.sendmoney.byscan.AdminFeeResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.MinimumNominalResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.SendMoneyResult
@@ -27,10 +28,44 @@ class PayViewModel
     internal var onAdminFeeTransferLoaded = MutableLiveData<AdminFeeTrfResponse>()
     lateinit var transferBankMinimumNominalData: MinimumNominalTrfResponse
 
+    lateinit var contactUser: ContactUser
+
     var action = "QR" //QR,BANK,CONTACT
     var minimumAmount = 0
     var adminFee = 0
     var total = 0
+
+    fun loadContactAdminFee(idMemberDesetination: String, amount: String) {
+        isLoading.postValue(true)
+        dataManager.contactLoadAdminFee(idMemberDesetination, amount)
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    isLoading.postValue(false)
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            if(response.isNotEmpty()){
+                                adminFee = response[0].adminFee.toInt()
+                                total = response[0].total.toInt()
+                                onAdminFeeLoaded.postValue(response[0])
+                            }else{
+                                warningMessage.postValue("empty data")
+                            }
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    isLoading.postValue(false)
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun loadContactMinimumNominal(idMemberDestination: String) {
         isLoading.postValue(true)

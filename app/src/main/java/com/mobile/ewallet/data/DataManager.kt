@@ -69,6 +69,12 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun contactLoadAdminFee(idMemberDestination: String, amount: String): Single<Response<MutableList<AdminFeeResponse>>> {
+        return api.contactAdminFee(getIdMember(), idMemberDestination, amount)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun contactLoadMinimumNominal(idMemberDestination: String): Single<Response<MutableList<MinimumNominalContactResponse>>> {
         return api.contactLoadNominal(getIdMember(), idMemberDestination)
             .subscribeOn(Schedulers.io())
