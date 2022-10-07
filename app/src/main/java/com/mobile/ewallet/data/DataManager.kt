@@ -22,6 +22,7 @@ import com.mobile.ewallet.model.api.register.ConfirmOTPAPIResponse
 import com.mobile.ewallet.model.api.sendmoney.HistoryTransferTransaction
 import com.mobile.ewallet.model.api.sendmoney.banktransfer.*
 import com.mobile.ewallet.model.api.sendmoney.bycontact.ContactUser
+import com.mobile.ewallet.model.api.sendmoney.bycontact.MinimumNominalContactResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.AdminFeeResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.MinimumNominalResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.SendMoneyResult
@@ -68,6 +69,12 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun contactLoadMinimumNominal(idMemberDestination: String): Single<Response<MutableList<MinimumNominalContactResponse>>> {
+        return api.contactLoadNominal(getIdMember(), idMemberDestination)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun loadEwalletUser(): Single<Response<MutableList<ContactUser>>> {
         return api.contacts(getIdMember())
             .subscribeOn(Schedulers.io())

@@ -13,6 +13,7 @@ import com.mobile.ewallet.model.api.register.ConfirmOTPAPIResponse
 import com.mobile.ewallet.model.api.sendmoney.HistoryTransferTransaction
 import com.mobile.ewallet.model.api.sendmoney.banktransfer.*
 import com.mobile.ewallet.model.api.sendmoney.bycontact.ContactUser
+import com.mobile.ewallet.model.api.sendmoney.bycontact.MinimumNominalContactResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.AdminFeeResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.MinimumNominalResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.SendMoneyResult
@@ -26,6 +27,13 @@ import retrofit2.http.*
 
 
 interface APIService {
+    @FormUrlEncoded
+    @POST("KIRIMUANG_Contact_Step1.aspx")
+    fun contactLoadNominal(
+        @Field("IDMember") idMember: String,
+        @Field("IDMember_Beneficiary") idMemberDestination: String
+    ): Single<Response<MutableList<MinimumNominalContactResponse>>>
+
     @FormUrlEncoded
     @POST("KIRIMUANG_Contact_ListContact.aspx")
     fun contacts(

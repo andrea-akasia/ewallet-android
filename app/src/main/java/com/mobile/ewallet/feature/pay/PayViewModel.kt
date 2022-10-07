@@ -9,6 +9,7 @@ import com.mobile.ewallet.model.api.sendmoney.banktransfer.MinimumNominalTrfResp
 import com.mobile.ewallet.model.api.sendmoney.byscan.AdminFeeResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.MinimumNominalResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.SendMoneyResult
+import com.mobile.ewallet.util.formatToCurrency
 import com.mobile.ewallet.util.removeCharExceptNumber
 import timber.log.Timber
 import javax.inject.Inject
@@ -26,10 +27,50 @@ class PayViewModel
     internal var onAdminFeeTransferLoaded = MutableLiveData<AdminFeeTrfResponse>()
     lateinit var transferBankMinimumNominalData: MinimumNominalTrfResponse
 
-    var action = "QR" //QR,BANK
+    var action = "QR" //QR,BANK,CONTACT
     var minimumAmount = 0
     var adminFee = 0
     var total = 0
+
+    fun loadContactMinimumNominal(idMemberDestination: String) {
+        isLoading.postValue(true)
+        dataManager.contactLoadMinimumNominal(idMemberDestination)
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    isLoading.postValue(false)
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            if(response.isNotEmpty()){
+                                minimumAmount = response[0].minimal.toInt()
+                                onMinimumNominalLoaded.postValue(
+                                    MinimumNominalResponse(
+                                        minimal = response[0].minimal,
+                                        minimalText = response[0].minimal.formatToCurrency()
+                                    ).apply {
+                                        destinationPhoto = response[0].destinationPhoto
+                                        destinationName = response[0].destinationName
+                                        destinationPhone = response[0].destinationPhone
+                                    }
+                                )
+                            }else{
+                                warningMessage.postValue("empty data")
+                            }
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    isLoading.postValue(false)
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun transferSendMoney(
         idBank: String,

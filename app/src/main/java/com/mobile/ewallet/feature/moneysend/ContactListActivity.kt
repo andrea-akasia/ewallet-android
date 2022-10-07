@@ -1,5 +1,6 @@
 package com.mobile.ewallet.feature.moneysend
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -7,6 +8,7 @@ import com.google.gson.Gson
 import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityListContactBinding
+import com.mobile.ewallet.feature.pay.PayInputActivity
 import com.mobile.ewallet.model.api.sendmoney.bycontact.ContactUser
 import timber.log.Timber
 
@@ -37,6 +39,10 @@ class ContactListActivity: BaseActivity<SendMoneyViewModel>(), ContactAdapter.Co
     }
 
     override fun onContactSelected(data: ContactUser) {
-        Timber.i("selected: ${data.nama}")
+        startActivity(
+            Intent(this, PayInputActivity::class.java)
+                .putExtra("DATA", Gson().toJson(data))
+                .putExtra("ACTION", "CONTACT")
+        )
     }
 }

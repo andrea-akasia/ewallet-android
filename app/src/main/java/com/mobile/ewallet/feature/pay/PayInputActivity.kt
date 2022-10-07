@@ -12,6 +12,7 @@ import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityPayInputBinding
 import com.mobile.ewallet.model.api.sendmoney.banktransfer.MinimumNominalTrfResponse
+import com.mobile.ewallet.model.api.sendmoney.bycontact.ContactUser
 import com.mobile.ewallet.model.api.sendmoney.byscan.AdminFeeResponse
 import com.mobile.ewallet.util.GlideApp
 import com.mobile.ewallet.util.formatToCurrency
@@ -54,7 +55,13 @@ class PayInputActivity: BaseActivity<PayViewModel>() {
                 binding.phone.text = "${viewModel.transferBankMinimumNominalData.norek} (${viewModel.transferBankMinimumNominalData.bank})"
                 viewModel.minimumAmount = viewModel.transferBankMinimumNominalData.minimalPengiriman!!.toInt()
                 binding.minimum.text = viewModel.transferBankMinimumNominalData.minimalPengiriman!!.formatToCurrency()
-            } else {
+            } else if(action == "CONTACT"){
+                viewModel.action == "CONTACT"
+                intent.getStringExtra("DATA")?.let { contactString ->
+                    val contactUser = Gson().fromJson(contactString, ContactUser::class.java)
+                    viewModel.loadContactMinimumNominal(contactUser.iD)
+                }
+            } else{
 
             }
         }
@@ -88,6 +95,8 @@ class PayInputActivity: BaseActivity<PayViewModel>() {
                 accountNumber = viewModel.transferBankMinimumNominalData.norek,
                 amount = binding.etAmount.text.toString()
             )
+        }else if(viewModel.action == "CONTACT"){
+
         }
     }
 
