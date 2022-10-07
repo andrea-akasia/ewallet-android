@@ -35,7 +35,12 @@ class TransactionDetailActivity: BaseActivity<HomeViewModel>() {
         observeViewModel()
 
         intent.getStringExtra("ID")?.let {
-            viewModel.loadTransactionDetail(it)
+            val action = intent.getStringExtra("ACTION")
+            if(action == "QR"){
+                viewModel.loadTransactionDetail(it)
+            }else if(action == "BANK"){
+                viewModel.loadTransferTransactionDetail(it)
+            }
         }
     }
 

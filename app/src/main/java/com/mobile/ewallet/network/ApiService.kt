@@ -11,10 +11,7 @@ import com.mobile.ewallet.model.api.pokemon.PokemonResponse
 import com.mobile.ewallet.model.api.profile.ProfileAPIResponse
 import com.mobile.ewallet.model.api.register.ConfirmOTPAPIResponse
 import com.mobile.ewallet.model.api.sendmoney.HistoryTransferTransaction
-import com.mobile.ewallet.model.api.sendmoney.banktransfer.AdminFeeTrfResponse
-import com.mobile.ewallet.model.api.sendmoney.banktransfer.Bank
-import com.mobile.ewallet.model.api.sendmoney.banktransfer.MinimumNominalTrfResponse
-import com.mobile.ewallet.model.api.sendmoney.banktransfer.SendMoneyResultTrfResponse
+import com.mobile.ewallet.model.api.sendmoney.banktransfer.*
 import com.mobile.ewallet.model.api.sendmoney.byscan.AdminFeeResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.MinimumNominalResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.SendMoneyResult
@@ -28,6 +25,13 @@ import retrofit2.http.*
 
 
 interface APIService {
+    @FormUrlEncoded
+    @POST("KIRIMUANG_BANK_Detail.aspx")
+    fun transferTransactionDetail(
+        @Field("IDMember") idMember: String,
+        @Field("IDTransaksi") idTransaction: String
+    ): Single<Response<MutableList<TransactionDetailTransfer>>>
+
     @FormUrlEncoded
     @POST("KIRIMUANG_BANK_Step4.aspx")
     fun trfSendMoney(

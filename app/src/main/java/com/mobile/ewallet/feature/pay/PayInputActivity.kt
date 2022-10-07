@@ -153,6 +153,7 @@ class PayInputActivity: BaseActivity<PayViewModel>() {
             startActivity(
                 Intent(this@PayInputActivity, PayResultActivity::class.java)
                     .putExtra("DATA", Gson().toJson(it))
+                    .putExtra("ACTION", viewModel.action)
             )
         }
 

@@ -56,6 +56,7 @@ class PayResultActivity: BaseActivity<PayViewModel>() {
                 startActivity(
                     Intent(this@PayResultActivity, TransactionDetailActivity::class.java)
                         .putExtra("ID", id)
+                        .putExtra("ACTION", intent.getStringExtra("ACTION"))
                 )
             }
         }

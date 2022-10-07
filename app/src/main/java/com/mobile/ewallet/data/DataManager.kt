@@ -20,10 +20,7 @@ import com.mobile.ewallet.model.api.moneyrequest.MoneyRequestData
 import com.mobile.ewallet.model.api.profile.ProfileAPIResponse
 import com.mobile.ewallet.model.api.register.ConfirmOTPAPIResponse
 import com.mobile.ewallet.model.api.sendmoney.HistoryTransferTransaction
-import com.mobile.ewallet.model.api.sendmoney.banktransfer.AdminFeeTrfResponse
-import com.mobile.ewallet.model.api.sendmoney.banktransfer.Bank
-import com.mobile.ewallet.model.api.sendmoney.banktransfer.MinimumNominalTrfResponse
-import com.mobile.ewallet.model.api.sendmoney.banktransfer.SendMoneyResultTrfResponse
+import com.mobile.ewallet.model.api.sendmoney.banktransfer.*
 import com.mobile.ewallet.model.api.sendmoney.byscan.AdminFeeResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.MinimumNominalResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.SendMoneyResult
@@ -70,6 +67,12 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun loadTransactionDetailTransfer(id: String): Single<Response<MutableList<TransactionDetailTransfer>>> {
+        return api.transferTransactionDetail(getIdMember(), id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun transferSendMoney(
         idBank: String,
         accountNumber: String,
