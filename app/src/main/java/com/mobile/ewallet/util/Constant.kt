@@ -9,5 +9,6 @@ class Constant {
 
         //Req Code
         const val RC_PERMISSIONS = 100
+        const val RC_CONTACT_PERMISSIONS = 101
     }
 }

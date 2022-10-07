@@ -10,6 +10,8 @@ import com.mobile.ewallet.model.api.dashboard.TransactionItem
 import com.mobile.ewallet.model.api.sendmoney.HistoryTransferTransaction
 import com.mobile.ewallet.model.api.sendmoney.banktransfer.Bank
 import com.mobile.ewallet.model.api.sendmoney.banktransfer.MinimumNominalTrfResponse
+import com.mobile.ewallet.model.api.sendmoney.bycontact.ContactUser
+import com.mobile.ewallet.model.contact.Contact
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -21,9 +23,35 @@ class SendMoneyViewModel
     internal var onHistoryTransactionLoaded = MutableLiveData<MutableList<HistoryTransferTransaction>>()
     internal var onBankListLoaded = MutableLiveData<MutableList<String>>()
     internal var onTransferBankMinimumNominalLoaded = MutableLiveData<MinimumNominalTrfResponse>()
+    internal var onEwalletUserLoaded = MutableLiveData<MutableList<ContactUser>>()
 
     var banks = mutableListOf<Bank>()
     var selectedBank: Bank? = null
+    var localContact = mutableListOf<Contact>()
+    var foundContacts = mutableListOf<ContactUser>()
+
+    fun loadEwalletUser(){
+        dataManager.loadEwalletUser()
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            onEwalletUserLoaded.postValue(response)
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun loadMinimumNominalTransferBank(idBank: String, accountNumber: String){
         dataManager.transferLoadMinimumNominal(idBank, accountNumber)

@@ -40,7 +40,7 @@ class ProfileActivity: BaseActivity<ProfileViewModel>() {
 
             if(viewModel.dashboardData.iDPendanaanDisetujui != "0"){
                 //has credit approved
-                binding.viewCreditIdentity.visibility = View.VISIBLE
+                //binding.viewCreditIdentity.visibility = View.VISIBLE
                 binding.viewCreditReqPrompt.visibility = View.GONE
                 binding.viewCreditInfo.visibility = View.VISIBLE
                 binding.valueActiveCredit.text = viewModel.dashboardData.pinjamanAktif
