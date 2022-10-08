@@ -97,9 +97,12 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
         }
 
         binding.actionTopup.setOnClickListener {
-            startActivity(
-                Intent(this, TopupActivity::class.java)
-            )
+            viewModel.balanceData?.let { balanceData ->
+                startActivity(
+                    Intent(this, TopupActivity::class.java)
+                        .putExtra("IS_HAS_CREDIT_APPROVED", balanceData.iDPendanaanDisetujui != "0")
+                )
+            }
         }
 
         binding.actionScan.setOnClickListener {

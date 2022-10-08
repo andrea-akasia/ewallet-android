@@ -1,6 +1,7 @@
 package com.mobile.ewallet.feature.topup
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,6 +23,14 @@ class TopupActivity: BaseActivity<TopupViewModel>() {
 
         binding.topbar.actionBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
         binding.topbar.title.text = "Topup Saldo"
+
+        intent.getBooleanExtra("IS_HAS_CREDIT_APPROVED", false).let {
+            if(it){
+                binding.viewCreditReqPrompt.visibility = View.GONE
+            }else{
+                binding.viewCreditReqPrompt.visibility = View.VISIBLE
+            }
+        }
 
         observeViewModel()
         viewModel.loadVirtualAcc()
