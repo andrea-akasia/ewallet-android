@@ -21,6 +21,7 @@ import com.mobile.ewallet.model.api.sendmoney.byscan.MinimumNominalResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.SendMoneyResult
 import com.mobile.ewallet.model.api.sendmoney.byscan.TransactionDetail
 import com.mobile.ewallet.model.api.splashscreen.SplashscreenAPIResponse
+import com.mobile.ewallet.model.api.topup.TopupVA
 import io.reactivex.Single
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -29,6 +30,12 @@ import retrofit2.http.*
 
 
 interface APIService {
+    @FormUrlEncoded
+    @POST("TOPUP_List_VA.aspx")
+    fun listVirtualAccount(
+        @Field("IDMember") idMember: String,
+    ): Single<Response<MutableList<TopupVA>>>
+
     @FormUrlEncoded
     @POST("KIRIMUANG_Contact_Detail.aspx")
     fun contactTransactionDetail(

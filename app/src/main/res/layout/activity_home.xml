@@ -469,6 +469,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/action_topup"
                     android:orientation="vertical"
                     android:layout_weight="0.25"
                     android:layout_width="0dp"

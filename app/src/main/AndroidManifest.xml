@@ -56,6 +56,7 @@
         <activity android:name=".feature.credit.CreditDetailActivity" />
         <activity android:name=".feature.scantosendmoney.ScannerActivity" />
         <activity android:name=".feature.moneysend.ContactListActivity" />
+        <activity android:name=".feature.topup.TopupActivity" />
     </application>
 
 </manifest>

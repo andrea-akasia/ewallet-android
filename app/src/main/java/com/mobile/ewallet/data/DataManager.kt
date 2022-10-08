@@ -30,6 +30,7 @@ import com.mobile.ewallet.model.api.sendmoney.byscan.MinimumNominalResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.SendMoneyResult
 import com.mobile.ewallet.model.api.sendmoney.byscan.TransactionDetail
 import com.mobile.ewallet.model.api.splashscreen.SplashscreenAPIResponse
+import com.mobile.ewallet.model.api.topup.TopupVA
 import com.mobile.ewallet.util.Constant.Companion.KEY_ID_MEMBER
 import com.mobile.ewallet.util.Constant.Companion.KEY_IS_LOGGED_IN
 import com.mobile.ewallet.util.createStringReqBody
@@ -71,6 +72,12 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun loadListVirtualAcc(): Single<Response<MutableList<TopupVA>>> {
+        return api.listVirtualAccount(getIdMember())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun loadTransactionDetailContact(id: String): Single<Response<MutableList<TransactionDetailContact>>> {
         return api.contactTransactionDetail(getIdMember(), id)
             .subscribeOn(Schedulers.io())

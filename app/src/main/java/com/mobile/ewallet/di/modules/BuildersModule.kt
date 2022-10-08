@@ -16,11 +16,15 @@ import com.mobile.ewallet.feature.pay.PayResultActivity
 import com.mobile.ewallet.feature.profile.ProfileActivity
 import com.mobile.ewallet.feature.profile.UpdateProfileActivity
 import com.mobile.ewallet.feature.scantosendmoney.ScannerActivity
+import com.mobile.ewallet.feature.topup.TopupActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class BuildersModule{
+    @ContributesAndroidInjector(modules = [FragmentBuildersModule::class])
+    abstract fun bindTopupActivity(): TopupActivity
+
     @ContributesAndroidInjector(modules = [FragmentBuildersModule::class])
     abstract fun bindContactListActivity(): ContactListActivity
 

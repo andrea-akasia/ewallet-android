@@ -18,9 +18,15 @@ import com.mobile.ewallet.feature.home.HomeViewModel
 import com.mobile.ewallet.feature.moneyreq.MoneyRequestViewModel
 import com.mobile.ewallet.feature.moneysend.SendMoneyViewModel
 import com.mobile.ewallet.feature.pay.PayViewModel
+import com.mobile.ewallet.feature.topup.TopupViewModel
 
 @Module
 abstract class ViewModelModule {
+    @Binds
+    @IntoMap
+    @ViewModelKey(TopupViewModel::class)
+    abstract fun bindTopupViewModel(topupViewModel: TopupViewModel): ViewModel
+
     @Binds
     @IntoMap
     @ViewModelKey(CreditViewModel::class)

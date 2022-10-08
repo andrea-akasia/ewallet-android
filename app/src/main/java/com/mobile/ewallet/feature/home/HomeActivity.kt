@@ -24,6 +24,7 @@ import com.mobile.ewallet.feature.moneysend.MoneySendTypeActivity
 import com.mobile.ewallet.feature.pay.PayInputActivity
 import com.mobile.ewallet.feature.profile.ProfileActivity
 import com.mobile.ewallet.feature.scantosendmoney.ScannerActivity
+import com.mobile.ewallet.feature.topup.TopupActivity
 import com.mobile.ewallet.util.Constant.Companion.RC_PERMISSIONS
 import com.mobile.ewallet.util.GlideApp
 
@@ -95,6 +96,12 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
             )
         }
 
+        binding.actionTopup.setOnClickListener {
+            startActivity(
+                Intent(this, TopupActivity::class.java)
+            )
+        }
+
         binding.actionScan.setOnClickListener {
             if (allPermissionsGranted()) {
                 startActivity(Intent(this@HomeActivity, ScannerActivity::class.java))
@@ -103,10 +110,6 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
                     this@HomeActivity, REQUIRED_PERMISSIONS, RC_PERMISSIONS
                 )
             }
-
-            /*startActivity(
-                Intent(this@HomeActivity, PayInputActivity::class.java)
-            )*/
         }
 
         binding.actionMoneyReq.setOnClickListener {
