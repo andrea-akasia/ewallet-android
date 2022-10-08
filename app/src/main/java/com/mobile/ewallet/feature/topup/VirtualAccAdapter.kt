@@ -10,7 +10,8 @@ import com.mobile.ewallet.model.api.topup.TopupVA
 import com.mobile.ewallet.util.GlideApp
 
 class VirtualAccAdapter(
-    val data: MutableList<TopupVA>
+    val data: MutableList<TopupVA>,
+    val listener: VAListener
 ): RecyclerView.Adapter<VirtualAccAdapter.VAHolder>() {
 
     class VAHolder(val binding: ViewItemVaBinding): RecyclerView.ViewHolder(binding.root)
@@ -37,15 +38,14 @@ class VirtualAccAdapter(
             binding.description.text = item.keterangan
 
             holder.itemView.setOnClickListener {
-                /*holder.itemView.context.startActivity(
-                    Intent(
-                        holder.itemView.context,
-                        TransactionDetailActivity::class.java
-                    )
-                )*/
+                listener.onVASelected(item)
             }
         }
     }
 
     override fun getItemCount(): Int = data.size
+
+    interface VAListener{
+        fun onVASelected(data: TopupVA)
+    }
 }
