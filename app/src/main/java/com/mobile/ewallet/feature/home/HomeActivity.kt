@@ -7,12 +7,14 @@ import android.os.Bundle
 import android.text.InputType
 import android.view.View
 import android.view.WindowInsetsController
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
@@ -25,8 +27,10 @@ import com.mobile.ewallet.feature.pay.PayInputActivity
 import com.mobile.ewallet.feature.profile.ProfileActivity
 import com.mobile.ewallet.feature.scantosendmoney.ScannerActivity
 import com.mobile.ewallet.feature.topup.TopupActivity
+import com.mobile.ewallet.model.api.sendmoney.byscan.AdminFeeResponse
 import com.mobile.ewallet.util.Constant.Companion.RC_PERMISSIONS
 import com.mobile.ewallet.util.GlideApp
+import com.mobile.ewallet.util.formatToCurrency
 
 class HomeActivity: BaseActivity<HomeViewModel>() {
 
@@ -138,6 +142,10 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
             }
         }
 
+        binding.btnApplyCredit.setOnClickListener {
+            showSelectPengajuanTypeDialog()
+        }
+
         observeViewModel()
     }
 
@@ -209,5 +217,20 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
         viewModel.warningMessage.observe(this){
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun showSelectPengajuanTypeDialog(){
+        val dialog = BottomSheetDialog(this)
+        val viewDialog = layoutInflater.inflate(R.layout.dialog_select_pengajuan_type, null)
+
+
+        viewDialog.findViewById<TextView>(R.id.action_close).setOnClickListener {
+            dialog.dismiss()
+        }
+        viewDialog.findViewById<TextView>(R.id.btn_kum).setOnClickListener {
+
+        }
+        dialog.setContentView(viewDialog)
+        dialog.show()
     }
 }
