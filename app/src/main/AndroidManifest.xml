@@ -57,6 +57,7 @@
         <activity android:name=".feature.scantosendmoney.ScannerActivity" />
         <activity android:name=".feature.moneysend.ContactListActivity" />
         <activity android:name=".feature.topup.TopupActivity" />
+        <activity android:name=".feature.credit.kum.KUMPrescreeningActivity" />
     </application>
 
 </manifest>

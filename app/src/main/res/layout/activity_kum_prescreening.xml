@@ -48,6 +48,8 @@
 
             <EditText
                 android:id="@+id/et_pelaporan_name"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_32sdp"
                 android:textSize="14sp"
@@ -66,6 +68,8 @@
 
             <EditText
                 android:id="@+id/et_nomor_kk"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_32sdp"
                 android:textSize="14sp"
@@ -84,6 +88,8 @@
 
             <EditText
                 android:id="@+id/et_tempat_lahir"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_32sdp"
                 android:textSize="14sp"

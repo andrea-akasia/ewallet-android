@@ -21,16 +21,14 @@ import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityHomeBinding
 import com.mobile.ewallet.feature.auth.AuthActivity
 import com.mobile.ewallet.feature.credit.CreditDetailActivity
+import com.mobile.ewallet.feature.credit.kum.KUMPrescreeningActivity
 import com.mobile.ewallet.feature.moneyreq.MoneyRequestActivity
 import com.mobile.ewallet.feature.moneysend.MoneySendTypeActivity
-import com.mobile.ewallet.feature.pay.PayInputActivity
 import com.mobile.ewallet.feature.profile.ProfileActivity
 import com.mobile.ewallet.feature.scantosendmoney.ScannerActivity
 import com.mobile.ewallet.feature.topup.TopupActivity
-import com.mobile.ewallet.model.api.sendmoney.byscan.AdminFeeResponse
 import com.mobile.ewallet.util.Constant.Companion.RC_PERMISSIONS
 import com.mobile.ewallet.util.GlideApp
-import com.mobile.ewallet.util.formatToCurrency
 
 class HomeActivity: BaseActivity<HomeViewModel>() {
 
@@ -187,7 +185,7 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
             it.iDPendanaanDisetujui?.let { approvedPendanaanId ->
                 if(approvedPendanaanId != "0"){
                     //show credit info
-                    binding.viewCreditReqPrompt.visibility = View.GONE
+                    //binding.viewCreditReqPrompt.visibility = View.GONE
                     binding.viewCreditInfo.visibility = View.VISIBLE
                     binding.valueLimitCredit.text = it.limitPinjaman
                     binding.valueActiveCredit.text = it.pinjamanAktif
@@ -228,7 +226,10 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
             dialog.dismiss()
         }
         viewDialog.findViewById<TextView>(R.id.btn_kum).setOnClickListener {
-
+            startActivity(
+                Intent(this, KUMPrescreeningActivity::class.java)
+            )
+            dialog.dismiss()
         }
         dialog.setContentView(viewDialog)
         dialog.show()
