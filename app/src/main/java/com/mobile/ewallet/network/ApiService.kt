@@ -3,10 +3,7 @@ package com.mobile.ewallet.network
 import com.mobile.ewallet.model.api.BaseAPIResponse
 import com.mobile.ewallet.model.api.badge.Badge
 import com.mobile.ewallet.model.api.badge.BadgeStatus
-import com.mobile.ewallet.model.api.credit.JenisKelamin
-import com.mobile.ewallet.model.api.credit.KodePos
-import com.mobile.ewallet.model.api.credit.LokasiDatill
-import com.mobile.ewallet.model.api.credit.Pendidikan
+import com.mobile.ewallet.model.api.credit.*
 import com.mobile.ewallet.model.api.dashboard.DashboardBalance
 import com.mobile.ewallet.model.api.dashboard.TransactionItem
 import com.mobile.ewallet.model.api.detailpokemon.DetailPokemonResponse
@@ -34,6 +31,9 @@ import retrofit2.http.*
 
 
 interface APIService {
+    @POST("DDM_StatusRumah.aspx")
+    fun formStatusRumah(): Single<Response<MutableList<StatusRumah>>>
+
     @POST("DDM_LokasiDatiII.aspx")
     fun formlokasiDatill(): Single<Response<MutableList<LokasiDatill>>>
 

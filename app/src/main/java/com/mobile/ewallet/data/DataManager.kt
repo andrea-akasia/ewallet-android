@@ -13,10 +13,7 @@ import androidx.paging.DataSource
 import com.mobile.ewallet.model.api.BaseAPIResponse
 import com.mobile.ewallet.model.api.badge.Badge
 import com.mobile.ewallet.model.api.badge.BadgeStatus
-import com.mobile.ewallet.model.api.credit.JenisKelamin
-import com.mobile.ewallet.model.api.credit.KodePos
-import com.mobile.ewallet.model.api.credit.LokasiDatill
-import com.mobile.ewallet.model.api.credit.Pendidikan
+import com.mobile.ewallet.model.api.credit.*
 import com.mobile.ewallet.model.api.dashboard.DashboardBalance
 import com.mobile.ewallet.model.api.dashboard.TransactionItem
 import com.mobile.ewallet.model.api.detailpokemon.DetailPokemonResponse
@@ -76,6 +73,12 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun formStatusRumah(): Single<Response<MutableList<StatusRumah>>> {
+        return api.formStatusRumah()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun formLokasiDatill(): Single<Response<MutableList<LokasiDatill>>> {
         return api.formlokasiDatill()
             .subscribeOn(Schedulers.io())

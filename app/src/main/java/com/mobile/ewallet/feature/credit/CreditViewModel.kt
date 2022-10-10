@@ -19,6 +19,7 @@ class CreditViewModel
     internal var onFormPendidikanLoaded = MutableLiveData<MutableList<String>>()
     internal var onFormKodePosLoaded = MutableLiveData<MutableList<KodePos>>()
     internal var onFormLokasiDatillLoaded = MutableLiveData<MutableList<String>>()
+    internal var onFormStatusRumahLoaded = MutableLiveData<MutableList<String>>()
 
     //form data
     var prescreeningKUMData = KUMPrescreeningBody()
@@ -32,6 +33,38 @@ class CreditViewModel
     var selectedKodePosKTP: KodePos? = null
     var lokasiDatills = mutableListOf<LokasiDatill>()
     var selectedLokasiDatill: LokasiDatill? = null
+    var statusRumahs = mutableListOf<StatusRumah>()
+    var selectedStatusRumah: StatusRumah? = null
+
+    fun loadStatusRumah() {
+        statusRumahs.clear()
+        selectedStatusRumah = null
+        dataManager.formStatusRumah()
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            val dataString = mutableListOf<String>()
+                            response.forEach {
+                                statusRumahs.add(it)
+                                dataString.add(it.description)
+                            }
+                            onFormStatusRumahLoaded.postValue(dataString)
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun loadLokasiDatill() {
         lokasiDatills.clear()
@@ -48,6 +81,7 @@ class CreditViewModel
                                 dataString.add(it.description)
                             }
                             onFormLokasiDatillLoaded.postValue(dataString)
+                            loadStatusRumah()
                         }
                     } else {
                         // not 20x
