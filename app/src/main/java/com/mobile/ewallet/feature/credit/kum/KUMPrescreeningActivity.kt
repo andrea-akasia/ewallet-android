@@ -52,6 +52,23 @@ class KUMPrescreeningActivity: BaseActivity<CreditViewModel>(), DatePickerFragme
     }
 
     private fun observeViewModel(){
+        viewModel.onFormLokasiDatillLoaded.observe(this){
+            ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, it).also { adptr ->
+                adptr.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
+                binding.spinnerDatill.adapter = adptr
+                binding.spinnerDatill.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        if(position > 0){
+                            viewModel.selectedLokasiDatill = viewModel.lokasiDatills[position]
+                        }else{
+                            viewModel.selectedLokasiDatill = null
+                        }
+                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {}
+                }
+            }
+        }
+
         viewModel.onFormKodePosLoaded.observe(this){
             searchKodePosDialog?.updateData(it)
         }

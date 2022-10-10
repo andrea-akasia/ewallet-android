@@ -5,6 +5,7 @@ import com.mobile.ewallet.model.api.badge.Badge
 import com.mobile.ewallet.model.api.badge.BadgeStatus
 import com.mobile.ewallet.model.api.credit.JenisKelamin
 import com.mobile.ewallet.model.api.credit.KodePos
+import com.mobile.ewallet.model.api.credit.LokasiDatill
 import com.mobile.ewallet.model.api.credit.Pendidikan
 import com.mobile.ewallet.model.api.dashboard.DashboardBalance
 import com.mobile.ewallet.model.api.dashboard.TransactionItem
@@ -33,6 +34,9 @@ import retrofit2.http.*
 
 
 interface APIService {
+    @POST("DDM_LokasiDatiII.aspx")
+    fun formlokasiDatill(): Single<Response<MutableList<LokasiDatill>>>
+
     @FormUrlEncoded
     @POST("DDM_KodePos.aspx")
     fun formKodePos(

@@ -601,6 +601,7 @@
 
             <LinearLayout
                 android:visibility="gone"
+                tools:visibility="visible"
                 android:id="@+id/view_pernikahan_optional"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -693,7 +694,7 @@
                 android:layout_marginBottom="@dimen/_4sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Limit Awal Yang Dtaimin"
+                android:text="Limit Awal Yang Diminta"
                 android:textColor="@android:color/black"
                 android:textSize="12sp" />
 
