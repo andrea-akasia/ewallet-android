@@ -652,7 +652,6 @@
                     android:textSize="14sp"
                     android:imeOptions="actionNext"
                     android:focusable="false"
-                    android:clickable="false"
                     android:background="@drawable/textfield_border_bg"
                     android:layout_marginBottom="@dimen/_8sdp"/>
 

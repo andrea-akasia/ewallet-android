@@ -73,6 +73,18 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun formJenisKreditKUM(): Single<Response<MutableList<JenisKredit>>> {
+        return api.formJenisKreditKUM()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun formStatusPernikahan(): Single<Response<MutableList<StatusPernikahan>>> {
+        return api.formStatusPernikahan()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun formStatusRumah(): Single<Response<MutableList<StatusRumah>>> {
         return api.formStatusRumah()
             .subscribeOn(Schedulers.io())

@@ -64,9 +64,58 @@ class KUMPrescreeningActivity: BaseActivity<CreditViewModel>(), DatePickerFragme
             datePicker.listener = this@KUMPrescreeningActivity
             datePicker.show(supportFragmentManager, null)
         }
+
+        binding.etTanggalLahirPasangan.setOnClickListener {
+            viewModel.TAG_DATE = "SPOUSE"
+            val datePicker = DatePickerFragment(maxDate = getMaxDateForBirthDate())
+            datePicker.isCancelable = true
+            datePicker.listener = this@KUMPrescreeningActivity
+            datePicker.show(supportFragmentManager, null)
+        }
     }
 
     private fun observeViewModel(){
+        viewModel.onFormJenisKreditLoaded.observe(this){
+            ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, it).also { adptr ->
+                adptr.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
+                binding.spinnerJenisKredit.adapter = adptr
+                binding.spinnerJenisKredit.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        if(position > 0){
+                            viewModel.selectedJenisKredit = viewModel.jenisKredits[position]
+                        }else{
+                            viewModel.selectedJenisKredit = null
+                        }
+                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {}
+                }
+            }
+        }
+
+        viewModel.onFormStatusPernikahanLoaded.observe(this){
+            ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, it).also { adptr ->
+                adptr.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
+                binding.spinnerPernikahan.adapter = adptr
+                binding.spinnerPernikahan.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        if(position > 0){
+                            viewModel.selectedStatusPernikahan = viewModel.statusPernikahans[position]
+                            viewModel.selectedStatusPernikahan?.let { status ->
+                                if(status.code == "1"){
+                                    binding.viewPernikahanOptional.visibility = View.VISIBLE
+                                }else{
+                                    binding.viewPernikahanOptional.visibility = View.GONE
+                                }
+                            }
+                        }else{
+                            viewModel.selectedStatusPernikahan = null
+                        }
+                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {}
+                }
+            }
+        }
+
         viewModel.onFormStatusRumahLoaded.observe(this){
             ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, it).also { adptr ->
                 adptr.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
@@ -149,6 +198,8 @@ class KUMPrescreeningActivity: BaseActivity<CreditViewModel>(), DatePickerFragme
             binding.etTanggalLahir.setText(date)
         }else if(viewModel.TAG_DATE == "HOME"){
             binding.etHomeTanggalMenempati.setText(date)
+        }else if(viewModel.TAG_DATE == "SPOUSE"){
+            binding.etTanggalLahirPasangan.setText(date)
         }
     }
 
