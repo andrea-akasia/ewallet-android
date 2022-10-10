@@ -73,6 +73,12 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun loadJenisKreditParameter(jenisKredit: String): Single<Response<MutableList<JenisKreditParameter>>> {
+        return api.jenisKreditParameter(jenisKredit)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun formJenisKreditKUM(): Single<Response<MutableList<JenisKredit>>> {
         return api.formJenisKreditKUM()
             .subscribeOn(Schedulers.io())

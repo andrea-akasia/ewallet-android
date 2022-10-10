@@ -31,6 +31,12 @@ import retrofit2.http.*
 
 
 interface APIService {
+    @FormUrlEncoded
+    @POST("DDM_JenisKredit_Parameter.aspx")
+    fun jenisKreditParameter(
+        @Field("JenisKredit") jenisKredit: String,
+    ): Single<Response<MutableList<JenisKreditParameter>>>
+
     @POST("DDM_JenisKredit_KUM.aspx")
     fun formJenisKreditKUM(): Single<Response<MutableList<JenisKredit>>>
 

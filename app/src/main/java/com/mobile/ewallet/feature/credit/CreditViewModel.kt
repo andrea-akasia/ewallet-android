@@ -42,6 +42,31 @@ class CreditViewModel
     var selectedStatusPernikahan: StatusPernikahan? = null
     var jenisKredits = mutableListOf<JenisKredit>()
     var selectedJenisKredit: JenisKredit? = null
+    var jenisKreditParameter: JenisKreditParameter? = null
+
+    fun loadJenisKreditParameter(jenisKredit: String) {
+        jenisKreditParameter = null
+        dataManager.loadJenisKreditParameter(jenisKredit)
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            jenisKreditParameter = response[0]
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun loadJenisKredit() {
         jenisKredits.clear()

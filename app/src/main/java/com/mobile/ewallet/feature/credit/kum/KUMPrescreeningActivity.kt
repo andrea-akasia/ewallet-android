@@ -83,6 +83,7 @@ class KUMPrescreeningActivity: BaseActivity<CreditViewModel>(), DatePickerFragme
                     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                         if(position > 0){
                             viewModel.selectedJenisKredit = viewModel.jenisKredits[position]
+                            viewModel.selectedJenisKredit?.let { jenisKredit -> viewModel.loadJenisKreditParameter(jenisKredit.code) }
                         }else{
                             viewModel.selectedJenisKredit = null
                         }
