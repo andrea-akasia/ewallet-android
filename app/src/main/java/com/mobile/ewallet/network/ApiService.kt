@@ -4,6 +4,7 @@ import com.mobile.ewallet.model.api.BaseAPIResponse
 import com.mobile.ewallet.model.api.badge.Badge
 import com.mobile.ewallet.model.api.badge.BadgeStatus
 import com.mobile.ewallet.model.api.credit.JenisKelamin
+import com.mobile.ewallet.model.api.credit.KodePos
 import com.mobile.ewallet.model.api.credit.Pendidikan
 import com.mobile.ewallet.model.api.dashboard.DashboardBalance
 import com.mobile.ewallet.model.api.dashboard.TransactionItem
@@ -32,6 +33,12 @@ import retrofit2.http.*
 
 
 interface APIService {
+    @FormUrlEncoded
+    @POST("DDM_KodePos.aspx")
+    fun formKodePos(
+        @Field("Keyword") keyword: String,
+    ): Single<Response<MutableList<KodePos>>>
+
     @POST("DDM_PendidikanTerakhir.aspx")
     fun formPendidikanTerakhir(): Single<Response<MutableList<Pendidikan>>>
 

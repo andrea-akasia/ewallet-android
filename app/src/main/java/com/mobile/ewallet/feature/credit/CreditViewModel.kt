@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.mobile.ewallet.base.BaseViewModel
 import com.mobile.ewallet.data.DataManager
 import com.mobile.ewallet.model.api.credit.JenisKelamin
+import com.mobile.ewallet.model.api.credit.KodePos
 import com.mobile.ewallet.model.api.credit.Pendidikan
 import com.mobile.ewallet.model.api.dashboard.TransactionItem
 import timber.log.Timber
@@ -18,6 +19,7 @@ class CreditViewModel
 
     internal var onFormJenisKelaminLoaded = MutableLiveData<MutableList<String>>()
     internal var onFormPendidikanLoaded = MutableLiveData<MutableList<String>>()
+    internal var onFormKodePosLoaded = MutableLiveData<MutableList<KodePos>>()
 
     //form data
     var jenisKelamins = mutableListOf<JenisKelamin>()
@@ -25,6 +27,37 @@ class CreditViewModel
     var TAG_DATE = "" //BIRTHDATE
     var pendidikans = mutableListOf<Pendidikan>()
     var selectedPendidikan: Pendidikan? = null
+    var TAG_KODE_POS = "" //KTP
+    var kodePoss = mutableListOf<KodePos>()
+    var selectedKodePosKTP: KodePos? = null
+
+    fun loadKodePos(keyword: String) {
+        kodePoss.clear()
+        dataManager.formKodePos(keyword)
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            response.forEach {
+                                kodePoss.add(it)
+                            }
+                            if(kodePoss.size > 1){ kodePoss.removeAt(0) }
+                            onFormKodePosLoaded.postValue(kodePoss)
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun loadFormPendidikan() {
         selectedPendidikan = null

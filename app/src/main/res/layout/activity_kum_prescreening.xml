@@ -191,6 +191,8 @@
 
             <EditText
                 android:id="@+id/et_mother_name"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_32sdp"
                 android:textSize="14sp"
@@ -222,6 +224,8 @@
 
                     <EditText
                         android:id="@+id/et_phone_area"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_8sdp"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_32sdp"
                         android:textSize="14sp"
@@ -252,6 +256,8 @@
 
                     <EditText
                         android:id="@+id/et_phone"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_8sdp"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_32sdp"
                         android:textSize="14sp"
@@ -284,6 +290,8 @@
 
             <EditText
                 android:id="@+id/et_nomor_ktp"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_32sdp"
                 android:textSize="14sp"
@@ -302,6 +310,8 @@
 
             <EditText
                 android:id="@+id/et_ktp_name"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_32sdp"
                 android:textSize="14sp"
@@ -320,10 +330,12 @@
 
             <EditText
                 android:id="@+id/et_ktp_address"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_32sdp"
                 android:textSize="14sp"
-                android:inputType="textPersonName"
+                android:inputType="text"
                 android:imeOptions="actionNext"
                 android:background="@drawable/textfield_border_bg"
                 android:layout_marginBottom="@dimen/_8sdp"/>
@@ -338,6 +350,8 @@
 
             <EditText
                 android:id="@+id/et_ktp_kota"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_32sdp"
                 android:textSize="14sp"
@@ -356,6 +370,8 @@
 
             <EditText
                 android:id="@+id/et_ktp_kecamatan"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_32sdp"
                 android:textSize="14sp"
@@ -374,6 +390,8 @@
 
             <EditText
                 android:id="@+id/et_ktp_kelurahan"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_32sdp"
                 android:textSize="14sp"
@@ -392,9 +410,12 @@
 
             <EditText
                 android:id="@+id/et_ktp_kodepos"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_32sdp"
                 android:textSize="14sp"
+                android:focusable="false"
                 android:inputType="numberSigned"
                 android:imeOptions="actionNext"
                 android:background="@drawable/textfield_border_bg"
