@@ -4,6 +4,7 @@ import com.mobile.ewallet.model.api.BaseAPIResponse
 import com.mobile.ewallet.model.api.badge.Badge
 import com.mobile.ewallet.model.api.badge.BadgeStatus
 import com.mobile.ewallet.model.api.credit.JenisKelamin
+import com.mobile.ewallet.model.api.credit.Pendidikan
 import com.mobile.ewallet.model.api.dashboard.DashboardBalance
 import com.mobile.ewallet.model.api.dashboard.TransactionItem
 import com.mobile.ewallet.model.api.detailpokemon.DetailPokemonResponse
@@ -31,6 +32,9 @@ import retrofit2.http.*
 
 
 interface APIService {
+    @POST("DDM_PendidikanTerakhir.aspx")
+    fun formPendidikanTerakhir(): Single<Response<MutableList<Pendidikan>>>
+
     @POST("DDM_JenisKelamin.aspx")
     fun formJenisKelamin(): Single<Response<MutableList<JenisKelamin>>>
 

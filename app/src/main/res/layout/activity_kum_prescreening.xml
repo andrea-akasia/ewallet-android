@@ -151,11 +151,12 @@
 
                     <EditText
                         android:id="@+id/et_tanggal_lahir"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_8sdp"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_32sdp"
                         android:textSize="14sp"
                         android:focusable="false"
-                        android:clickable="false"
                         android:imeOptions="actionNext"
                         android:background="@drawable/textfield_border_bg"/>
 
