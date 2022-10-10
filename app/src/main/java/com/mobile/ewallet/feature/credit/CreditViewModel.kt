@@ -22,6 +22,7 @@ class CreditViewModel
     internal var onFormStatusRumahLoaded = MutableLiveData<MutableList<String>>()
     internal var onFormStatusPernikahanLoaded = MutableLiveData<MutableList<String>>()
     internal var onFormJenisKreditLoaded = MutableLiveData<MutableList<String>>()
+    internal var onFormJangkaWaktuLoaded = MutableLiveData<MutableList<String>>()
 
     //form data
     var prescreeningKUMData = KUMPrescreeningBody()
@@ -43,6 +44,42 @@ class CreditViewModel
     var jenisKredits = mutableListOf<JenisKredit>()
     var selectedJenisKredit: JenisKredit? = null
     var jenisKreditParameter: JenisKreditParameter? = null
+    var jangkaWaktus = mutableListOf<JangkaWaktu>()
+    var selectedJangkaWaktu: JangkaWaktu? = null
+
+    fun loadJangkaWaktu(jenisKredit: String) {
+        selectedJangkaWaktu = null
+        jangkaWaktus.clear()
+        dataManager.formJangkaWaktu(jenisKredit)
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            val dataString = mutableListOf<String>()
+                            response.forEach {
+                                jangkaWaktus.add(it)
+                                if(it.description != "SELECT"){
+                                    dataString.add("${it.description} Bulan")
+                                }else{
+                                    dataString.add(it.description)
+                                }
+                            }
+                            onFormJangkaWaktuLoaded.postValue(dataString)
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun loadJenisKreditParameter(jenisKredit: String) {
         jenisKreditParameter = null
@@ -54,6 +91,7 @@ class CreditViewModel
                         res.body()?.let { response ->
                             jenisKreditParameter = response[0]
                         }
+                        loadJangkaWaktu(jenisKredit)
                     } else {
                         // not 20x
                         val code = res.code()

@@ -73,6 +73,12 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun formJangkaWaktu(jenisKredit: String): Single<Response<MutableList<JangkaWaktu>>> {
+        return api.formJangkaWaktu(jenisKredit)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun loadJenisKreditParameter(jenisKredit: String): Single<Response<MutableList<JenisKreditParameter>>> {
         return api.jenisKreditParameter(jenisKredit)
             .subscribeOn(Schedulers.io())

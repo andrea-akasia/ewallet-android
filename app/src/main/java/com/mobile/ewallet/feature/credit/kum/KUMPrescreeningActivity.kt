@@ -75,6 +75,23 @@ class KUMPrescreeningActivity: BaseActivity<CreditViewModel>(), DatePickerFragme
     }
 
     private fun observeViewModel(){
+        viewModel.onFormJangkaWaktuLoaded.observe(this){
+            ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, it).also { adptr ->
+                adptr.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
+                binding.spinnerJangkaWaktu.adapter = adptr
+                binding.spinnerJangkaWaktu.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        if(position > 0){
+                            viewModel.selectedJangkaWaktu = viewModel.jangkaWaktus[position]
+                        }else{
+                            viewModel.selectedJangkaWaktu = null
+                        }
+                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {}
+                }
+            }
+        }
+
         viewModel.onFormJenisKreditLoaded.observe(this){
             ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, it).also { adptr ->
                 adptr.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
