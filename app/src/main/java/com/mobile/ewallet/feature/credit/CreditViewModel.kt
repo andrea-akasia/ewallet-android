@@ -31,6 +31,7 @@ class CreditViewModel
     var TAG_KODE_POS = "" //KTP
     var kodePoss = mutableListOf<KodePos>()
     var selectedKodePosKTP: KodePos? = null
+    var selectedKodePosRumah: KodePos? = null
     var lokasiDatills = mutableListOf<LokasiDatill>()
     var selectedLokasiDatill: LokasiDatill? = null
     var statusRumahs = mutableListOf<StatusRumah>()

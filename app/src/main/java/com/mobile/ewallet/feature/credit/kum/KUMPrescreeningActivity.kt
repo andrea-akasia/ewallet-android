@@ -49,6 +49,21 @@ class KUMPrescreeningActivity: BaseActivity<CreditViewModel>(), DatePickerFragme
             searchKodePosDialog?.listener = this@KUMPrescreeningActivity
             searchKodePosDialog?.show(supportFragmentManager, null)
         }
+
+        binding.etHomeKodepos.setOnClickListener {
+            viewModel.TAG_KODE_POS = "HOME"
+            searchKodePosDialog = KodePosSearchDialog().newInstance()
+            searchKodePosDialog?.listener = this@KUMPrescreeningActivity
+            searchKodePosDialog?.show(supportFragmentManager, null)
+        }
+
+        binding.etHomeTanggalMenempati.setOnClickListener {
+            viewModel.TAG_DATE = "HOME"
+            val datePicker = DatePickerFragment()
+            datePicker.isCancelable = true
+            datePicker.listener = this@KUMPrescreeningActivity
+            datePicker.show(supportFragmentManager, null)
+        }
     }
 
     private fun observeViewModel(){
@@ -132,6 +147,8 @@ class KUMPrescreeningActivity: BaseActivity<CreditViewModel>(), DatePickerFragme
     override fun onDateSelected(date: String) {
         if(viewModel.TAG_DATE == "BIRTHDATE"){
             binding.etTanggalLahir.setText(date)
+        }else if(viewModel.TAG_DATE == "HOME"){
+            binding.etHomeTanggalMenempati.setText(date)
         }
     }
 
@@ -143,6 +160,9 @@ class KUMPrescreeningActivity: BaseActivity<CreditViewModel>(), DatePickerFragme
         if(viewModel.TAG_KODE_POS == "KTP"){
             binding.etKtpKodepos.setText(data.description)
             viewModel.selectedKodePosKTP = data
+        }else if(viewModel.TAG_KODE_POS == "HOME"){
+            binding.etHomeKodepos.setText(data.description)
+            viewModel.selectedKodePosRumah = data
         }
         searchKodePosDialog?.dismiss()
     }
