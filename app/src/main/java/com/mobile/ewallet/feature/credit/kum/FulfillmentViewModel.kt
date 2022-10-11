@@ -4,10 +4,7 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import com.mobile.ewallet.base.BaseViewModel
 import com.mobile.ewallet.data.DataManager
-import com.mobile.ewallet.model.api.credit.JenisKelamin
-import com.mobile.ewallet.model.api.credit.KUMFulfillmentBody
-import com.mobile.ewallet.model.api.credit.Kewarganegaraan
-import com.mobile.ewallet.model.api.credit.Profesi
+import com.mobile.ewallet.model.api.credit.*
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -18,6 +15,7 @@ class FulfillmentViewModel
 
     internal var onFormKewarganegaraanLoaded = MutableLiveData<MutableList<String>>()
     internal var onFormProfesiLoaded = MutableLiveData<MutableList<String>>()
+    internal var onFormJabatanLoaded = MutableLiveData<MutableList<String>>()
 
     var KUMFulfillmentData = KUMFulfillmentBody()
     var creditRequestId = ""
@@ -25,6 +23,38 @@ class FulfillmentViewModel
     var selectedKewarganegaraan: Kewarganegaraan? = null
     var profesis = mutableListOf<Profesi>()
     var selectedProfesi: Profesi? = null
+    var jabatans = mutableListOf<Jabatan>()
+    var selectedJabatan: Jabatan? = null
+
+    fun loadFormJabatan() {
+        selectedJabatan = null
+        jabatans.clear()
+        dataManager.formJabatan()
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            val dataString = mutableListOf<String>()
+                            response.forEach {
+                                jabatans.add(it)
+                                dataString.add(it.description)
+                            }
+                            onFormJabatanLoaded.postValue(dataString)
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun loadFormProfesi() {
         selectedProfesi = null
@@ -41,6 +71,7 @@ class FulfillmentViewModel
                                 dataString.add(it.description)
                             }
                             onFormProfesiLoaded.postValue(dataString)
+                            loadFormJabatan()
                         }
                     } else {
                         // not 20x
