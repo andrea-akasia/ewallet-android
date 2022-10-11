@@ -73,6 +73,12 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun formKewarganegaraan(): Single<Response<MutableList<Kewarganegaraan>>> {
+        return api.formKewarganegaraan()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun submitPrescreeningKUM(data: KUMPrescreeningBody): Single<Response<MutableList<KUMPrescreeningResponse>>> {
         return api.preScreeningKUM(
             idmember = getIdMember(),

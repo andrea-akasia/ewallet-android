@@ -1,5 +1,6 @@
 package com.mobile.ewallet.feature.credit.kum
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -74,7 +75,10 @@ class KUMPrescreeningActivity: BaseActivity<CreditViewModel>(), DatePickerFragme
             datePicker.show(supportFragmentManager, null)
         }
 
-        binding.btnContinue.setOnClickListener { validateForm() }
+        binding.btnContinue.setOnClickListener {
+            viewModel.onPrescreeningSuccess.postValue(true)
+            //validateForm()
+        }
     }
 
     private fun validateForm(){
@@ -126,6 +130,13 @@ class KUMPrescreeningActivity: BaseActivity<CreditViewModel>(), DatePickerFragme
     }
 
     private fun observeViewModel(){
+        viewModel.onPrescreeningSuccess.observe(this){
+            startActivity(
+                Intent(this, KUMFulfillmentActivity::class.java)
+                    .putExtra("ID_REQUEST", viewModel.creditRequestId)
+            )
+        }
+
         viewModel.onFormJangkaWaktuLoaded.observe(this){
             ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, it).also { adptr ->
                 adptr.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)

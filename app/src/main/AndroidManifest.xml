@@ -58,6 +58,7 @@
         <activity android:name=".feature.moneysend.ContactListActivity" />
         <activity android:name=".feature.topup.TopupActivity" />
         <activity android:name=".feature.credit.kum.KUMPrescreeningActivity" />
+        <activity android:name=".feature.credit.kum.KUMFulfillmentActivity" />
     </application>
 
 </manifest>

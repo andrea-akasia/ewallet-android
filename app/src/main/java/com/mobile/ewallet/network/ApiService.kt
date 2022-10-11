@@ -31,6 +31,9 @@ import retrofit2.http.*
 
 
 interface APIService {
+    @POST("DDM_Kewarganegaraan.aspx")
+    fun formKewarganegaraan(): Single<Response<MutableList<Kewarganegaraan>>>
+
     @FormUrlEncoded
     @POST("Pendanaan_KUM_PreScreening.aspx")
     fun preScreeningKUM(
