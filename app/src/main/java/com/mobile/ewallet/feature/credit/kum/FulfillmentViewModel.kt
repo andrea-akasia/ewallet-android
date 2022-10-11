@@ -21,6 +21,7 @@ class FulfillmentViewModel
     internal var onFormKodePosLoaded = MutableLiveData<MutableList<KodePos>>()
     internal var onFormStatusPernikahanLoaded = MutableLiveData<MutableList<String>>()
     internal var onFormLokasiDatillLoaded = MutableLiveData<MutableList<String>>()
+    internal var onFormSumberDanaLoaded = MutableLiveData<MutableList<String>>()
 
     var KUMFulfillmentData = KUMFulfillmentBody()
     var creditRequestId = ""
@@ -45,6 +46,39 @@ class FulfillmentViewModel
     var selectedBidangUsahaPasangan: BidangUsaha? = null
     var lokasiDatills = mutableListOf<LokasiDatill>()
     var selectedLokasiDatill: LokasiDatill? = null
+    var sumberDanas = mutableListOf<SumberDana>()
+    var selectedSumberDana: SumberDana? = null
+
+    fun loadSumberDana() {
+        sumberDanas.clear()
+        selectedSumberDana = null
+        dataManager.formSumberDana()
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            val dataString = mutableListOf<String>()
+                            response.forEach {
+                                sumberDanas.add(it)
+                                dataString.add(it.description)
+                            }
+                            onFormSumberDanaLoaded.postValue(dataString)
+
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun loadLokasiDatill() {
         lokasiDatills.clear()
@@ -61,7 +95,7 @@ class FulfillmentViewModel
                                 dataString.add(it.description)
                             }
                             onFormLokasiDatillLoaded.postValue(dataString)
-
+                            loadSumberDana()
                         }
                     } else {
                         // not 20x

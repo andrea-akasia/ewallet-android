@@ -69,6 +69,23 @@ class KUMFulfillmentActivity: BaseActivity<FulfillmentViewModel>(),
     }
 
     private fun observeViewModel(){
+        viewModel.onFormSumberDanaLoaded.observe(this){
+            ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, it).also { adptr ->
+                adptr.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
+                binding.spinnerSumberDana.adapter = adptr
+                binding.spinnerSumberDana.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        if(position > 0){
+                            viewModel.selectedSumberDana = viewModel.sumberDanas[position]
+                        }else{
+                            viewModel.selectedSumberDana = null
+                        }
+                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {}
+                }
+            }
+        }
+
         viewModel.onFormLokasiDatillLoaded.observe(this){
             ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, it).also { adptr ->
                 adptr.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)

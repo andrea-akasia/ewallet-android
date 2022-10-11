@@ -73,6 +73,12 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun formSumberDana(): Single<Response<MutableList<SumberDana>>> {
+        return api.formSumberDana()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun formTempatBekerja(): Single<Response<MutableList<TempatBekerja>>> {
         return api.formTempatBekerja()
             .subscribeOn(Schedulers.io())
