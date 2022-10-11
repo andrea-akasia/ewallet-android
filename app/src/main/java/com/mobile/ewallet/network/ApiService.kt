@@ -32,6 +32,51 @@ import retrofit2.http.*
 
 interface APIService {
     @FormUrlEncoded
+    @POST("Pendanaan_KUM_PreScreening.aspx")
+    fun preScreeningKUM(
+        @Field("IDMember") idmember: String,
+        @Field("IDRequest") idRequest: String,
+        @Field("NamaPelaporan") namaPelapor: String,
+        @Field("NomorKartuKeluarga") nomorKK: String,
+        @Field("TempatLahir") tempatLahir: String,
+        @Field("JenisKelamin") jenisKelamin: String,
+        @Field("TanggalLahir") tanggalLahir: String,
+        @Field("PendidikanTerakhir") pendidikanTerakhir: String,
+        @Field("NamaGadisIbuKandung") namaIbu: String,
+        @Field("telpygdptdihubungiArea") telpArea: String,
+        @Field("telpygdptdihubungi") telp: String,
+        @Field("NomorKTP") nomorKTP: String,
+        @Field("NamaSesuaiKTP") namaKTP: String,
+        @Field("AlamatSesuaiKTP") alamatKTP: String,
+        @Field("KotaSesuaiKTP") kotaKTP: String,
+        @Field("KecamatanSesuaiKTP") kecamatanKTP: String,
+        @Field("KelurahanSesuaiKTP") kelurahanKTP: String,
+        @Field("KodePosKTP") kodePosKTP: String,
+        @Field("AlamatRumah") alamatRumah: String,
+        @Field("KotaAlamatRumah") kotaRumah: String,
+        @Field("KecamatanRumah") kecamatanRumah: String,
+        @Field("KelurahanRumah") kelurahanRumah: String,
+        @Field("KodePosRumah") kodePosRumah: String,
+        @Field("LokasiDatiIIRumah") datillRumah: String,
+        @Field("StatusRumah") statusRumah: String,
+        @Field("MulaiMenempati") tanggalMenempatiRumah: String,
+        @Field("StatusPernikahan") statusPernikahan: String,
+        @Field("NamaSuamiIstri") namaPasangan: String = "",
+        @Field("TanggalLahirPasangan") tanggalLahirPasangan: String = "",
+        @Field("NomorKTPPasangan") nomorKTPPasangan: String = "",
+        @Field("JenisKredit") jenisKredit: String,
+        @Field("LimitAwalyangdiminta") limitAwal: String,
+        @Field("JangkaWaktu") jangkaWaktu: String,
+        @Field("NPWP") npwp: String
+    ): Single<Response<MutableList<KUMPrescreeningResponse>>>
+
+    @FormUrlEncoded
+    @POST("Pendanaan_IDRequest.aspx")
+    fun generateCreditRequest(
+        @Field("IDMember") idmember: String,
+    ): Single<Response<MutableList<GeneratedCreditRequestId>>>
+
+    @FormUrlEncoded
     @POST("DDM_JangkaWaktu.aspx")
     fun formJangkaWaktu(
         @Field("JenisKredit") jenisKredit: String,

@@ -73,6 +73,53 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun submitPrescreeningKUM(data: KUMPrescreeningBody): Single<Response<MutableList<KUMPrescreeningResponse>>> {
+        return api.preScreeningKUM(
+            idmember = getIdMember(),
+            idRequest = data.idRequest,
+            namaPelapor = data.namaPelapor,
+            nomorKK = data.nomorKK,
+            tempatLahir = data.tempatLahir,
+            jenisKelamin = data.codeJenisKelamin,
+            tanggalLahir = data.tanggalLahir,
+            pendidikanTerakhir = data.codePendidikan,
+            namaIbu = data.namaIbu,
+            telpArea = data.noTelpArea,
+            telp = data.noTelp,
+            nomorKTP = data.nomorKTP,
+            namaKTP = data.namaKTP,
+            alamatKTP = data.alamatKTP,
+            kotaKTP = data.kotaKTP,
+            kecamatanKTP = data.kecamatanKTP,
+            kelurahanKTP = data.kelurahanKTP,
+            kodePosKTP = data.codeKodePosKTP,
+            alamatRumah = data.alamatRumah,
+            kotaRumah = data.kotaRumah,
+            kecamatanRumah = data.kecamatanRumah,
+            kelurahanRumah = data.kelurahanRumah,
+            kodePosRumah = data.codeKodePosRumah,
+            datillRumah = data.codeDatillRumah,
+            statusRumah = data.codeStatusRumah,
+            tanggalMenempatiRumah = data.tanggalMulaiMenempatiRumah,
+            statusPernikahan = data.codeStatusPernikahan,
+            namaPasangan = data.namaPasangan,
+            tanggalLahirPasangan = data.tanggalLahirPasangan,
+            nomorKTPPasangan = data.nomorKTPPasangan,
+            jenisKredit = data.codeJenisKredit,
+            limitAwal = data.limitAwal,
+            jangkaWaktu = data.codeJangkaWaktu,
+            npwp = data.npwp
+        )
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun generateCreditRequest(): Single<Response<MutableList<GeneratedCreditRequestId>>> {
+        return api.generateCreditRequest(getIdMember())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun formJangkaWaktu(jenisKredit: String): Single<Response<MutableList<JangkaWaktu>>> {
         return api.formJangkaWaktu(jenisKredit)
             .subscribeOn(Schedulers.io())

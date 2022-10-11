@@ -6,6 +6,7 @@ import com.mobile.ewallet.base.BaseViewModel
 import com.mobile.ewallet.data.DataManager
 import com.mobile.ewallet.model.api.credit.*
 import com.mobile.ewallet.model.api.dashboard.TransactionItem
+import retrofit2.http.Field
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -23,8 +24,10 @@ class CreditViewModel
     internal var onFormStatusPernikahanLoaded = MutableLiveData<MutableList<String>>()
     internal var onFormJenisKreditLoaded = MutableLiveData<MutableList<String>>()
     internal var onFormJangkaWaktuLoaded = MutableLiveData<MutableList<String>>()
+    internal var onPrescreeningSuccess = MutableLiveData<Boolean>()
 
     //form data
+    var creditRequestId = ""
     var prescreeningKUMData = KUMPrescreeningBody()
     var jenisKelamins = mutableListOf<JenisKelamin>()
     var selectedJenisKelamin: JenisKelamin? = null
@@ -46,6 +49,120 @@ class CreditViewModel
     var jenisKreditParameter: JenisKreditParameter? = null
     var jangkaWaktus = mutableListOf<JangkaWaktu>()
     var selectedJangkaWaktu: JangkaWaktu? = null
+
+    fun submitPrescreeningKUM(
+        namaPelapor: String,
+        nomorKK: String,
+        tempatLahir: String,
+        tanggalLahir: String,
+        namaIbu: String,
+        telpArea: String,
+        telp: String,
+        nomorKTP: String,
+        namaKTP: String,
+        alamatKTP: String,
+        kotaKTP: String,
+        kecamatanKTP: String,
+        kelurahanKTP: String,
+        alamatRumah: String,
+        kotaRumah: String,
+        kecamatanRumah: String,
+        kelurahanRumah: String,
+        tanggalMenempatiRumah: String,
+        namaPasangan: String = "",
+        tanggalLahirPasangan: String = "",
+        nomorKTPPasangan: String = "",
+        limitAwal: String,
+        npwp: String
+    ) {
+        dataManager.submitPrescreeningKUM(
+            KUMPrescreeningBody(
+                idRequest = creditRequestId,
+                namaPelapor = namaPelapor,
+                nomorKK = nomorKK,
+                tempatLahir = tempatLahir,
+                codeJenisKelamin = if(selectedJenisKelamin!=null) selectedJenisKelamin!!.code else "",
+                tanggalLahir = tanggalLahir,
+                codePendidikan = if(selectedPendidikan!=null) selectedPendidikan!!.code else "",
+                namaIbu = namaIbu,
+                noTelpArea = telpArea,
+                noTelp = telp,
+                nomorKTP = nomorKTP,
+                namaKTP = namaKTP,
+                alamatKTP = alamatKTP,
+                kotaKTP = kotaKTP,
+                kecamatanKTP = kecamatanKTP,
+                kelurahanKTP = kelurahanKTP,
+                codeKodePosKTP = if(selectedKodePosKTP!=null) selectedKodePosKTP!!.code else "",
+                alamatRumah = alamatRumah,
+                kotaRumah = kotaRumah,
+                kecamatanRumah = kecamatanRumah,
+                kelurahanRumah = kelurahanRumah,
+                codeKodePosRumah = if(selectedKodePosRumah!=null) selectedKodePosRumah!!.code else "",
+                codeDatillRumah = if(selectedLokasiDatill!=null) selectedLokasiDatill!!.code else "",
+                codeStatusRumah = if(selectedStatusRumah!=null) selectedStatusRumah!!.code else "",
+                tanggalMulaiMenempatiRumah = tanggalMenempatiRumah,
+                codeStatusPernikahan = if(selectedStatusPernikahan!=null) selectedStatusPernikahan!!.code else "",
+                namaPasangan = namaPasangan,
+                tanggalLahirPasangan = tanggalLahirPasangan,
+                nomorKTPPasangan = nomorKTPPasangan,
+                codeJenisKredit = if(selectedJenisKredit!=null) selectedJenisKredit!!.code else "",
+                limitAwal = limitAwal,
+                codeJangkaWaktu = if(selectedJangkaWaktu!=null) selectedJangkaWaktu!!.code else "",
+                npwp = npwp
+            )
+        )
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            if(response.isNotEmpty()){
+                                if(response[0].message.lowercase() == "success"){
+                                    onPrescreeningSuccess.postValue(true)
+                                }else{
+                                    warningMessage.postValue(response[0].message)
+                                }
+                            }else{
+                                warningMessage.postValue("empty data response")
+                            }
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
+
+    fun generateCreditRequest() {
+        dataManager.generateCreditRequest()
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            creditRequestId = response[0].iDRequestPendanaan
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun loadJangkaWaktu(jenisKredit: String) {
         selectedJangkaWaktu = null
