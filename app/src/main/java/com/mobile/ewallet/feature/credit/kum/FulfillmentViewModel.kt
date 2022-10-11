@@ -19,6 +19,7 @@ class FulfillmentViewModel
     internal var onFormBidangUsahaLoaded = MutableLiveData<MutableList<String>>()
     internal var onFormTempatBekerjaLoaded = MutableLiveData<MutableList<String>>()
     internal var onFormKodePosLoaded = MutableLiveData<MutableList<KodePos>>()
+    internal var onFormStatusPernikahanLoaded = MutableLiveData<MutableList<String>>()
 
     var KUMFulfillmentData = KUMFulfillmentBody()
     var creditRequestId = ""
@@ -36,6 +37,38 @@ class FulfillmentViewModel
     var TAG_KODE_POS = ""
     var kodePoss = mutableListOf<KodePos>()
     var selectedKodePosKantor: KodePos? = null
+    var statusPernikahans = mutableListOf<StatusPernikahan>()
+    var selectedStatusPernikahan: StatusPernikahan? = null
+
+    fun loadStatusPernikahan() {
+        statusPernikahans.clear()
+        selectedStatusPernikahan = null
+        dataManager.formStatusPernikahan()
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            val dataString = mutableListOf<String>()
+                            response.forEach {
+                                statusPernikahans.add(it)
+                                dataString.add(it.description)
+                            }
+                            onFormStatusPernikahanLoaded.postValue(dataString)
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun loadKodePos(keyword: String) {
         kodePoss.clear()
@@ -80,6 +113,7 @@ class FulfillmentViewModel
                                 dataString.add(it.description)
                             }
                             onFormTempatBekerjaLoaded.postValue(dataString)
+                            loadStatusPernikahan()
                         }
                     } else {
                         // not 20x

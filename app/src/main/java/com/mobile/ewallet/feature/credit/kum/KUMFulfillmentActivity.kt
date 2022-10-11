@@ -61,6 +61,30 @@ class KUMFulfillmentActivity: BaseActivity<FulfillmentViewModel>(),
     }
 
     private fun observeViewModel(){
+        viewModel.onFormStatusPernikahanLoaded.observe(this){
+            ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, it).also { adptr ->
+                adptr.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
+                binding.spinnerHubungan.adapter = adptr
+                binding.spinnerHubungan.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        if(position > 0){
+                            viewModel.selectedStatusPernikahan = viewModel.statusPernikahans[position]
+                            viewModel.selectedStatusPernikahan?.let { status ->
+                                if(status.code == "1"){
+                                    binding.viewPernikahanOptional.visibility = View.VISIBLE
+                                }else{
+                                    binding.viewPernikahanOptional.visibility = View.GONE
+                                }
+                            }
+                        }else{
+                            viewModel.selectedStatusPernikahan = null
+                        }
+                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {}
+                }
+            }
+        }
+
         viewModel.onFormKodePosLoaded.observe(this){
             searchKodePosDialog?.updateData(it)
         }
