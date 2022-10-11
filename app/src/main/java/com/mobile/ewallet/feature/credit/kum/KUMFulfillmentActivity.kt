@@ -11,8 +11,10 @@ import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityKumFulfillmentBinding
 import com.mobile.ewallet.feature.credit.KodePosSearchDialog
 import com.mobile.ewallet.util.DatePickerFragment
+import com.mobile.ewallet.util.getMaxDateForBirthDate
 
-class KUMFulfillmentActivity: BaseActivity<FulfillmentViewModel>() {
+class KUMFulfillmentActivity: BaseActivity<FulfillmentViewModel>(),
+    DatePickerFragment.DateListener {
 
     override val viewModelClass: Class<FulfillmentViewModel> get() = FulfillmentViewModel::class.java
     private lateinit var binding: ActivityKumFulfillmentBinding
@@ -29,6 +31,14 @@ class KUMFulfillmentActivity: BaseActivity<FulfillmentViewModel>() {
         binding.topbar.title.text = "KUM Fulfillment"
 
         intent.getStringExtra("ID_REQUEST")?.let { viewModel.creditRequestId = it}
+
+        binding.etBerdiriSejak.setOnClickListener {
+            viewModel.TAG_DATE = "BERDIRI_SEJAK"
+            val datePicker = DatePickerFragment()
+            datePicker.isCancelable = true
+            datePicker.listener = this@KUMFulfillmentActivity
+            datePicker.show(supportFragmentManager, null)
+        }
 
         observeViewModel()
         viewModel.loadFormKewarganegaraan()
@@ -105,6 +115,12 @@ class KUMFulfillmentActivity: BaseActivity<FulfillmentViewModel>() {
 
         viewModel.warningMessage.observe(this){
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onDateSelected(date: String) {
+        if(viewModel.TAG_DATE == "BERDIRI_SEJAK"){
+            binding.etBerdiriSejak.setText(date)
         }
     }
 }

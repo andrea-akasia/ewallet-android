@@ -28,6 +28,7 @@ class FulfillmentViewModel
     var selectedJabatan: Jabatan? = null
     var bidangUsahas = mutableListOf<BidangUsaha>()
     var selectedBidangUsaha: BidangUsaha? = null
+    var TAG_DATE = ""
 
     fun loadFormBidangUsaha() {
         selectedBidangUsaha = null
