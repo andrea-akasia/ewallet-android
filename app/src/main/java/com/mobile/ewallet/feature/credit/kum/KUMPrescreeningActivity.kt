@@ -76,56 +76,68 @@ class KUMPrescreeningActivity: BaseActivity<CreditViewModel>(), DatePickerFragme
         }
 
         binding.btnContinue.setOnClickListener {
-            viewModel.onPrescreeningSuccess.postValue(true)
-            //validateForm()
+            //viewModel.onPrescreeningSuccess.postValue(true)
+            validateForm()
         }
     }
 
     private fun validateForm(){
-        viewModel.jenisKreditParameter?.let { jenisKreditParameter ->
-            val limitInputed = binding.etLimit.text.toString().toInt()
-            if(limitInputed < jenisKreditParameter.minLimit.toInt()){
-                Toast.makeText(
-                    this,
-                    "Limit minimal adalah ${jenisKreditParameter.minLimit}",
-                    Toast.LENGTH_SHORT
-                ).show()
-                return
-            }
-            if(limitInputed > jenisKreditParameter.maxLimit.toInt()){
-                Toast.makeText(
-                    this,
-                    "Limit maksimal adalah ${jenisKreditParameter.maxLimit}",
-                    Toast.LENGTH_SHORT
-                ).show()
-                return
-            }
+        if(viewModel.jenisKreditParameter != null){
+            viewModel.jenisKreditParameter?.let { jenisKreditParameter ->
+                if(binding.etLimit.text.toString().isNotEmpty()){
+                    val limitInputed = binding.etLimit.text.toString().toInt()
+                    if(limitInputed < jenisKreditParameter.minLimit.toInt()){
+                        Toast.makeText(
+                            this,
+                            "Limit minimal adalah ${jenisKreditParameter.minLimit}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        return
+                    }
+                    if(limitInputed > jenisKreditParameter.maxLimit.toInt()){
+                        Toast.makeText(
+                            this,
+                            "Limit maksimal adalah ${jenisKreditParameter.maxLimit}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        return
+                    }
 
-            viewModel.submitPrescreeningKUM(
-                namaPelapor = binding.etPelaporanName.text.toString(),
-                nomorKK = binding.etNomorKk.text.toString(),
-                tempatLahir = binding.etTempatLahir.text.toString(),
-                tanggalLahir = binding.etTanggalLahir.text.toString(),
-                namaIbu = binding.etMotherName.text.toString(),
-                telpArea = binding.etPhoneArea.text.toString(),
-                telp = binding.etPhone.text.toString(),
-                nomorKTP = binding.etNomorKtp.text.toString(),
-                namaKTP = binding.etKtpName.text.toString(),
-                alamatKTP = binding.etKtpAddress.text.toString(),
-                kotaKTP = binding.etKtpKota.text.toString(),
-                kecamatanKTP = binding.etKtpKecamatan.text.toString(),
-                kelurahanKTP = binding.etKtpKelurahan.text.toString(),
-                alamatRumah = binding.etHomeAddress.text.toString(),
-                kotaRumah = binding.etHomeKota.text.toString(),
-                kecamatanRumah = binding.etHomeKecamatan.text.toString(),
-                kelurahanRumah = binding.etHomeKelurahan.text.toString(),
-                tanggalMenempatiRumah = binding.etHomeTanggalMenempati.text.toString(),
-                namaPasangan = binding.etNamaPasangan.text.toString(),
-                tanggalLahirPasangan = binding.etTanggalLahirPasangan.text.toString(),
-                nomorKTPPasangan = binding.etKtpPasangan.text.toString(),
-                limitAwal = binding.etLimit.text.toString(),
-                npwp = binding.etNpwp.text.toString()
-            )
+                    viewModel.submitPrescreeningKUM(
+                        namaPelapor = binding.etPelaporanName.text.toString(),
+                        nomorKK = binding.etNomorKk.text.toString(),
+                        tempatLahir = binding.etTempatLahir.text.toString(),
+                        tanggalLahir = binding.etTanggalLahir.text.toString(),
+                        namaIbu = binding.etMotherName.text.toString(),
+                        telpArea = binding.etPhoneArea.text.toString(),
+                        telp = binding.etPhone.text.toString(),
+                        nomorKTP = binding.etNomorKtp.text.toString(),
+                        namaKTP = binding.etKtpName.text.toString(),
+                        alamatKTP = binding.etKtpAddress.text.toString(),
+                        kotaKTP = binding.etKtpKota.text.toString(),
+                        kecamatanKTP = binding.etKtpKecamatan.text.toString(),
+                        kelurahanKTP = binding.etKtpKelurahan.text.toString(),
+                        alamatRumah = binding.etHomeAddress.text.toString(),
+                        kotaRumah = binding.etHomeKota.text.toString(),
+                        kecamatanRumah = binding.etHomeKecamatan.text.toString(),
+                        kelurahanRumah = binding.etHomeKelurahan.text.toString(),
+                        tanggalMenempatiRumah = binding.etHomeTanggalMenempati.text.toString(),
+                        namaPasangan = binding.etNamaPasangan.text.toString(),
+                        tanggalLahirPasangan = binding.etTanggalLahirPasangan.text.toString(),
+                        nomorKTPPasangan = binding.etKtpPasangan.text.toString(),
+                        limitAwal = binding.etLimit.text.toString(),
+                        npwp = binding.etNpwp.text.toString()
+                    )
+                }else{
+                    Toast.makeText(
+                        this@KUMPrescreeningActivity,
+                        "Limit awal harus diisi",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }else{
+            Toast.makeText(this, "Jenis kredit harus dipilih!", Toast.LENGTH_SHORT).show()
         }
     }
 
