@@ -56,6 +56,14 @@ class KUMFulfillmentActivity: BaseActivity<FulfillmentViewModel>(),
             searchKodePosDialog?.show(supportFragmentManager, null)
         }
 
+        binding.etBekerjaTanggalMenikah.setOnClickListener {
+            viewModel.TAG_DATE = "TANGGAL_MENIKAH"
+            val datePicker = DatePickerFragment()
+            datePicker.isCancelable = true
+            datePicker.listener = this@KUMFulfillmentActivity
+            datePicker.show(supportFragmentManager, null)
+        }
+
         observeViewModel()
         viewModel.loadFormKewarganegaraan()
     }
@@ -230,6 +238,8 @@ class KUMFulfillmentActivity: BaseActivity<FulfillmentViewModel>(),
             binding.etBerdiriSejak.setText(date)
         }else if(viewModel.TAG_DATE == "BEKERJA_SEJAK"){
             binding.etBekerjaSejak.setText(date)
+        }else if(viewModel.TAG_DATE == "TANGGAL_MENIKAH"){
+            binding.etBekerjaTanggalMenikah.setText(date)
         }
     }
 
