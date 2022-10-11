@@ -73,6 +73,12 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun formProfesi(): Single<Response<MutableList<Profesi>>> {
+        return api.formProfesi()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun formKewarganegaraan(): Single<Response<MutableList<Kewarganegaraan>>> {
         return api.formKewarganegaraan()
             .subscribeOn(Schedulers.io())
