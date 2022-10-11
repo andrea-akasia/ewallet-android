@@ -40,11 +40,36 @@ class KUMFulfillmentActivity: BaseActivity<FulfillmentViewModel>(),
             datePicker.show(supportFragmentManager, null)
         }
 
+        binding.etBekerjaSejak.setOnClickListener {
+            viewModel.TAG_DATE = "BEKERJA_SEJAK"
+            val datePicker = DatePickerFragment()
+            datePicker.isCancelable = true
+            datePicker.listener = this@KUMFulfillmentActivity
+            datePicker.show(supportFragmentManager, null)
+        }
+
         observeViewModel()
         viewModel.loadFormKewarganegaraan()
     }
 
     private fun observeViewModel(){
+        viewModel.onFormTempatBekerjaLoaded.observe(this){
+            ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, it).also { adptr ->
+                adptr.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
+                binding.spinnerTempatBekerja.adapter = adptr
+                binding.spinnerTempatBekerja.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        if(position > 0){
+                            viewModel.selectedTempatBekerja = viewModel.tempatBekerjas[position]
+                        }else{
+                            viewModel.selectedTempatBekerja = null
+                        }
+                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {}
+                }
+            }
+        }
+
         viewModel.onFormBidangUsahaLoaded.observe(this){
             ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, it).also { adptr ->
                 adptr.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
@@ -121,6 +146,8 @@ class KUMFulfillmentActivity: BaseActivity<FulfillmentViewModel>(),
     override fun onDateSelected(date: String) {
         if(viewModel.TAG_DATE == "BERDIRI_SEJAK"){
             binding.etBerdiriSejak.setText(date)
+        }else if(viewModel.TAG_DATE == "BEKERJA_SEJAK"){
+            binding.etBekerjaSejak.setText(date)
         }
     }
 }

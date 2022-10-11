@@ -31,6 +31,9 @@ import retrofit2.http.*
 
 
 interface APIService {
+    @POST("DDM_TempatBekerja.aspx")
+    fun formTempatBekerja(): Single<Response<MutableList<TempatBekerja>>>
+
     @POST("DDM_BidangUsaha.aspx")
     fun formBidangUsaha(): Single<Response<MutableList<BidangUsaha>>>
 
