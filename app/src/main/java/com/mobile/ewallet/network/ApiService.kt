@@ -31,6 +31,45 @@ import retrofit2.http.*
 
 
 interface APIService {
+    @FormUrlEncoded
+    @POST("Pendanaan_KUM_Fulfillment.aspx")
+    fun fulfillmentKUM(
+        @Field("IDMember") idmember: String,
+        @Field("IDRequest") idRequest: String,
+        @Field("Kewarganegaraan") kewarganegaraan: String,
+        @Field("telpHP") phone: String,
+        @Field("FaxArea") faxArea: String,
+        @Field("Fax") fax: String,
+        @Field("Profesi") profesi: String,
+        @Field("Jabatan") jabatan: String,
+        @Field("BidangUsaha") bidangUsaha: String,
+        @Field("BerdiriSejak") berdiriSejak: String,
+        @Field("BekerjaUsahaSejak") bekerjaSejak: String,
+        @Field("TempatBekerja") tempatBekerja: String,
+        @Field("NamaPerusahaan") namaPerusahaan: String,
+        @Field("AlamatKantorLine1") alamatKantor1: String,
+        @Field("AlamatKantorLine2") alamatKantor2: String,
+        @Field("AlamatKantorLine3") alamatKantor3: String,
+        @Field("KecamatanKantor") kecamatanKantor: String,
+        @Field("KelurahanKantor") kelurahanKantor: String,
+        @Field("KodePosKantor") kodePosKantor: String,
+        @Field("NoFaxAreaKantor") faxAreaKantor: String,
+        @Field("NoFaxKantor") faxKantor: String,
+        @Field("NoTelpAreaKantor") telpAreaKantor: String,
+        @Field("NoTelpKantor") telpKantor: String,
+        @Field("NamaEmergency") emergencyName: String,
+        @Field("Hubungan") hubungan: String,
+        @Field("ProfesiPasangan") profesiPasangan: String = "",
+        @Field("TempatBekerjaPasangan") tempatBekerjaPasangan: String = "",
+        @Field("BidangUsahaPasangan") bidangUsahaPasangan: String = "",
+        @Field("BekerjaTanggalMenikah") tanggalMenikah: String,
+        @Field("LokasiDatiIIUsaha") datill: String,
+        @Field("SumberDana") sumberDana: String,
+        @Field("Komoditas") komoditas: String,
+        @Field("LuasLahan") luasLahan: String,
+        @Field("JenisDebitur") jenisDebitur: String,
+    ): Single<Response<MutableList<KUMFulfillmentResponse>>>
+
     @POST("DDM_JenisDebitur.aspx")
     fun formJenisDebitur(): Single<Response<MutableList<JenisDebitur>>>
 
