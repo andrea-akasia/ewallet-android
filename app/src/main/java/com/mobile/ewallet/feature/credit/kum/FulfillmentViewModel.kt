@@ -18,6 +18,7 @@ class FulfillmentViewModel
     internal var onFormJabatanLoaded = MutableLiveData<MutableList<String>>()
     internal var onFormBidangUsahaLoaded = MutableLiveData<MutableList<String>>()
     internal var onFormTempatBekerjaLoaded = MutableLiveData<MutableList<String>>()
+    internal var onFormKodePosLoaded = MutableLiveData<MutableList<KodePos>>()
 
     var KUMFulfillmentData = KUMFulfillmentBody()
     var creditRequestId = ""
@@ -32,6 +33,37 @@ class FulfillmentViewModel
     var TAG_DATE = ""
     var tempatBekerjas = mutableListOf<TempatBekerja>()
     var selectedTempatBekerja: TempatBekerja? = null
+    var TAG_KODE_POS = ""
+    var kodePoss = mutableListOf<KodePos>()
+    var selectedKodePosKantor: KodePos? = null
+
+    fun loadKodePos(keyword: String) {
+        kodePoss.clear()
+        dataManager.formKodePos(keyword)
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            response.forEach {
+                                kodePoss.add(it)
+                            }
+                            if(kodePoss.size > 1){ kodePoss.removeAt(0) }
+                            onFormKodePosLoaded.postValue(kodePoss)
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun loaddFormTempatBekerja() {
         selectedTempatBekerja = null

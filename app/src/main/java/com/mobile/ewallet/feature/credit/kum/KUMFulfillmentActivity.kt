@@ -10,11 +10,12 @@ import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityKumFulfillmentBinding
 import com.mobile.ewallet.feature.credit.KodePosSearchDialog
+import com.mobile.ewallet.model.api.credit.KodePos
 import com.mobile.ewallet.util.DatePickerFragment
 import com.mobile.ewallet.util.getMaxDateForBirthDate
 
 class KUMFulfillmentActivity: BaseActivity<FulfillmentViewModel>(),
-    DatePickerFragment.DateListener {
+    DatePickerFragment.DateListener, KodePosSearchDialog.SearchKodePosListener {
 
     override val viewModelClass: Class<FulfillmentViewModel> get() = FulfillmentViewModel::class.java
     private lateinit var binding: ActivityKumFulfillmentBinding
@@ -48,11 +49,22 @@ class KUMFulfillmentActivity: BaseActivity<FulfillmentViewModel>(),
             datePicker.show(supportFragmentManager, null)
         }
 
+        binding.etKodeposKantor.setOnClickListener {
+            viewModel.TAG_KODE_POS = "KANTOR"
+            searchKodePosDialog = KodePosSearchDialog().newInstance()
+            searchKodePosDialog?.listener = this@KUMFulfillmentActivity
+            searchKodePosDialog?.show(supportFragmentManager, null)
+        }
+
         observeViewModel()
         viewModel.loadFormKewarganegaraan()
     }
 
     private fun observeViewModel(){
+        viewModel.onFormKodePosLoaded.observe(this){
+            searchKodePosDialog?.updateData(it)
+        }
+
         viewModel.onFormTempatBekerjaLoaded.observe(this){
             ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, it).also { adptr ->
                 adptr.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
@@ -149,5 +161,17 @@ class KUMFulfillmentActivity: BaseActivity<FulfillmentViewModel>(),
         }else if(viewModel.TAG_DATE == "BEKERJA_SEJAK"){
             binding.etBekerjaSejak.setText(date)
         }
+    }
+
+    override fun onKodePosKeywordSubmited(keyword: String) {
+        viewModel.loadKodePos(keyword)
+    }
+
+    override fun onKodePosSelected(data: KodePos) {
+        if(viewModel.TAG_KODE_POS == "KANTOR"){
+            binding.etKodeposKantor.setText(data.description)
+            viewModel.selectedKodePosKantor = data
+        }
+        searchKodePosDialog?.dismiss()
     }
 }
