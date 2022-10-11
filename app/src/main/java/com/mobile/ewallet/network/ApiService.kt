@@ -31,6 +31,12 @@ import retrofit2.http.*
 
 
 interface APIService {
+    @POST("DDM_JenisDebitur.aspx")
+    fun formJenisDebitur(): Single<Response<MutableList<JenisDebitur>>>
+
+    @POST("DDM_Komoditas.aspx")
+    fun formKomoditas(): Single<Response<MutableList<Komoditas>>>
+
     @POST("DDM_SumberDana.aspx")
     fun formSumberDana(): Single<Response<MutableList<SumberDana>>>
 

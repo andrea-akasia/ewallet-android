@@ -22,6 +22,8 @@ class FulfillmentViewModel
     internal var onFormStatusPernikahanLoaded = MutableLiveData<MutableList<String>>()
     internal var onFormLokasiDatillLoaded = MutableLiveData<MutableList<String>>()
     internal var onFormSumberDanaLoaded = MutableLiveData<MutableList<String>>()
+    internal var onFormKomoditasLoaded = MutableLiveData<MutableList<String>>()
+    internal var onFormJenisDebiturLoaded = MutableLiveData<MutableList<String>>()
 
     var KUMFulfillmentData = KUMFulfillmentBody()
     var creditRequestId = ""
@@ -48,6 +50,72 @@ class FulfillmentViewModel
     var selectedLokasiDatill: LokasiDatill? = null
     var sumberDanas = mutableListOf<SumberDana>()
     var selectedSumberDana: SumberDana? = null
+    var komoditass = mutableListOf<Komoditas>()
+    var selectedKomoditas: Komoditas? = null
+    var jenisDebiturs = mutableListOf<JenisDebitur>()
+    var selectedJenisDebitur: JenisDebitur? = null
+
+    fun loadJenisDebitur() {
+        jenisDebiturs.clear()
+        selectedJenisDebitur = null
+        dataManager.formJenisDebitur()
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            val dataString = mutableListOf<String>()
+                            response.forEach {
+                                jenisDebiturs.add(it)
+                                dataString.add(it.description)
+                            }
+                            onFormJenisDebiturLoaded.postValue(dataString)
+
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
+
+    fun loadKomoditas() {
+        komoditass.clear()
+        selectedKomoditas = null
+        dataManager.formKomoditas()
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            val dataString = mutableListOf<String>()
+                            response.forEach {
+                                komoditass.add(it)
+                                dataString.add(it.description)
+                            }
+                            onFormKomoditasLoaded.postValue(dataString)
+                            loadJenisDebitur()
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun loadSumberDana() {
         sumberDanas.clear()
@@ -64,7 +132,7 @@ class FulfillmentViewModel
                                 dataString.add(it.description)
                             }
                             onFormSumberDanaLoaded.postValue(dataString)
-
+                            loadKomoditas()
                         }
                     } else {
                         // not 20x

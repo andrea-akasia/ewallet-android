@@ -73,6 +73,18 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun formJenisDebitur(): Single<Response<MutableList<JenisDebitur>>> {
+        return api.formJenisDebitur()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun formKomoditas(): Single<Response<MutableList<Komoditas>>> {
+        return api.formKomoditas()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun formSumberDana(): Single<Response<MutableList<SumberDana>>> {
         return api.formSumberDana()
             .subscribeOn(Schedulers.io())

@@ -69,6 +69,40 @@ class KUMFulfillmentActivity: BaseActivity<FulfillmentViewModel>(),
     }
 
     private fun observeViewModel(){
+        viewModel.onFormJenisDebiturLoaded.observe(this){
+            ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, it).also { adptr ->
+                adptr.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
+                binding.spinnerJenisDebitur.adapter = adptr
+                binding.spinnerJenisDebitur.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        if(position > 0){
+                            viewModel.selectedJenisDebitur = viewModel.jenisDebiturs[position]
+                        }else{
+                            viewModel.selectedJenisDebitur = null
+                        }
+                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {}
+                }
+            }
+        }
+
+        viewModel.onFormKomoditasLoaded.observe(this){
+            ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, it).also { adptr ->
+                adptr.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
+                binding.spinnerKomoditas.adapter = adptr
+                binding.spinnerKomoditas.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        if(position > 0){
+                            viewModel.selectedKomoditas = viewModel.komoditass[position]
+                        }else{
+                            viewModel.selectedKomoditas = null
+                        }
+                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {}
+                }
+            }
+        }
+
         viewModel.onFormSumberDanaLoaded.observe(this){
             ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, it).also { adptr ->
                 adptr.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
