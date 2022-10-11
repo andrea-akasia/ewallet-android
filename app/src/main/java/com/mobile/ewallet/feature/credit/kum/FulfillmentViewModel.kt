@@ -39,6 +39,9 @@ class FulfillmentViewModel
     var selectedKodePosKantor: KodePos? = null
     var statusPernikahans = mutableListOf<StatusPernikahan>()
     var selectedStatusPernikahan: StatusPernikahan? = null
+    var selectedProfesiPasangan: Profesi? = null
+    var selectedTempatBekerjaPasangan: TempatBekerja? = null
+    var selectedBidangUsahaPasangan: BidangUsaha? = null
 
     fun loadStatusPernikahan() {
         statusPernikahans.clear()

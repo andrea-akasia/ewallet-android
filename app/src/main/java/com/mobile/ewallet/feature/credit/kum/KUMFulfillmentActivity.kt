@@ -78,6 +78,7 @@ class KUMFulfillmentActivity: BaseActivity<FulfillmentViewModel>(),
                             }
                         }else{
                             viewModel.selectedStatusPernikahan = null
+                            binding.viewPernikahanOptional.visibility = View.GONE
                         }
                     }
                     override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -104,6 +105,21 @@ class KUMFulfillmentActivity: BaseActivity<FulfillmentViewModel>(),
                     override fun onNothingSelected(parent: AdapterView<*>?) {}
                 }
             }
+
+            ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, it).also { adptr ->
+                adptr.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
+                binding.spinnerTempatBekerjaPasangan.adapter = adptr
+                binding.spinnerTempatBekerjaPasangan.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        if(position > 0){
+                            viewModel.selectedTempatBekerjaPasangan = viewModel.tempatBekerjas[position]
+                        }else{
+                            viewModel.selectedTempatBekerjaPasangan = null
+                        }
+                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {}
+                }
+            }
         }
 
         viewModel.onFormBidangUsahaLoaded.observe(this){
@@ -116,6 +132,21 @@ class KUMFulfillmentActivity: BaseActivity<FulfillmentViewModel>(),
                             viewModel.selectedBidangUsaha = viewModel.bidangUsahas[position]
                         }else{
                             viewModel.selectedBidangUsaha = null
+                        }
+                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {}
+                }
+            }
+
+            ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, it).also { adptr ->
+                adptr.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
+                binding.spinnerBidangUsahaPasangan.adapter = adptr
+                binding.spinnerBidangUsahaPasangan.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        if(position > 0){
+                            viewModel.selectedBidangUsahaPasangan = viewModel.bidangUsahas[position]
+                        }else{
+                            viewModel.selectedBidangUsahaPasangan = null
                         }
                     }
                     override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -150,6 +181,21 @@ class KUMFulfillmentActivity: BaseActivity<FulfillmentViewModel>(),
                             viewModel.selectedProfesi = viewModel.profesis[position]
                         }else{
                             viewModel.selectedProfesi = null
+                        }
+                    }
+                    override fun onNothingSelected(parent: AdapterView<*>?) {}
+                }
+            }
+
+            ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, it).also { adptr ->
+                adptr.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
+                binding.spinnerProfesiPasangan.adapter = adptr
+                binding.spinnerProfesiPasangan.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        if(position > 0){
+                            viewModel.selectedProfesiPasangan = viewModel.profesis[position]
+                        }else{
+                            viewModel.selectedProfesiPasangan = null
                         }
                     }
                     override fun onNothingSelected(parent: AdapterView<*>?) {}
