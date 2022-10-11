@@ -20,6 +20,7 @@ class FulfillmentViewModel
     internal var onFormTempatBekerjaLoaded = MutableLiveData<MutableList<String>>()
     internal var onFormKodePosLoaded = MutableLiveData<MutableList<KodePos>>()
     internal var onFormStatusPernikahanLoaded = MutableLiveData<MutableList<String>>()
+    internal var onFormLokasiDatillLoaded = MutableLiveData<MutableList<String>>()
 
     var KUMFulfillmentData = KUMFulfillmentBody()
     var creditRequestId = ""
@@ -42,6 +43,39 @@ class FulfillmentViewModel
     var selectedProfesiPasangan: Profesi? = null
     var selectedTempatBekerjaPasangan: TempatBekerja? = null
     var selectedBidangUsahaPasangan: BidangUsaha? = null
+    var lokasiDatills = mutableListOf<LokasiDatill>()
+    var selectedLokasiDatill: LokasiDatill? = null
+
+    fun loadLokasiDatill() {
+        lokasiDatills.clear()
+        selectedLokasiDatill = null
+        dataManager.formLokasiDatill()
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            val dataString = mutableListOf<String>()
+                            response.forEach {
+                                lokasiDatills.add(it)
+                                dataString.add(it.description)
+                            }
+                            onFormLokasiDatillLoaded.postValue(dataString)
+
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun loadStatusPernikahan() {
         statusPernikahans.clear()
@@ -58,6 +92,7 @@ class FulfillmentViewModel
                                 dataString.add(it.description)
                             }
                             onFormStatusPernikahanLoaded.postValue(dataString)
+                            loadLokasiDatill()
                         }
                     } else {
                         // not 20x
