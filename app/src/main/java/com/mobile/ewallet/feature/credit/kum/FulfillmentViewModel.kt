@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.mobile.ewallet.base.BaseViewModel
 import com.mobile.ewallet.data.DataManager
 import com.mobile.ewallet.model.api.credit.*
+import retrofit2.http.Field
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -24,6 +25,7 @@ class FulfillmentViewModel
     internal var onFormSumberDanaLoaded = MutableLiveData<MutableList<String>>()
     internal var onFormKomoditasLoaded = MutableLiveData<MutableList<String>>()
     internal var onFormJenisDebiturLoaded = MutableLiveData<MutableList<String>>()
+    internal  var onFulfillmentSuccess = MutableLiveData<Boolean>()
 
     var KUMFulfillmentData = KUMFulfillmentBody()
     var creditRequestId = ""
@@ -54,6 +56,92 @@ class FulfillmentViewModel
     var selectedKomoditas: Komoditas? = null
     var jenisDebiturs = mutableListOf<JenisDebitur>()
     var selectedJenisDebitur: JenisDebitur? = null
+
+    fun submitFulfillmentKUM(
+        phone: String,
+        faxArea: String,
+        fax: String,
+        berdiriSejak: String,
+        bekerjaSejak: String,
+        namaPerusahaan: String,
+        alamatKantor1: String,
+        alamatKantor2: String,
+        alamatKantor3: String,
+        kecamatanKantor: String,
+        kelurahanKantor: String,
+        faxAreaKantor: String,
+        faxKantor: String,
+        telpAreaKantor: String,
+        telpKantor: String,
+        emergencyName: String,
+        tanggalMenikah: String,
+        luasLahan: String
+    ) {
+        dataManager.submitFulfillmentKUM(
+            KUMFulfillmentBody(
+                idRequest = creditRequestId,
+                codeKewarganegaraan = if (selectedKewarganegaraan != null) selectedKewarganegaraan!!.code else "",
+                nomorPonsel = phone,
+                faxArea = faxArea,
+                fax = fax,
+                codeProfesi = if (selectedProfesi != null) selectedProfesi!!.code else "",
+                codeJabatan = if (selectedJabatan != null) selectedJabatan!!.code else "",
+                codeBidangUsaha = if (selectedBidangUsaha != null) selectedBidangUsaha!!.code else "",
+                berdiriSejak = berdiriSejak,
+                bekerjaSejak = bekerjaSejak,
+                codeTempatBekerja = if (selectedTempatBekerja != null) selectedTempatBekerja!!.code else "",
+                namaPerusahaan = namaPerusahaan,
+                alamatKantor1 = alamatKantor1,
+                alamatKantor2 = alamatKantor2,
+                alamatKantor3 = alamatKantor3,
+                kecamatanKantor = kecamatanKantor,
+                kelurahanKantor = kelurahanKantor,
+                codeKodePosKantor = if (selectedKodePosKantor != null) selectedKodePosKantor!!.code else "",
+                faxAreaKantor = faxAreaKantor,
+                faxKantor = faxKantor,
+                telpAreaKantor = telpAreaKantor,
+                telpKantor = telpKantor,
+                kontakDarurat = emergencyName,
+                codeHubungan = if (selectedStatusPernikahan != null) selectedStatusPernikahan!!.code else "",
+                codeProfesiPasangan = if (selectedProfesiPasangan != null) selectedProfesiPasangan!!.code else "",
+                codeTempatBekerjaPasangan = if (selectedTempatBekerjaPasangan != null) selectedTempatBekerjaPasangan!!.code else "",
+                codeBidangUsahaPasangan = if (selectedBidangUsahaPasangan != null) selectedBidangUsahaPasangan!!.code else "",
+                tanggalMenikah = tanggalMenikah,
+                codeDatill = if (selectedLokasiDatill != null) selectedLokasiDatill!!.code else "",
+                codeSumberDana = if (selectedSumberDana != null) selectedSumberDana!!.code else "",
+                codeKomoditas = if (selectedKomoditas != null) selectedKomoditas!!.code else "",
+                luasLahan = luasLahan,
+                codeJenisDebitur = if (selectedJenisDebitur != null) selectedJenisDebitur!!.code else "",
+            )
+        )
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            if (response.isNotEmpty()) {
+                                if (response[0].message.lowercase() == "success") {
+                                    onFulfillmentSuccess.postValue(true)
+                                } else {
+                                    warningMessage.postValue(response[0].message)
+                                }
+                            } else {
+                                warningMessage.postValue("empty data response")
+                            }
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun loadJenisDebitur() {
         jenisDebiturs.clear()

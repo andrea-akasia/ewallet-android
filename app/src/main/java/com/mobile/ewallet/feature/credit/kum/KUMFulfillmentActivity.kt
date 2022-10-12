@@ -64,11 +64,38 @@ class KUMFulfillmentActivity: BaseActivity<FulfillmentViewModel>(),
             datePicker.show(supportFragmentManager, null)
         }
 
+        binding.btnContinue.setOnClickListener {
+            viewModel.submitFulfillmentKUM(
+                phone = binding.etPhone.text.toString(),
+                faxArea = binding.etFaxArea.text.toString(),
+                fax = binding.etFax.text.toString(),
+                berdiriSejak = binding.etBerdiriSejak.text.toString(),
+                bekerjaSejak = binding.etBekerjaSejak.text.toString(),
+                namaPerusahaan = binding.etNamaPerusahaan.text.toString(),
+                alamatKantor1 = binding.etAlamatKantor1.text.toString(),
+                alamatKantor2 = binding.etAlamatKantor2.text.toString(),
+                alamatKantor3 = binding.etAlamatKantor3.text.toString(),
+                kecamatanKantor = binding.etKecamatanKantor.text.toString(),
+                kelurahanKantor = binding.etKelurahanKantor.text.toString(),
+                faxAreaKantor = binding.etFaxAreaKantor.text.toString(),
+                faxKantor = binding.etFaxKantor.text.toString(),
+                telpAreaKantor = binding.etPhoneAreaKantor.text.toString(),
+                telpKantor = binding.etPhoneKantor.text.toString(),
+                emergencyName = binding.etEmergencyName.text.toString(),
+                tanggalMenikah = binding.etBekerjaTanggalMenikah.text.toString(),
+                luasLahan = binding.etLuasLahan.text.toString(),
+            )
+        }
+
         observeViewModel()
         viewModel.loadFormKewarganegaraan()
     }
 
     private fun observeViewModel(){
+        viewModel.onFulfillmentSuccess.observe(this){
+
+        }
+
         viewModel.onFormJenisDebiturLoaded.observe(this){
             ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, it).also { adptr ->
                 adptr.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)

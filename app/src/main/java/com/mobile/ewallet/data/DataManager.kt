@@ -73,6 +73,47 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun submitFulfillmentKUM(data: KUMFulfillmentBody): Single<Response<MutableList<KUMFulfillmentResponse>>> {
+        return api.fulfillmentKUM(
+            idmember = getIdMember(),
+            idRequest = data.idRequest,
+            kewarganegaraan = data.codeKewarganegaraan,
+            phone = data.nomorPonsel,
+            faxArea = data.faxArea,
+            fax = data.fax,
+            profesi = data.codeProfesi,
+            jabatan = data.codeJabatan,
+            bidangUsaha = data.codeBidangUsaha,
+            berdiriSejak = data.berdiriSejak,
+            bekerjaSejak = data.bekerjaSejak,
+            tempatBekerja = data.codeTempatBekerja,
+            namaPerusahaan = data.namaPerusahaan,
+            alamatKantor1 = data.alamatKantor1,
+            alamatKantor2 = data.alamatKantor2,
+            alamatKantor3 = data.alamatKantor3,
+            kecamatanKantor = data.kecamatanKantor,
+            kelurahanKantor = data.kelurahanKantor,
+            kodePosKantor = data.codeKodePosKantor,
+            faxAreaKantor = data.faxAreaKantor,
+            faxKantor = data.faxKantor,
+            telpAreaKantor = data.telpAreaKantor,
+            telpKantor = data.telpKantor,
+            emergencyName = data.kontakDarurat,
+            hubungan = data.codeHubungan,
+            profesiPasangan = data.codeProfesiPasangan,
+            tempatBekerjaPasangan = data.codeTempatBekerjaPasangan,
+            bidangUsahaPasangan = data.codeBidangUsahaPasangan,
+            tanggalMenikah = data.tanggalMenikah,
+            datill = data.codeDatill,
+            sumberDana = data.codeSumberDana,
+            komoditas = data.codeKomoditas,
+            luasLahan = data.luasLahan,
+            jenisDebitur = data.codeJenisDebitur
+        )
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun formJenisDebitur(): Single<Response<MutableList<JenisDebitur>>> {
         return api.formJenisDebitur()
             .subscribeOn(Schedulers.io())
