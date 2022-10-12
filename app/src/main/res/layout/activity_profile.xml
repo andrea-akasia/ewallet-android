@@ -162,6 +162,8 @@
                 </LinearLayout>
 
                 <androidx.cardview.widget.CardView
+                    android:visibility="gone"
+                    tools:visibility="visible"
                     android:id="@+id/view_credit_req_prompt"
                     android:layout_marginTop="@dimen/_8sdp"
                     android:layout_width="match_parent"

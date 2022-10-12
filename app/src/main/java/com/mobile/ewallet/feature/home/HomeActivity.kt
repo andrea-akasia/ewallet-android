@@ -176,6 +176,13 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
                 binding.tvInProgress.visibility = View.GONE
                 binding.tvDeclined.visibility = View.VISIBLE
             }
+
+            binding.viewCreditReqStatus.setOnClickListener { v ->
+                startActivity(
+                    Intent(this, DetailStatusCreditReqActivity::class.java)
+                        .putExtra("DATA", Gson().toJson(it))
+                )
+            }
         }
 
         viewModel.onHistoryTransactionLoaded.observe(this){

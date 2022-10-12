@@ -8,6 +8,7 @@ import com.mobile.ewallet.feature.credit.kum.KUMUploadDocumentsActivity
 import com.mobile.ewallet.feature.listpokemon.ListPokemonActivity
 import com.mobile.ewallet.feature.detailpokemon.DetailPokemonActivity
 import com.mobile.ewallet.feature.home.BadgeActivity
+import com.mobile.ewallet.feature.home.DetailStatusCreditReqActivity
 import com.mobile.ewallet.feature.home.HomeActivity
 import com.mobile.ewallet.feature.home.TransactionDetailActivity
 import com.mobile.ewallet.feature.moneyreq.MoneyRequestActivity
@@ -25,6 +26,9 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class BuildersModule{
+    @ContributesAndroidInjector(modules = [FragmentBuildersModule::class])
+    abstract fun bindDetailStatusCreditReqActivity(): DetailStatusCreditReqActivity
+
     @ContributesAndroidInjector(modules = [FragmentBuildersModule::class])
     abstract fun bindKUMUploadDocumentsActivity(): KUMUploadDocumentsActivity
 
