@@ -1,5 +1,6 @@
 package com.mobile.ewallet.feature.credit.kum
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -11,6 +12,7 @@ import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityKumDocumentBinding
 import com.mobile.ewallet.feature.credit.CreditTermsDialog
+import com.mobile.ewallet.feature.home.HomeActivity
 import com.mobile.ewallet.util.getFile
 import timber.log.Timber
 
@@ -80,6 +82,15 @@ class KUMUploadDocumentsActivity: BaseActivity<KUMDocumentViewModel>(),
     }
 
     private fun observeViewModel(){
+        viewModel.onSubmitSuccess.observe(this){
+            startActivity(
+                Intent(this@KUMUploadDocumentsActivity, HomeActivity::class.java)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            )
+            this@KUMUploadDocumentsActivity.finish()
+        }
+
         viewModel.onTermsLoaded.observe(this){
             val dialog = CreditTermsDialog().newInstance(it)
             dialog.listener = this@KUMUploadDocumentsActivity
@@ -117,6 +128,6 @@ class KUMUploadDocumentsActivity: BaseActivity<KUMDocumentViewModel>(),
     }
 
     override fun onSubmit() {
-
+        viewModel.submitFinal()
     }
 }

@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.mobile.ewallet.R
@@ -46,6 +47,10 @@ class CreditTermsDialog: DialogFragment() {
 
             val datahtml = requireArguments().getString("data", "")
             view.findViewById<TextView>(R.id.terms).text = Html.fromHtml(datahtml, Html.FROM_HTML_MODE_COMPACT)
+
+            view.findViewById<Button>(R.id.btn_continue).setOnClickListener {
+                listener?.onSubmit()
+            }
         }
 
         return view

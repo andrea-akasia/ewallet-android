@@ -20,9 +20,42 @@ class KUMDocumentViewModel
     internal  var onSelfieSuccess = MutableLiveData<Boolean>()
     internal  var onSuratSuccess = MutableLiveData<Boolean>()
     internal  var onTermsLoaded = MutableLiveData<String>()
+    internal  var onSubmitSuccess = MutableLiveData<Boolean>()
 
     var creditRequestId = ""
     var TAG = ""
+
+    fun submitFinal() {
+        dataManager.submitFinalCredit(creditRequestId)
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            if(response.isNotEmpty()){
+                                if(response[0].message!!.lowercase() == "success"){
+                                    onSubmitSuccess.postValue(true)
+                                }else{
+                                    warningMessage.postValue(response[0].message!!)
+                                }
+                            }else{
+                                warningMessage.postValue("error empty data response")
+                            }
+
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun loadTerms() {
         dataManager.creditTerms(creditRequestId)

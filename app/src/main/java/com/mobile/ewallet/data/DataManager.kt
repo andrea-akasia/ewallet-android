@@ -73,6 +73,12 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun submitFinalCredit(idRequest: String): Single<Response<MutableList<BaseAPIResponse>>> {
+        return api.submitFinalCredit(getIdMember(), idRequest)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun creditTerms(idRequest: String): Single<Response<MutableList<TermsResponse>>> {
         return api.creditTerms(getIdMember(), idRequest)
             .subscribeOn(Schedulers.io())
