@@ -8,7 +8,7 @@ data class DashboardBalance(
 	val limitPinjaman: String? = null,
 
 	@field:SerializedName("IDPendanaanDisetujui")
-	val iDPendanaanDisetujui: String? = null,
+	var iDPendanaanDisetujui: String? = null,
 
 	@field:SerializedName("Last_Topup")
 	val lastTopup: String? = null,

@@ -32,6 +32,12 @@ import retrofit2.http.*
 
 interface APIService {
     @FormUrlEncoded
+    @POST("Pendanaan_LIST.aspx")
+    fun listPendanaanReq(
+        @Field("IDMember") idmember: String
+    ): Single<Response<MutableList<PendanaanItem>>>
+
+    @FormUrlEncoded
     @POST("Pendanaan_SubmitFINAL.aspx")
     fun submitFinalCredit(
         @Field("IDMember") idmember: String,

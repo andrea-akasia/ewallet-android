@@ -164,6 +164,20 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
     }
 
     private fun observeViewModel(){
+        viewModel.onLatestCreditReqLoaded.observe(this){
+            binding.viewCreditReqPrompt.visibility = View.GONE
+            binding.viewCreditReqStatus.visibility = View.VISIBLE
+            if(it.statusProses == "PENDING"){
+                //in progress
+                binding.tvInProgress.visibility = View.VISIBLE
+                binding.tvDeclined.visibility = View.GONE
+            }else{
+                //ditolak
+                binding.tvInProgress.visibility = View.GONE
+                binding.tvDeclined.visibility = View.VISIBLE
+            }
+        }
+
         viewModel.onHistoryTransactionLoaded.observe(this){
             adapter = TransactionAdapter(it)
             binding.rv.layoutManager = LinearLayoutManager(this)
@@ -185,7 +199,7 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
             it.iDPendanaanDisetujui?.let { approvedPendanaanId ->
                 if(approvedPendanaanId != "0"){
                     //show credit info
-                    //binding.viewCreditReqPrompt.visibility = View.GONE
+                    binding.viewCreditReqPrompt.visibility = View.GONE
                     binding.viewCreditInfo.visibility = View.VISIBLE
                     binding.valueLimitCredit.text = it.limitPinjaman
                     binding.valueActiveCredit.text = it.pinjamanAktif
@@ -201,6 +215,7 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
                     binding.btnDetailCredit.setOnClickListener(null)
                     binding.viewCreditInfo.visibility = View.GONE
                     binding.viewCreditReqPrompt.visibility = View.VISIBLE
+                    viewModel.loadLatestPendanaanReqStatus()
                 }
             }
         }

@@ -73,6 +73,12 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun listPendanaanReq(): Single<Response<MutableList<PendanaanItem>>> {
+        return api.listPendanaanReq(getIdMember())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun submitFinalCredit(idRequest: String): Single<Response<MutableList<BaseAPIResponse>>> {
         return api.submitFinalCredit(getIdMember(), idRequest)
             .subscribeOn(Schedulers.io())

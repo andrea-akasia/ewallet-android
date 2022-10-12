@@ -6,6 +6,7 @@ import com.mobile.ewallet.base.BaseViewModel
 import com.mobile.ewallet.data.DataManager
 import com.mobile.ewallet.model.api.badge.Badge
 import com.mobile.ewallet.model.api.badge.BadgeStatus
+import com.mobile.ewallet.model.api.credit.PendanaanItem
 import com.mobile.ewallet.model.api.dashboard.DashboardBalance
 import com.mobile.ewallet.model.api.dashboard.TransactionItem
 import com.mobile.ewallet.model.api.profile.ProfileAPIResponse
@@ -24,8 +25,34 @@ class HomeViewModel
     internal var onBadgesLoaded = MutableLiveData<MutableList<Badge>>()
     internal var onBadgeStatusLoaded = MutableLiveData<BadgeStatus>()
     internal var onTransactionDetailLoaded = MutableLiveData<TransactionDetail>()
+    internal var onLatestCreditReqLoaded = MutableLiveData<PendanaanItem>()
 
     var balanceData: DashboardBalance? = null
+
+    fun loadLatestPendanaanReqStatus() {
+        dataManager.listPendanaanReq()
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            if(response.isNotEmpty()){
+                                onLatestCreditReqLoaded.postValue(response[response.size-1])
+                            }
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun loadContactTransactionDetail(id: String) {
         dataManager.loadTransactionDetailContact(id)
@@ -220,7 +247,7 @@ class HomeViewModel
                         res.body()?.let { response ->
                             if(response.isNotEmpty()){
                                 balanceData = response[0]
-                                onDashboardBalanceLoaded.postValue(response[0])
+                                onDashboardBalanceLoaded.postValue(response[0]/*.apply { iDPendanaanDisetujui = "0" }*/)
                             }else{
                                 warningMessage.postValue("empty data dashboard")
                             }
