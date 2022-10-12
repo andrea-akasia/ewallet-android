@@ -180,7 +180,7 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
             binding.viewCreditReqStatus.setOnClickListener { v ->
                 startActivity(
                     Intent(this, DetailStatusCreditReqActivity::class.java)
-                        .putExtra("DATA", Gson().toJson(it))
+                        .putExtra("DATA", Gson().toJson(it/*.apply { statusProses = "DECLINED" }*/))
                 )
             }
         }

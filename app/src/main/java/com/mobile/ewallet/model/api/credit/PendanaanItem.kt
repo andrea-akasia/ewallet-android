@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class PendanaanItem(
 
 	@field:SerializedName("StatusProses")
-	val statusProses: String? = null,
+	var statusProses: String? = null,
 
 	@field:SerializedName("NominalPengajuan")
 	val nominalPengajuan: String? = null,
