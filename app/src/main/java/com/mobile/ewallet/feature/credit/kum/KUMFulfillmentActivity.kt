@@ -1,5 +1,6 @@
 package com.mobile.ewallet.feature.credit.kum
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -93,7 +94,10 @@ class KUMFulfillmentActivity: BaseActivity<FulfillmentViewModel>(),
 
     private fun observeViewModel(){
         viewModel.onFulfillmentSuccess.observe(this){
-
+            startActivity(
+                Intent(this, KUMUploadDocumentsActivity::class.java)
+                    .putExtra("ID_REQUEST", viewModel.creditRequestId)
+            )
         }
 
         viewModel.onFormJenisDebiturLoaded.observe(this){

@@ -73,6 +73,12 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun kumDocumentKTP(idRequest: String, file: MultipartBody.Part): Single<Response<MutableList<BaseAPIResponse>>> {
+        return api.kumDocumentKTP(createStringReqBody(getIdMember()), createStringReqBody(idRequest), file)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun submitFulfillmentKUM(data: KUMFulfillmentBody): Single<Response<MutableList<KUMFulfillmentResponse>>> {
         return api.fulfillmentKUM(
             idmember = getIdMember(),

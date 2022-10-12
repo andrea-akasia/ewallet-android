@@ -31,6 +31,14 @@ import retrofit2.http.*
 
 
 interface APIService {
+    @Multipart
+    @POST("Pendanaan_KUM_Document_KTP.aspx")
+    fun kumDocumentKTP(
+        @Part("IDMember") idMember: RequestBody,
+        @Part("IDRequest") idRequest: RequestBody,
+        @Part file: MultipartBody.Part
+    ): Single<Response<MutableList<BaseAPIResponse>>>
+
     @FormUrlEncoded
     @POST("Pendanaan_KUM_Fulfillment.aspx")
     fun fulfillmentKUM(
