@@ -15,9 +15,121 @@ class KUMDocumentViewModel
     internal var warningMessage = MutableLiveData<String>()
 
     internal  var onKTPSuccess = MutableLiveData<Boolean>()
+    internal  var onKKSuccess = MutableLiveData<Boolean>()
+    internal  var onNPWPSuccess = MutableLiveData<Boolean>()
+    internal  var onSelfieSuccess = MutableLiveData<Boolean>()
+    internal  var onSuratSuccess = MutableLiveData<Boolean>()
 
     var creditRequestId = ""
     var TAG = ""
+
+    fun uploadSurat(file: File) {
+        dataManager.kumDocumentSurat(creditRequestId, createMultipartFromImageFile(file, "SuratPengajuan"))
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            if(response[0].status == "1"){
+                                onSuratSuccess.postValue(true)
+                            }else{
+                                warningMessage.postValue(response[0].message!!)
+                            }
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
+
+    fun uploadSelfie(file: File) {
+        dataManager.kumDocumentSelfie(creditRequestId, createMultipartFromImageFile(file, "PHOTOSELFIE"))
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            if(response[0].status == "1"){
+                                onSelfieSuccess.postValue(true)
+                            }else{
+                                warningMessage.postValue(response[0].message!!)
+                            }
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
+
+    fun uploadNPWP(file: File) {
+        dataManager.kumDocumentNPWP(creditRequestId, createMultipartFromImageFile(file, "PHOTONPWP"))
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            if(response[0].status == "1"){
+                                onNPWPSuccess.postValue(true)
+                            }else{
+                                warningMessage.postValue(response[0].message!!)
+                            }
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
+
+    fun uploadKK(file: File) {
+        dataManager.kumDocumentKK(creditRequestId, createMultipartFromImageFile(file, "PHOTOKK"))
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            if(response[0].status == "1"){
+                                onKKSuccess.postValue(true)
+                            }else{
+                                warningMessage.postValue(response[0].message!!)
+                            }
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun uploadKTP(file: File) {
         dataManager.kumDocumentKTP(creditRequestId, createMultipartFromImageFile(file, "PHOTOKTP"))

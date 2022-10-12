@@ -73,6 +73,30 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun kumDocumentSurat(idRequest: String, file: MultipartBody.Part): Single<Response<MutableList<BaseAPIResponse>>> {
+        return api.kumDocumentSurat(createStringReqBody(getIdMember()), createStringReqBody(idRequest), file)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun kumDocumentNPWP(idRequest: String, file: MultipartBody.Part): Single<Response<MutableList<BaseAPIResponse>>> {
+        return api.kumDocumentNPWP(createStringReqBody(getIdMember()), createStringReqBody(idRequest), file)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun kumDocumentSelfie(idRequest: String, file: MultipartBody.Part): Single<Response<MutableList<BaseAPIResponse>>> {
+        return api.kumDocumentSelfie(createStringReqBody(getIdMember()), createStringReqBody(idRequest), file)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun kumDocumentKK(idRequest: String, file: MultipartBody.Part): Single<Response<MutableList<BaseAPIResponse>>> {
+        return api.kumDocumentKK(createStringReqBody(getIdMember()), createStringReqBody(idRequest), file)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun kumDocumentKTP(idRequest: String, file: MultipartBody.Part): Single<Response<MutableList<BaseAPIResponse>>> {
         return api.kumDocumentKTP(createStringReqBody(getIdMember()), createStringReqBody(idRequest), file)
             .subscribeOn(Schedulers.io())

@@ -32,6 +32,38 @@ import retrofit2.http.*
 
 interface APIService {
     @Multipart
+    @POST("Pendanaan_KUM_Document_NPWP.aspx")
+    fun kumDocumentNPWP(
+        @Part("IDMember") idMember: RequestBody,
+        @Part("IDRequest") idRequest: RequestBody,
+        @Part file: MultipartBody.Part
+    ): Single<Response<MutableList<BaseAPIResponse>>>
+
+    @Multipart
+    @POST("Pendanaan_KUM_Document_SuratPengajuan.aspx")
+    fun kumDocumentSurat(
+        @Part("IDMember") idMember: RequestBody,
+        @Part("IDRequest") idRequest: RequestBody,
+        @Part file: MultipartBody.Part
+    ): Single<Response<MutableList<BaseAPIResponse>>>
+
+    @Multipart
+    @POST("Pendanaan_KUM_Document_PhotoSelfie.aspx")
+    fun kumDocumentSelfie(
+        @Part("IDMember") idMember: RequestBody,
+        @Part("IDRequest") idRequest: RequestBody,
+        @Part file: MultipartBody.Part
+    ): Single<Response<MutableList<BaseAPIResponse>>>
+
+    @Multipart
+    @POST("Pendanaan_KUM_Document_KK.aspx")
+    fun kumDocumentKK(
+        @Part("IDMember") idMember: RequestBody,
+        @Part("IDRequest") idRequest: RequestBody,
+        @Part file: MultipartBody.Part
+    ): Single<Response<MutableList<BaseAPIResponse>>>
+
+    @Multipart
     @POST("Pendanaan_KUM_Document_KTP.aspx")
     fun kumDocumentKTP(
         @Part("IDMember") idMember: RequestBody,

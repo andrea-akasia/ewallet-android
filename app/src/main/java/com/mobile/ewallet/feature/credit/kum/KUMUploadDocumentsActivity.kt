@@ -22,6 +22,14 @@ class KUMUploadDocumentsActivity: BaseActivity<KUMDocumentViewModel>() {
         uri?.let {
             if(viewModel.TAG == "KTP"){
                 viewModel.uploadKTP(getFile(this, it))
+            }else if(viewModel.TAG == "KK"){
+                viewModel.uploadKK(getFile(this, it))
+            }else if(viewModel.TAG == "NPWP"){
+                viewModel.uploadNPWP(getFile(this, it))
+            }else if(viewModel.TAG == "SELFIE"){
+                viewModel.uploadSelfie(getFile(this, it))
+            }else if(viewModel.TAG == "SURAT"){
+                viewModel.uploadSurat(getFile(this, it))
             }
         }
     }
@@ -42,6 +50,26 @@ class KUMUploadDocumentsActivity: BaseActivity<KUMDocumentViewModel>() {
             pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
 
+        binding.actionUploadNpwp.setOnClickListener {
+            viewModel.TAG = "NPWP"
+            pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        }
+
+        binding.actionUploadKk.setOnClickListener {
+            viewModel.TAG = "KK"
+            pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        }
+
+        binding.actionUploadSelfie.setOnClickListener {
+            viewModel.TAG = "SELFIE"
+            pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        }
+
+        binding.actionUploadSuratPengajuan.setOnClickListener {
+            viewModel.TAG = "SURAT"
+            pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        }
+
         observeViewModel()
     }
 
@@ -49,6 +77,26 @@ class KUMUploadDocumentsActivity: BaseActivity<KUMDocumentViewModel>() {
         viewModel.onKTPSuccess.observe(this){
             binding.statusKtp.visibility = View.VISIBLE
             binding.actionUploadKtp.background = ContextCompat.getDrawable(this@KUMUploadDocumentsActivity, R.drawable.green_border_bg)
+        }
+
+        viewModel.onKKSuccess.observe(this){
+            binding.statusKk.visibility = View.VISIBLE
+            binding.actionUploadKk.background = ContextCompat.getDrawable(this@KUMUploadDocumentsActivity, R.drawable.green_border_bg)
+        }
+
+        viewModel.onNPWPSuccess.observe(this){
+            binding.statusNpwp.visibility = View.VISIBLE
+            binding.actionUploadNpwp.background = ContextCompat.getDrawable(this@KUMUploadDocumentsActivity, R.drawable.green_border_bg)
+        }
+
+        viewModel.onSelfieSuccess.observe(this){
+            binding.statusSelfie.visibility = View.VISIBLE
+            binding.actionUploadSelfie.background = ContextCompat.getDrawable(this@KUMUploadDocumentsActivity, R.drawable.green_border_bg)
+        }
+
+        viewModel.onSuratSuccess.observe(this){
+            binding.statusSurat.visibility = View.VISIBLE
+            binding.actionUploadSuratPengajuan.background = ContextCompat.getDrawable(this@KUMUploadDocumentsActivity, R.drawable.green_border_bg)
         }
 
         viewModel.warningMessage.observe(this){
