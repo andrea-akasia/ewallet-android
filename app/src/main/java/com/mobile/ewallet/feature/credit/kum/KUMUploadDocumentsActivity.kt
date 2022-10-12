@@ -10,10 +10,12 @@ import com.bumptech.glide.Glide
 import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityKumDocumentBinding
+import com.mobile.ewallet.feature.credit.CreditTermsDialog
 import com.mobile.ewallet.util.getFile
 import timber.log.Timber
 
-class KUMUploadDocumentsActivity: BaseActivity<KUMDocumentViewModel>() {
+class KUMUploadDocumentsActivity: BaseActivity<KUMDocumentViewModel>(),
+    CreditTermsDialog.CreditTermsListener {
 
     override val viewModelClass: Class<KUMDocumentViewModel> get() = KUMDocumentViewModel::class.java
     private lateinit var binding: ActivityKumDocumentBinding
@@ -70,10 +72,20 @@ class KUMUploadDocumentsActivity: BaseActivity<KUMDocumentViewModel>() {
             pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
 
+        binding.btnContinue.setOnClickListener {
+            viewModel.loadTerms()
+        }
+
         observeViewModel()
     }
 
     private fun observeViewModel(){
+        viewModel.onTermsLoaded.observe(this){
+            val dialog = CreditTermsDialog().newInstance(it)
+            dialog.listener = this@KUMUploadDocumentsActivity
+            dialog.show(supportFragmentManager, null)
+        }
+
         viewModel.onKTPSuccess.observe(this){
             binding.statusKtp.visibility = View.VISIBLE
             binding.actionUploadKtp.background = ContextCompat.getDrawable(this@KUMUploadDocumentsActivity, R.drawable.green_border_bg)
@@ -102,5 +114,9 @@ class KUMUploadDocumentsActivity: BaseActivity<KUMDocumentViewModel>() {
         viewModel.warningMessage.observe(this){
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun onSubmit() {
+
     }
 }

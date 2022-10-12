@@ -19,9 +19,33 @@ class KUMDocumentViewModel
     internal  var onNPWPSuccess = MutableLiveData<Boolean>()
     internal  var onSelfieSuccess = MutableLiveData<Boolean>()
     internal  var onSuratSuccess = MutableLiveData<Boolean>()
+    internal  var onTermsLoaded = MutableLiveData<String>()
 
     var creditRequestId = ""
     var TAG = ""
+
+    fun loadTerms() {
+        dataManager.creditTerms(creditRequestId)
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            onTermsLoaded.postValue(response[0].terms)
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun uploadSurat(file: File) {
         dataManager.kumDocumentSurat(creditRequestId, createMultipartFromImageFile(file, "SuratPengajuan"))

@@ -73,6 +73,12 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun creditTerms(idRequest: String): Single<Response<MutableList<TermsResponse>>> {
+        return api.creditTerms(getIdMember(), idRequest)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun kumDocumentSurat(idRequest: String, file: MultipartBody.Part): Single<Response<MutableList<BaseAPIResponse>>> {
         return api.kumDocumentSurat(createStringReqBody(getIdMember()), createStringReqBody(idRequest), file)
             .subscribeOn(Schedulers.io())
