@@ -23,6 +23,7 @@ import com.mobile.ewallet.model.api.sendmoney.byscan.SendMoneyResult
 import com.mobile.ewallet.model.api.sendmoney.byscan.TransactionDetail
 import com.mobile.ewallet.model.api.splashscreen.SplashscreenAPIResponse
 import com.mobile.ewallet.model.api.topup.TopupVA
+import com.mobile.ewallet.model.api.topup.TopupViaKreditStatResponse
 import io.reactivex.Single
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -31,6 +32,12 @@ import retrofit2.http.*
 
 
 interface APIService {
+    @FormUrlEncoded
+    @POST("TOPUP_KirimKredit_Step1.aspx")
+    fun topupViaKreditStat(
+        @Field("IDMember") idmember: String
+    ): Single<Response<MutableList<TopupViaKreditStatResponse>>>
+
     @FormUrlEncoded
     @POST("Pendanaan_LIST.aspx")
     fun listPendanaanReq(

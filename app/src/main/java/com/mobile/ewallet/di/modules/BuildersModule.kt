@@ -21,11 +21,15 @@ import com.mobile.ewallet.feature.profile.ProfileActivity
 import com.mobile.ewallet.feature.profile.UpdateProfileActivity
 import com.mobile.ewallet.feature.scantosendmoney.ScannerActivity
 import com.mobile.ewallet.feature.topup.TopupActivity
+import com.mobile.ewallet.feature.topup.TopupViaKreditActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class BuildersModule{
+    @ContributesAndroidInjector(modules = [FragmentBuildersModule::class])
+    abstract fun bindTopupViaKreditActivity(): TopupViaKreditActivity
+
     @ContributesAndroidInjector(modules = [FragmentBuildersModule::class])
     abstract fun bindDetailStatusCreditReqActivity(): DetailStatusCreditReqActivity
 

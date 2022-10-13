@@ -32,6 +32,7 @@ import com.mobile.ewallet.model.api.sendmoney.byscan.SendMoneyResult
 import com.mobile.ewallet.model.api.sendmoney.byscan.TransactionDetail
 import com.mobile.ewallet.model.api.splashscreen.SplashscreenAPIResponse
 import com.mobile.ewallet.model.api.topup.TopupVA
+import com.mobile.ewallet.model.api.topup.TopupViaKreditStatResponse
 import com.mobile.ewallet.util.Constant.Companion.KEY_ID_MEMBER
 import com.mobile.ewallet.util.Constant.Companion.KEY_IS_LOGGED_IN
 import com.mobile.ewallet.util.createStringReqBody
@@ -73,6 +74,12 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun topupViaKreditStat(): Single<Response<MutableList<TopupViaKreditStatResponse>>> {
+        return api.topupViaKreditStat(getIdMember())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun listPendanaanReq(): Single<Response<MutableList<PendanaanItem>>> {
         return api.listPendanaanReq(getIdMember())
             .subscribeOn(Schedulers.io())

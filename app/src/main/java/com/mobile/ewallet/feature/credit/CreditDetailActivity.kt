@@ -13,6 +13,8 @@ import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityCreditInfoBinding
 import com.mobile.ewallet.feature.home.TransactionAdapter
+import com.mobile.ewallet.feature.topup.TopupViaKreditActivity
+import com.mobile.ewallet.model.api.topup.TopupViaKreditStatResponse
 import com.mobile.ewallet.util.GlideApp
 
 class CreditDetailActivity: BaseActivity<CreditViewModel>() {
@@ -37,6 +39,12 @@ class CreditDetailActivity: BaseActivity<CreditViewModel>() {
         }
         intent.getStringExtra("LIMIT")?.let {
             binding.valueLimit.text = it
+        }
+
+        binding.actionTopup.setOnClickListener {
+            startActivity(
+                Intent(this, TopupViaKreditActivity::class.java)
+            )
         }
 
         observeViewModel()

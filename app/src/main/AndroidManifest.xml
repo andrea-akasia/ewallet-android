@@ -61,6 +61,7 @@
         <activity android:name=".feature.credit.kum.KUMFulfillmentActivity" />
         <activity android:name=".feature.credit.kum.KUMUploadDocumentsActivity" />
         <activity android:name=".feature.home.DetailStatusCreditReqActivity" />
+        <activity android:name=".feature.topup.TopupViaKreditActivity" />
     </application>
 
 </manifest>
