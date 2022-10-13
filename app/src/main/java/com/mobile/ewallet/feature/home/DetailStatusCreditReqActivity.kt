@@ -12,6 +12,7 @@ import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityDetailStatusCreditReqBinding
 import com.mobile.ewallet.feature.credit.kum.KUMPrescreeningActivity
+import com.mobile.ewallet.feature.credit.kur.KURPrecreeningActivity
 import com.mobile.ewallet.model.api.credit.PendanaanItem
 
 class DetailStatusCreditReqActivity: BaseActivity<HomeViewModel>() {
@@ -59,6 +60,12 @@ class DetailStatusCreditReqActivity: BaseActivity<HomeViewModel>() {
         viewDialog.findViewById<TextView>(R.id.btn_kum).setOnClickListener {
             startActivity(
                 Intent(this, KUMPrescreeningActivity::class.java)
+            )
+            dialog.dismiss()
+        }
+        viewDialog.findViewById<TextView>(R.id.btn_kur).setOnClickListener {
+            startActivity(
+                Intent(this, KURPrecreeningActivity::class.java)
             )
             dialog.dismiss()
         }
