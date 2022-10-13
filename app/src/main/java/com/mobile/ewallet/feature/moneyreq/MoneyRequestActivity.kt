@@ -1,8 +1,13 @@
 package com.mobile.ewallet.feature.moneyreq
 
+import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
@@ -30,6 +35,10 @@ class MoneyRequestActivity: BaseActivity<MoneyRequestViewModel>() {
         binding.topbar.actionBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
         binding.topbar.title.text = "Minta Uang"
 
+        binding.btnShare.setOnClickListener {
+            share(screenShot(binding.constraintLayout2))
+        }
+
         observeViewModel()
         viewModel.loadData()
     }
@@ -54,6 +63,27 @@ class MoneyRequestActivity: BaseActivity<MoneyRequestViewModel>() {
         viewModel.warningMessage.observe(this){
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun screenShot(view: View): Bitmap {
+        val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        view.draw(canvas)
+        return bitmap
+    }
+
+    private fun share(bitmap: Bitmap) {
+        val pathofBmp = MediaStore.Images.Media.insertImage(
+            contentResolver,
+            bitmap, "share", null
+        )
+        val uri: Uri = Uri.parse(pathofBmp)
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.type = "image/*"
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Share QR")
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "")
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
+        startActivity(Intent.createChooser(shareIntent, "Share QR"))
     }
 
     private fun getQrCodeBitmap(data: String): Bitmap {
