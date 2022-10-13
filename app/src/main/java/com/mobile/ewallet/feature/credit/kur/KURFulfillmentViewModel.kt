@@ -73,10 +73,12 @@ class KURFulfillmentViewModel
         telpKantor: String,
         emergencyName: String,
         tanggalMenikah: String,
-        luasLahan: String
+        luasLahan: String,
+        suratPermohonan: String,
+        ijinUsaha: String
     ) {
         dataManager.submitFulfillmentKUR(
-            KUMFulfillmentBody(
+            KURFulfillmentBody(
                 idRequest = creditRequestId,
                 codeKewarganegaraan = if (selectedKewarganegaraan != null) selectedKewarganegaraan!!.code else "",
                 nomorPonsel = phone,
@@ -110,6 +112,8 @@ class KURFulfillmentViewModel
                 codeKomoditas = if (selectedKomoditas != null) selectedKomoditas!!.code else "",
                 luasLahan = luasLahan,
                 codeJenisDebitur = if (selectedJenisDebitur != null) selectedJenisDebitur!!.code else "",
+                suratPermohonan = suratPermohonan,
+                ijinUsaha = ijinUsaha
             )
         )
             .doOnSubscribe(this::addDisposable)

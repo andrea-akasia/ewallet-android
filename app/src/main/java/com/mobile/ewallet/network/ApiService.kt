@@ -33,6 +33,54 @@ import retrofit2.http.*
 
 
 interface APIService {
+    @Multipart
+    @POST("Pendanaan_KUR_Document_SIUP.aspx")
+    fun kurDocumentSIUP(
+        @Part("IDMember") idMember: RequestBody,
+        @Part("IDRequest") idRequest: RequestBody,
+        @Part file: MultipartBody.Part
+    ): Single<Response<MutableList<BaseAPIResponse>>>
+
+    @Multipart
+    @POST("Pendanaan_KUR_Document_NPWP.aspx")
+    fun kurDocumentNPWP(
+        @Part("IDMember") idMember: RequestBody,
+        @Part("IDRequest") idRequest: RequestBody,
+        @Part file: MultipartBody.Part
+    ): Single<Response<MutableList<BaseAPIResponse>>>
+
+    @Multipart
+    @POST("Pendanaan_KUR_Document_SuratPengajuan.aspx")
+    fun kurDocumentSurat(
+        @Part("IDMember") idMember: RequestBody,
+        @Part("IDRequest") idRequest: RequestBody,
+        @Part file: MultipartBody.Part
+    ): Single<Response<MutableList<BaseAPIResponse>>>
+
+    @Multipart
+    @POST("Pendanaan_KUR_Document_PhotoSelfie.aspx")
+    fun kurDocumentSelfie(
+        @Part("IDMember") idMember: RequestBody,
+        @Part("IDRequest") idRequest: RequestBody,
+        @Part file: MultipartBody.Part
+    ): Single<Response<MutableList<BaseAPIResponse>>>
+
+    @Multipart
+    @POST("Pendanaan_KUR_Document_KK.aspx")
+    fun kurDocumentKK(
+        @Part("IDMember") idMember: RequestBody,
+        @Part("IDRequest") idRequest: RequestBody,
+        @Part file: MultipartBody.Part
+    ): Single<Response<MutableList<BaseAPIResponse>>>
+
+    @Multipart
+    @POST("Pendanaan_KUR_Document_KTP.aspx")
+    fun kurDocumentKTP(
+        @Part("IDMember") idMember: RequestBody,
+        @Part("IDRequest") idRequest: RequestBody,
+        @Part file: MultipartBody.Part
+    ): Single<Response<MutableList<BaseAPIResponse>>>
+
     @FormUrlEncoded
     @POST("Pendanaan_KUR_Fulfillment.aspx")
     fun fulfillmentKUR(
@@ -70,6 +118,8 @@ interface APIService {
         @Field("Komoditas") komoditas: String,
         @Field("LuasLahan") luasLahan: String,
         @Field("JenisDebitur") jenisDebitur: String,
+        @Field("NoSuratPermohonan") suratPermhononan: String,
+        @Field("NoIjinUsaha") ijinUsaha: String
     ): Single<Response<MutableList<KUMFulfillmentResponse>>>
 
     @POST("DDM_JenisKredit_KUR.aspx")

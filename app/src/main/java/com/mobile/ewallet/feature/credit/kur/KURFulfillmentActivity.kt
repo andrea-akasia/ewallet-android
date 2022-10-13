@@ -84,6 +84,8 @@ class KURFulfillmentActivity: BaseActivity<KURFulfillmentViewModel>(),
                 emergencyName = binding.etEmergencyName.text.toString(),
                 tanggalMenikah = binding.etBekerjaTanggalMenikah.text.toString(),
                 luasLahan = binding.etLuasLahan.text.toString(),
+                suratPermohonan = binding.etNoSuratPermohonan.text.toString(),
+                ijinUsaha = binding.etNoIjinUsaha.text.toString()
             )
         }
 
@@ -93,10 +95,10 @@ class KURFulfillmentActivity: BaseActivity<KURFulfillmentViewModel>(),
 
     private fun observeViewModel(){
         viewModel.onFulfillmentSuccess.observe(this){
-            /*startActivity(
-                Intent(this, KUMUploadDocumentsActivity::class.java)
+            startActivity(
+                Intent(this, KURUploadDocumentsActivity::class.java)
                     .putExtra("ID_REQUEST", viewModel.creditRequestId)
-            )*/
+            )
         }
 
         viewModel.onFormJenisDebiturLoaded.observe(this){

@@ -75,7 +75,43 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
-    fun submitFulfillmentKUR(data: KUMFulfillmentBody): Single<Response<MutableList<KUMFulfillmentResponse>>> {
+    fun kurDocumentSIUP(idRequest: String, file: MultipartBody.Part): Single<Response<MutableList<BaseAPIResponse>>> {
+        return api.kurDocumentSIUP(createStringReqBody(getIdMember()), createStringReqBody(idRequest), file)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun kurDocumentSurat(idRequest: String, file: MultipartBody.Part): Single<Response<MutableList<BaseAPIResponse>>> {
+        return api.kurDocumentSurat(createStringReqBody(getIdMember()), createStringReqBody(idRequest), file)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun kurDocumentSelfie(idRequest: String, file: MultipartBody.Part): Single<Response<MutableList<BaseAPIResponse>>> {
+        return api.kurDocumentSelfie(createStringReqBody(getIdMember()), createStringReqBody(idRequest), file)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun kurDocumentKK(idRequest: String, file: MultipartBody.Part): Single<Response<MutableList<BaseAPIResponse>>> {
+        return api.kurDocumentKK(createStringReqBody(getIdMember()), createStringReqBody(idRequest), file)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun kurDocumentKTP(idRequest: String, file: MultipartBody.Part): Single<Response<MutableList<BaseAPIResponse>>> {
+        return api.kurDocumentKTP(createStringReqBody(getIdMember()), createStringReqBody(idRequest), file)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun kurDocumentNPWP(idRequest: String, file: MultipartBody.Part): Single<Response<MutableList<BaseAPIResponse>>> {
+        return api.kurDocumentNPWP(createStringReqBody(getIdMember()), createStringReqBody(idRequest), file)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun submitFulfillmentKUR(data: KURFulfillmentBody): Single<Response<MutableList<KUMFulfillmentResponse>>> {
         return api.fulfillmentKUR(
             idmember = getIdMember(),
             idRequest = data.idRequest,
@@ -110,7 +146,9 @@ class DataManager
             sumberDana = data.codeSumberDana,
             komoditas = data.codeKomoditas,
             luasLahan = data.luasLahan,
-            jenisDebitur = data.codeJenisDebitur
+            jenisDebitur = data.codeJenisDebitur,
+            suratPermhononan = data.suratPermohonan,
+            ijinUsaha = data.ijinUsaha
         )
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
