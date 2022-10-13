@@ -34,6 +34,88 @@ import retrofit2.http.*
 
 interface APIService {
     @FormUrlEncoded
+    @POST("Pendanaan_KUR_Fulfillment.aspx")
+    fun fulfillmentKUR(
+        @Field("IDMember") idmember: String,
+        @Field("IDRequest") idRequest: String,
+        @Field("Kewarganegaraan") kewarganegaraan: String,
+        @Field("telpHP") phone: String,
+        @Field("FaxArea") faxArea: String,
+        @Field("Fax") fax: String,
+        @Field("Profesi") profesi: String,
+        @Field("Jabatan") jabatan: String,
+        @Field("BidangUsaha") bidangUsaha: String,
+        @Field("BerdiriSejak") berdiriSejak: String,
+        @Field("BekerjaUsahaSejak") bekerjaSejak: String,
+        @Field("TempatBekerja") tempatBekerja: String,
+        @Field("NamaPerusahaan") namaPerusahaan: String,
+        @Field("AlamatKantorLine1") alamatKantor1: String,
+        @Field("AlamatKantorLine2") alamatKantor2: String,
+        @Field("AlamatKantorLine3") alamatKantor3: String,
+        @Field("KecamatanKantor") kecamatanKantor: String,
+        @Field("KelurahanKantor") kelurahanKantor: String,
+        @Field("KodePosKantor") kodePosKantor: String,
+        @Field("NoFaxAreaKantor") faxAreaKantor: String,
+        @Field("NoFaxKantor") faxKantor: String,
+        @Field("NoTelpAreaKantor") telpAreaKantor: String,
+        @Field("NoTelpKantor") telpKantor: String,
+        @Field("NamaEmergency") emergencyName: String,
+        @Field("Hubungan") hubungan: String,
+        @Field("ProfesiPasangan") profesiPasangan: String = "",
+        @Field("TempatBekerjaPasangan") tempatBekerjaPasangan: String = "",
+        @Field("BidangUsahaPasangan") bidangUsahaPasangan: String = "",
+        @Field("BekerjaTanggalMenikah") tanggalMenikah: String,
+        @Field("LokasiDatiIIUsaha") datill: String,
+        @Field("SumberDana") sumberDana: String,
+        @Field("Komoditas") komoditas: String,
+        @Field("LuasLahan") luasLahan: String,
+        @Field("JenisDebitur") jenisDebitur: String,
+    ): Single<Response<MutableList<KUMFulfillmentResponse>>>
+
+    @POST("DDM_JenisKredit_KUR.aspx")
+    fun formJenisKreditKUR(): Single<Response<MutableList<JenisKredit>>>
+
+    @FormUrlEncoded
+    @POST("Pendanaan_KUR_PreScreening.aspx")
+    fun preScreeningKUR(
+        @Field("IDMember") idmember: String,
+        @Field("IDRequest") idRequest: String,
+        @Field("NamaPelaporan") namaPelapor: String,
+        @Field("NomorKartuKeluarga") nomorKK: String,
+        @Field("TempatLahir") tempatLahir: String,
+        @Field("JenisKelamin") jenisKelamin: String,
+        @Field("TanggalLahir") tanggalLahir: String,
+        @Field("PendidikanTerakhir") pendidikanTerakhir: String,
+        @Field("NamaGadisIbuKandung") namaIbu: String,
+        @Field("telpygdptdihubungiArea") telpArea: String,
+        @Field("telpygdptdihubungi") telp: String,
+        @Field("NomorKTP") nomorKTP: String,
+        @Field("NamaSesuaiKTP") namaKTP: String,
+        @Field("AlamatSesuaiKTP") alamatKTP: String,
+        @Field("KotaSesuaiKTP") kotaKTP: String,
+        @Field("KecamatanSesuaiKTP") kecamatanKTP: String,
+        @Field("KelurahanSesuaiKTP") kelurahanKTP: String,
+        @Field("KodePosKTP") kodePosKTP: String,
+        @Field("AlamatRumah") alamatRumah: String,
+        @Field("KotaAlamatRumah") kotaRumah: String,
+        @Field("KecamatanRumah") kecamatanRumah: String,
+        @Field("KelurahanRumah") kelurahanRumah: String,
+        @Field("KodePosRumah") kodePosRumah: String,
+        @Field("LokasiDatiIIRumah") datillRumah: String,
+        @Field("StatusRumah") statusRumah: String,
+        @Field("MulaiMenempati") tanggalMenempatiRumah: String,
+        @Field("StatusPernikahan") statusPernikahan: String,
+        @Field("NamaSuamiIstri") namaPasangan: String = "",
+        @Field("TanggalLahirPasangan") tanggalLahirPasangan: String = "",
+        @Field("NomorKTPPasangan") nomorKTPPasangan: String = "",
+        @Field("JenisKredit") jenisKredit: String,
+        @Field("LimitAwalyangdiminta") limitAwal: String,
+        @Field("JangkaWaktu") jangkaWaktu: String,
+        @Field("NPWP") npwp: String,
+        @Field("NomorRekening") noRek: String
+    ): Single<Response<MutableList<KURPrescreeningResponse>>>
+
+    @FormUrlEncoded
     @POST("TOPUP_KirimKredit_Step2.aspx")
     fun submitTopupViaKredit(
         @Field("IDMember") idmember: String,

@@ -63,6 +63,8 @@
         <activity android:name=".feature.home.DetailStatusCreditReqActivity" />
         <activity android:name=".feature.topup.TopupViaKreditActivity" />
         <activity android:name=".feature.topup.TopupViaKreditResultActivity" />
+        <activity android:name=".feature.credit.kur.KURPrecreeningActivity" />
+        <activity android:name=".feature.credit.kur.KURFulfillmentActivity" />
     </application>
 
 </manifest>

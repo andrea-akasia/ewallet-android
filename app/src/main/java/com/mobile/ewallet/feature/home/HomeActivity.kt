@@ -22,6 +22,7 @@ import com.mobile.ewallet.databinding.ActivityHomeBinding
 import com.mobile.ewallet.feature.auth.AuthActivity
 import com.mobile.ewallet.feature.credit.CreditDetailActivity
 import com.mobile.ewallet.feature.credit.kum.KUMPrescreeningActivity
+import com.mobile.ewallet.feature.credit.kur.KURPrecreeningActivity
 import com.mobile.ewallet.feature.moneyreq.MoneyRequestActivity
 import com.mobile.ewallet.feature.moneysend.MoneySendTypeActivity
 import com.mobile.ewallet.feature.profile.ProfileActivity
@@ -250,6 +251,12 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
         viewDialog.findViewById<TextView>(R.id.btn_kum).setOnClickListener {
             startActivity(
                 Intent(this, KUMPrescreeningActivity::class.java)
+            )
+            dialog.dismiss()
+        }
+        viewDialog.findViewById<TextView>(R.id.btn_kur).setOnClickListener {
+            startActivity(
+                Intent(this, KURPrecreeningActivity::class.java)
             )
             dialog.dismiss()
         }

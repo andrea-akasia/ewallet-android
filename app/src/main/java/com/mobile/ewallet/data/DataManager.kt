@@ -75,6 +75,95 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun submitFulfillmentKUR(data: KUMFulfillmentBody): Single<Response<MutableList<KUMFulfillmentResponse>>> {
+        return api.fulfillmentKUR(
+            idmember = getIdMember(),
+            idRequest = data.idRequest,
+            kewarganegaraan = data.codeKewarganegaraan,
+            phone = data.nomorPonsel,
+            faxArea = data.faxArea,
+            fax = data.fax,
+            profesi = data.codeProfesi,
+            jabatan = data.codeJabatan,
+            bidangUsaha = data.codeBidangUsaha,
+            berdiriSejak = data.berdiriSejak,
+            bekerjaSejak = data.bekerjaSejak,
+            tempatBekerja = data.codeTempatBekerja,
+            namaPerusahaan = data.namaPerusahaan,
+            alamatKantor1 = data.alamatKantor1,
+            alamatKantor2 = data.alamatKantor2,
+            alamatKantor3 = data.alamatKantor3,
+            kecamatanKantor = data.kecamatanKantor,
+            kelurahanKantor = data.kelurahanKantor,
+            kodePosKantor = data.codeKodePosKantor,
+            faxAreaKantor = data.faxAreaKantor,
+            faxKantor = data.faxKantor,
+            telpAreaKantor = data.telpAreaKantor,
+            telpKantor = data.telpKantor,
+            emergencyName = data.kontakDarurat,
+            hubungan = data.codeHubungan,
+            profesiPasangan = data.codeProfesiPasangan,
+            tempatBekerjaPasangan = data.codeTempatBekerjaPasangan,
+            bidangUsahaPasangan = data.codeBidangUsahaPasangan,
+            tanggalMenikah = data.tanggalMenikah,
+            datill = data.codeDatill,
+            sumberDana = data.codeSumberDana,
+            komoditas = data.codeKomoditas,
+            luasLahan = data.luasLahan,
+            jenisDebitur = data.codeJenisDebitur
+        )
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun formJenisKreditKUR(): Single<Response<MutableList<JenisKredit>>> {
+        return api.formJenisKreditKUR()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun submitPrescreeningKUR(data: KURPrescreeningBody): Single<Response<MutableList<KURPrescreeningResponse>>> {
+        return api.preScreeningKUR(
+            idmember = getIdMember(),
+            idRequest = data.idRequest,
+            namaPelapor = data.namaPelapor,
+            nomorKK = data.nomorKK,
+            tempatLahir = data.tempatLahir,
+            jenisKelamin = data.codeJenisKelamin,
+            tanggalLahir = data.tanggalLahir,
+            pendidikanTerakhir = data.codePendidikan,
+            namaIbu = data.namaIbu,
+            telpArea = data.noTelpArea,
+            telp = data.noTelp,
+            nomorKTP = data.nomorKTP,
+            namaKTP = data.namaKTP,
+            alamatKTP = data.alamatKTP,
+            kotaKTP = data.kotaKTP,
+            kecamatanKTP = data.kecamatanKTP,
+            kelurahanKTP = data.kelurahanKTP,
+            kodePosKTP = data.codeKodePosKTP,
+            alamatRumah = data.alamatRumah,
+            kotaRumah = data.kotaRumah,
+            kecamatanRumah = data.kecamatanRumah,
+            kelurahanRumah = data.kelurahanRumah,
+            kodePosRumah = data.codeKodePosRumah,
+            datillRumah = data.codeDatillRumah,
+            statusRumah = data.codeStatusRumah,
+            tanggalMenempatiRumah = data.tanggalMulaiMenempatiRumah,
+            statusPernikahan = data.codeStatusPernikahan,
+            namaPasangan = data.namaPasangan,
+            tanggalLahirPasangan = data.tanggalLahirPasangan,
+            nomorKTPPasangan = data.nomorKTPPasangan,
+            jenisKredit = data.codeJenisKredit,
+            limitAwal = data.limitAwal,
+            jangkaWaktu = data.codeJangkaWaktu,
+            npwp = data.npwp,
+            noRek = data.noRek
+        )
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun submitTopupViaKredit(amount: String): Single<Response<MutableList<TopupViaKreditResultResponse>>> {
         return api.submitTopupViaKredit(getIdMember(), amount)
             .subscribeOn(Schedulers.io())

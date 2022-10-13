@@ -7,15 +7,10 @@ import android.view.WindowInsetsController
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityCreditInfoBinding
 import com.mobile.ewallet.feature.home.TransactionAdapter
 import com.mobile.ewallet.feature.topup.TopupViaKreditActivity
-import com.mobile.ewallet.model.api.topup.TopupViaKreditStatResponse
-import com.mobile.ewallet.util.GlideApp
 
 class CreditDetailActivity: BaseActivity<CreditViewModel>() {
 
