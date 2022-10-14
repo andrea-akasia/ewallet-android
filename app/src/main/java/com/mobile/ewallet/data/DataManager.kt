@@ -18,6 +18,7 @@ import com.mobile.ewallet.model.api.dashboard.DashboardBalance
 import com.mobile.ewallet.model.api.dashboard.TransactionItem
 import com.mobile.ewallet.model.api.detailpokemon.DetailPokemonResponse
 import com.mobile.ewallet.model.api.moneyrequest.MoneyRequestData
+import com.mobile.ewallet.model.api.profile.Faq
 import com.mobile.ewallet.model.api.profile.ProfileAPIResponse
 import com.mobile.ewallet.model.api.profile.TermsCondition
 import com.mobile.ewallet.model.api.register.ConfirmOTPAPIResponse
@@ -77,6 +78,12 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun faq(): Single<Response<MutableList<Faq>>> {
+        return api.faq()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun termsConditions(): Single<Response<MutableList<TermsCondition>>> {
         return api.termsConditions()
             .subscribeOn(Schedulers.io())

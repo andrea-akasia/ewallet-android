@@ -602,6 +602,7 @@
                     android:layout_marginBottom="@dimen/_10sdp"/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/action_faq"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -626,7 +627,6 @@
                         app:layout_constraintTop_toTopOf="@+id/img_help" />
 
                     <ImageView
-                        android:id="@+id/action_faq"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:srcCompat="@drawable/ic_chevron_right"

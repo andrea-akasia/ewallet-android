@@ -20,6 +20,7 @@ import com.mobile.ewallet.feature.moneysend.MoneySendBankActivity
 import com.mobile.ewallet.feature.moneysend.MoneySendTypeActivity
 import com.mobile.ewallet.feature.pay.PayInputActivity
 import com.mobile.ewallet.feature.pay.PayResultActivity
+import com.mobile.ewallet.feature.profile.FaqActivity
 import com.mobile.ewallet.feature.profile.ProfileActivity
 import com.mobile.ewallet.feature.profile.TermConditionActivity
 import com.mobile.ewallet.feature.profile.UpdateProfileActivity
@@ -32,6 +33,9 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class BuildersModule{
+    @ContributesAndroidInjector(modules = [FragmentBuildersModule::class])
+    abstract fun bindFaqActivity(): FaqActivity
+
     @ContributesAndroidInjector(modules = [FragmentBuildersModule::class])
     abstract fun bindTermConditionActivity(): TermConditionActivity
 

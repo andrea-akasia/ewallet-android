@@ -99,6 +99,12 @@ class ProfileActivity: BaseActivity<ProfileViewModel>() {
             viewModel.loadTermsConditions()
         }
 
+        binding.actionFaq.setOnClickListener {
+            startActivity(
+                Intent(this, FaqActivity::class.java)
+            )
+        }
+
         observeViewModel()
     }
 
