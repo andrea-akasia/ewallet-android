@@ -21,8 +21,8 @@ class FaqAdapter(val data: MutableList<Faq>): RecyclerView.Adapter<FaqAdapter.Fa
     override fun onBindViewHolder(holder: FaqHolder, position: Int) {
         with(holder){
             val item = data[bindingAdapterPosition]
-            binding.question.text = item.question
-            binding.answer.text = item.answer
+            binding.question.text = Html.fromHtml(item.question, Html.FROM_HTML_MODE_COMPACT)
+            binding.answer.text = Html.fromHtml(item.answer, Html.FROM_HTML_MODE_COMPACT)
         }
     }
 
