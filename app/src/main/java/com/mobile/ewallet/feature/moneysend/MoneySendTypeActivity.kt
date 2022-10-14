@@ -102,8 +102,13 @@ class MoneySendTypeActivity: BaseActivity<SendMoneyViewModel>() {
             if(it.isNotEmpty()){
                 viewModel.localContact.forEach { lc ->
                     lc.numbers.forEach { num ->
-                        it.findLast { cu -> cu.phone == num }?.let { found ->
-                            viewModel.foundContacts.add(found)
+                        val compareValue = if(num[0] == '0') num.substring(1, num.length) else num.substring(2, num.length)
+                        //Timber.i(compareValue)
+                        it.findLast { cu -> cu.phone.contains(compareValue, true) }?.let { found ->
+                            val isExist = viewModel.foundContacts.findLast { search -> search == found }
+                            if(isExist == null){
+                                viewModel.foundContacts.add(found)
+                            }
                         }
                     }
                 }
