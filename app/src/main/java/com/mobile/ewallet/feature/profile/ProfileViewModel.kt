@@ -6,6 +6,7 @@ import com.mobile.ewallet.base.BaseViewModel
 import com.mobile.ewallet.data.DataManager
 import com.mobile.ewallet.model.api.dashboard.DashboardBalance
 import com.mobile.ewallet.model.api.profile.ProfileAPIResponse
+import com.mobile.ewallet.model.api.profile.TermsCondition
 import com.mobile.ewallet.util.createMultipartFromImageFile
 import timber.log.Timber
 import java.io.File
@@ -20,11 +21,37 @@ class ProfileViewModel
     internal var warningMessage = MutableLiveData<String>()
     internal var onProfileSaved = MutableLiveData<Boolean>()
     internal var isLoading = MutableLiveData<Boolean>()
+    internal var onTermsConditionsLoaded = MutableLiveData<TermsCondition>()
 
     var profileData: ProfileAPIResponse? = null
     var isNeedUpdatePhoto: Boolean = false
     var photoFile: File? = null
     lateinit var dashboardData: DashboardBalance
+
+    fun loadTermsConditions(){
+        dataManager.termsConditions()
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    isLoading.postValue(false)
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            onTermsConditionsLoaded.postValue(response[0])
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    isLoading.postValue(false)
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun save(phone: String, name: String, birthDate: String = ""){
         isLoading.postValue(true)

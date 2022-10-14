@@ -10,6 +10,7 @@ import com.mobile.ewallet.model.api.detailpokemon.DetailPokemonResponse
 import com.mobile.ewallet.model.api.moneyrequest.MoneyRequestData
 import com.mobile.ewallet.model.api.pokemon.PokemonResponse
 import com.mobile.ewallet.model.api.profile.ProfileAPIResponse
+import com.mobile.ewallet.model.api.profile.TermsCondition
 import com.mobile.ewallet.model.api.register.ConfirmOTPAPIResponse
 import com.mobile.ewallet.model.api.sendmoney.HistoryTransferTransaction
 import com.mobile.ewallet.model.api.sendmoney.banktransfer.*
@@ -34,6 +35,9 @@ import retrofit2.http.*
 
 
 interface APIService {
+    @POST("SyaratKetentuan.aspx")
+    fun termsConditions(): Single<Response<MutableList<TermsCondition>>>
+
     @FormUrlEncoded
     @POST("TOPUP_VA_Instruction.aspx")
     fun topupVAInstruction(

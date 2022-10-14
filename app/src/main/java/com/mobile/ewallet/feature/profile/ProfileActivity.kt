@@ -95,6 +95,10 @@ class ProfileActivity: BaseActivity<ProfileViewModel>() {
             logoutDialog.show()
         }
 
+        binding.actionTerms.setOnClickListener {
+            viewModel.loadTermsConditions()
+        }
+
         observeViewModel()
     }
 
@@ -104,6 +108,13 @@ class ProfileActivity: BaseActivity<ProfileViewModel>() {
     }
 
     private fun observeViewModel(){
+        viewModel.onTermsConditionsLoaded.observe(this){
+            startActivity(
+                Intent(this, TermConditionActivity::class.java)
+                    .putExtra("DATA", it.terms)
+            )
+        }
+
         viewModel.onProfileLoaded.observe(this){
             Glide.with(this)
                 .load(it.photoProfileThumbnail)

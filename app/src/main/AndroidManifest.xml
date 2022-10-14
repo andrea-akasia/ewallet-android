@@ -66,6 +66,7 @@
         <activity android:name=".feature.credit.kur.KURPrecreeningActivity" />
         <activity android:name=".feature.credit.kur.KURFulfillmentActivity" />
         <activity android:name=".feature.credit.kur.KURUploadDocumentsActivity" />
+        <activity android:name=".feature.profile.TermConditionActivity" />
     </application>
 
 </manifest>

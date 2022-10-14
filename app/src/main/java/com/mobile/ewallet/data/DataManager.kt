@@ -19,6 +19,7 @@ import com.mobile.ewallet.model.api.dashboard.TransactionItem
 import com.mobile.ewallet.model.api.detailpokemon.DetailPokemonResponse
 import com.mobile.ewallet.model.api.moneyrequest.MoneyRequestData
 import com.mobile.ewallet.model.api.profile.ProfileAPIResponse
+import com.mobile.ewallet.model.api.profile.TermsCondition
 import com.mobile.ewallet.model.api.register.ConfirmOTPAPIResponse
 import com.mobile.ewallet.model.api.sendmoney.HistoryTransferTransaction
 import com.mobile.ewallet.model.api.sendmoney.banktransfer.*
@@ -76,6 +77,12 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun termsConditions(): Single<Response<MutableList<TermsCondition>>> {
+        return api.termsConditions()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun topupVAInstruction(idbank: String): Single<Response<MutableList<TopupInstruction>>> {
         return api.topupVAInstruction(getIdMember(), idbank)
             .subscribeOn(Schedulers.io())
