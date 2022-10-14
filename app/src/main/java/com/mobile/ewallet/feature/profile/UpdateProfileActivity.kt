@@ -1,6 +1,8 @@
 package com.mobile.ewallet.feature.profile
 
+import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.ViewGroup
@@ -11,6 +13,7 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
@@ -64,9 +67,14 @@ class UpdateProfileActivity: BaseActivity<ProfileViewModel>(), DatePickerFragmen
         setContentView(binding.root)
 
         window.statusBarColor = ContextCompat.getColor(this, android.R.color.white)
-        window.insetsController?.setSystemBarsAppearance(
-            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
-            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+            window.insetsController?.setSystemBarsAppearance(
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
+        }else{
+            WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = true
+            window.statusBarColor = Color.WHITE
+        }
         val prefixView =
             binding.tilPhone.findViewById<AppCompatTextView>(com.google.android.material.R.id.textinput_prefix_text)
         prefixView.layoutParams = LinearLayout.LayoutParams(

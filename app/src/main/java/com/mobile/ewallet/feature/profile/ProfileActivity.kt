@@ -1,12 +1,15 @@
 package com.mobile.ewallet.feature.profile
 
 import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowInsetsController
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.mobile.ewallet.R
@@ -27,9 +30,14 @@ class ProfileActivity: BaseActivity<ProfileViewModel>() {
         setContentView(binding.root)
 
         window.statusBarColor = ContextCompat.getColor(this, android.R.color.white)
-        window.insetsController?.setSystemBarsAppearance(
-            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
-            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+            window.insetsController?.setSystemBarsAppearance(
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
+        }else{
+            WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = true
+            window.statusBarColor = Color.WHITE
+        }
 
         intent.getStringExtra("DASHBOARD_DATA")?.let {
             viewModel.dashboardData = Gson().fromJson(it, DashboardBalance::class.java)

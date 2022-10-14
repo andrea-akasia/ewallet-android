@@ -1,11 +1,14 @@
 package com.mobile.ewallet.feature.credit
 
 import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowInsetsController
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityCreditInfoBinding
@@ -23,9 +26,14 @@ class CreditDetailActivity: BaseActivity<CreditViewModel>() {
         setContentView(binding.root)
 
         window.statusBarColor = ContextCompat.getColor(this, android.R.color.white)
-        window.insetsController?.setSystemBarsAppearance(
-            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
-            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+            window.insetsController?.setSystemBarsAppearance(
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
+        }else{
+            WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = true
+            window.statusBarColor = Color.WHITE
+        }
 
         binding.topbar.actionBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
         binding.topbar.title.text = "Saldo Kredit"
