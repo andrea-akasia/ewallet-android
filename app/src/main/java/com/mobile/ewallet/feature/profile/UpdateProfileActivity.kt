@@ -1,5 +1,7 @@
 package com.mobile.ewallet.feature.profile
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
@@ -9,30 +11,78 @@ import android.view.ViewGroup
 import android.view.WindowInsetsController
 import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.esafirm.imagepicker.features.ImagePickerConfig
+import com.esafirm.imagepicker.features.ImagePickerMode
+import com.esafirm.imagepicker.features.registerImagePicker
 import com.google.gson.Gson
 import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityUpdateProfileBinding
 import com.mobile.ewallet.model.api.profile.ProfileAPIResponse
-import com.mobile.ewallet.util.DatePickerFragment
-import com.mobile.ewallet.util.getFile
-import com.mobile.ewallet.util.getMaxDateForBirthDate
+import com.mobile.ewallet.util.*
 import id.zelory.compressor.Compressor
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File
 
+
 class UpdateProfileActivity: BaseActivity<ProfileViewModel>(), DatePickerFragment.DateListener {
 
     override val viewModelClass: Class<ProfileViewModel> get() = ProfileViewModel::class.java
     private lateinit var binding: ActivityUpdateProfileBinding
+
+    private val REQUIRED_PERMISSIONS = arrayOf(
+        Manifest.permission.CAMERA
+    )
+
+    private fun allPermissionsGranted(): Boolean {
+        for (permission in REQUIRED_PERMISSIONS) {
+            if (ContextCompat.checkSelfPermission(
+                    this, permission
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                return false
+            }
+        }
+        return true
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == Constant.RC_PERMISSIONS) {
+            if (!allPermissionsGranted()) {
+                Toast.makeText(
+                    this,
+                    "Izin penggunakan kamera harus diberikan untuk dapat melanjutkan!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                pickImage()
+            }
+        }
+    }
+
+    private val imagePickerLauncher = registerImagePicker { images ->
+        if(images.isNotEmpty()){
+            val bmp = rotateBitmap(getBitmap(images[0].path)!!, getCameraPhotoOrientation(images[0].path).toFloat())
+            viewModel.isNeedUpdatePhoto = true
+            viewModel.photoFile = File(persistImage(bmp, filesDir))//File(images[0].path)
+            viewModel.photoFile?.let { compressImageFile(it) }
+            Glide.with(this)
+                .load(viewModel.photoFile)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .into(binding.image)
+        }
+    }
 
     private val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
         uri?.let {
@@ -52,11 +102,13 @@ class UpdateProfileActivity: BaseActivity<ProfileViewModel>(), DatePickerFragmen
         lifecycleScope.launch {
             viewModel.photoFile = Compressor.compress(applicationContext, imageFile)
             //Timber.i("compressed image size: ${getFolderSizeLabel(viewModel.photoFile!!)}")
-            Timber.i("compressed image path -> ${viewModel.photoFile!!.path}")
+            //Timber.i("compressed image path -> ${viewModel.photoFile!!.path}")
 
             val uri = Uri.fromFile(viewModel.photoFile)
             Glide.with(this@UpdateProfileActivity)
                 .load(uri)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
                 .into(binding.image)
         }
     }
@@ -97,7 +149,14 @@ class UpdateProfileActivity: BaseActivity<ProfileViewModel>(), DatePickerFragmen
         }
 
         binding.actionSelectPhoto.setOnClickListener {
-            pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+            //pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+            if (allPermissionsGranted()) {
+                pickImage()
+            } else {
+                ActivityCompat.requestPermissions(
+                    this@UpdateProfileActivity, REQUIRED_PERMISSIONS, Constant.RC_PERMISSIONS
+                )
+            }
         }
 
         binding.etDate.setOnClickListener {
@@ -116,6 +175,14 @@ class UpdateProfileActivity: BaseActivity<ProfileViewModel>(), DatePickerFragmen
         }
 
         observeViewModel()
+    }
+
+    private fun pickImage(){
+        imagePickerLauncher.launch(
+            ImagePickerConfig(
+                mode = ImagePickerMode.SINGLE
+            )
+        )
     }
 
     override fun onDateSelected(date: String) {
@@ -142,4 +209,5 @@ class UpdateProfileActivity: BaseActivity<ProfileViewModel>(), DatePickerFragmen
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
     }
+
 }

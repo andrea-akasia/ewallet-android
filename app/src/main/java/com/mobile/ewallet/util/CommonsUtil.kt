@@ -2,17 +2,19 @@ package com.mobile.ewallet.util
 
 import android.content.Context
 import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Matrix
 import android.net.Uri
 import android.provider.OpenableColumns
+import androidx.exifinterface.media.ExifInterface
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.InputStream
+import timber.log.Timber
+import java.io.*
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.text.NumberFormat
@@ -88,4 +90,61 @@ fun String.formatToCurrency(): String {
 fun String.removeCharExceptNumber(): String {
     val re = Regex("[^0-9]")
     return re.replace(this, "")
+}
+
+fun getCameraPhotoOrientation(imagePath: String): Int {
+    var rotate = 0
+    try {
+        //context.contentResolver.notifyChange(imageUri, null)
+        val imageFile = File(imagePath)
+        val exif = ExifInterface(imageFile.absolutePath)
+        val orientation: Int = exif.getAttributeInt(
+            ExifInterface.TAG_ORIENTATION,
+            ExifInterface.ORIENTATION_NORMAL
+        )
+        when (orientation) {
+            ExifInterface.ORIENTATION_ROTATE_270 -> rotate = 270
+            ExifInterface.ORIENTATION_ROTATE_180 -> rotate = 180
+            ExifInterface.ORIENTATION_ROTATE_90 -> rotate = 90
+        }
+        Timber.i("Exif orientation: $orientation")
+        Timber.i("Rotate value: $rotate")
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+    return rotate
+}
+
+fun rotateBitmap(source: Bitmap, angle: Float): Bitmap {
+    val matrix = Matrix()
+    matrix.postRotate(angle)
+    return Bitmap.createBitmap(source, 0, 0, source.width, source.height, matrix, true)
+}
+
+fun getBitmap(path: String): Bitmap? {
+    var bitmap: Bitmap? = null
+    try {
+        val f = File(path)
+        val options = BitmapFactory.Options()
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888
+        bitmap = BitmapFactory.decodeStream(FileInputStream(f), null, options)
+    } catch (e: java.lang.Exception) {
+        e.printStackTrace()
+    }
+    return bitmap
+}
+
+fun persistImage(bitmap: Bitmap, filesDirectory: File): String {
+    val imageFile = File(filesDirectory, "img.jpg")
+    val os: OutputStream
+    try {
+        os = FileOutputStream(imageFile)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os)
+        os.flush()
+        os.close()
+        return imageFile.path
+    } catch (e: java.lang.Exception) {
+        Timber.e("Error writing bitmap")
+    }
+    return ""
 }
