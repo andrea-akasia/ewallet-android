@@ -31,6 +31,7 @@ import com.mobile.ewallet.model.api.sendmoney.byscan.MinimumNominalResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.SendMoneyResult
 import com.mobile.ewallet.model.api.sendmoney.byscan.TransactionDetail
 import com.mobile.ewallet.model.api.splashscreen.SplashscreenAPIResponse
+import com.mobile.ewallet.model.api.topup.TopupInstruction
 import com.mobile.ewallet.model.api.topup.TopupVA
 import com.mobile.ewallet.model.api.topup.TopupViaKreditResultResponse
 import com.mobile.ewallet.model.api.topup.TopupViaKreditStatResponse
@@ -75,6 +76,12 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun topupVAInstruction(idbank: String): Single<Response<MutableList<TopupInstruction>>> {
+        return api.topupVAInstruction(getIdMember(), idbank)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun kurDocumentSIUP(idRequest: String, file: MultipartBody.Part): Single<Response<MutableList<BaseAPIResponse>>> {
         return api.kurDocumentSIUP(createStringReqBody(getIdMember()), createStringReqBody(idRequest), file)
             .subscribeOn(Schedulers.io())

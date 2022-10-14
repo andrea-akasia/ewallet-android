@@ -22,6 +22,7 @@ import com.mobile.ewallet.model.api.sendmoney.byscan.MinimumNominalResponse
 import com.mobile.ewallet.model.api.sendmoney.byscan.SendMoneyResult
 import com.mobile.ewallet.model.api.sendmoney.byscan.TransactionDetail
 import com.mobile.ewallet.model.api.splashscreen.SplashscreenAPIResponse
+import com.mobile.ewallet.model.api.topup.TopupInstruction
 import com.mobile.ewallet.model.api.topup.TopupVA
 import com.mobile.ewallet.model.api.topup.TopupViaKreditResultResponse
 import com.mobile.ewallet.model.api.topup.TopupViaKreditStatResponse
@@ -33,6 +34,13 @@ import retrofit2.http.*
 
 
 interface APIService {
+    @FormUrlEncoded
+    @POST("TOPUP_VA_Instruction.aspx")
+    fun topupVAInstruction(
+        @Field("IDMember") idMember: String,
+        @Field("IDBankVA") idRequest: String
+    ): Single<Response<MutableList<TopupInstruction>>>
+
     @Multipart
     @POST("Pendanaan_KUR_Document_SIUP.aspx")
     fun kurDocumentSIUP(

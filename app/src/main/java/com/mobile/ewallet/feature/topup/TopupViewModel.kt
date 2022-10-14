@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import com.mobile.ewallet.base.BaseViewModel
 import com.mobile.ewallet.data.DataManager
+import com.mobile.ewallet.model.api.topup.TopupInstruction
 import com.mobile.ewallet.model.api.topup.TopupVA
 import com.mobile.ewallet.model.api.topup.TopupViaKreditResultResponse
 import com.mobile.ewallet.model.api.topup.TopupViaKreditStatResponse
@@ -19,8 +20,36 @@ class TopupViewModel
     internal var onVirtualAccountLoaded = MutableLiveData<MutableList<TopupVA>>()
     internal var onTopupViaKreditStatLoaded = MutableLiveData<TopupViaKreditStatResponse>()
     internal var onTopupSuccess = MutableLiveData<TopupViaKreditResultResponse>()
+    internal var onTopupInstructionsLoaded = MutableLiveData<MutableList<TopupInstruction>>()
 
     var maksimum = 0
+    var selectedVA: TopupVA? = null
+
+    fun loadTopupInstructions(idBank: String) {
+        isLoading.postValue(true)
+        dataManager.topupVAInstruction(idBank)
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    isLoading.postValue(false)
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            onTopupInstructionsLoaded.postValue(response)
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    isLoading.postValue(false)
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun submitTopupViaKredit(amount: String) {
         isLoading.postValue(true)

@@ -11,11 +11,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityTopupBinding
+import com.mobile.ewallet.model.api.topup.TopupInstruction
 import com.mobile.ewallet.model.api.topup.TopupVA
 import com.mobile.ewallet.util.GlideApp
 
@@ -48,6 +50,10 @@ class TopupActivity: BaseActivity<TopupViewModel>(), VirtualAccAdapter.VAListene
     }
 
     private fun observeViewModel() {
+        viewModel.onTopupInstructionsLoaded.observe(this){
+            showVirtualAccountInfo(viewModel.selectedVA!!, it)
+        }
+
         viewModel.onVirtualAccountLoaded.observe(this){
             if(it.isNotEmpty()){
                 val vaAdapter = VirtualAccAdapter(it, this@TopupActivity)
@@ -71,9 +77,13 @@ class TopupActivity: BaseActivity<TopupViewModel>(), VirtualAccAdapter.VAListene
         Toast.makeText(this, "Kode Virtual Account Telah Disalin", Toast.LENGTH_SHORT).show()
     }
 
-    private fun showVirtualAccountInfo(data: TopupVA){
+    private fun showVirtualAccountInfo(data: TopupVA, instructions: MutableList<TopupInstruction>){
         val dialog = BottomSheetDialog(this)
         val viewDialog = layoutInflater.inflate(R.layout.dialog_va, null)
+
+        val instructionAdapter = InstructionAdapter(instructions)
+        viewDialog.findViewById<RecyclerView>(R.id.rv).layoutManager = LinearLayoutManager(this)
+        viewDialog.findViewById<RecyclerView>(R.id.rv).adapter = instructionAdapter
 
         GlideApp.with(this)
             .load(data.logo)
@@ -100,6 +110,8 @@ class TopupActivity: BaseActivity<TopupViewModel>(), VirtualAccAdapter.VAListene
     }
 
     override fun onVASelected(data: TopupVA) {
-        showVirtualAccountInfo(data)
+        viewModel.selectedVA = data
+        viewModel.loadTopupInstructions(data.iDBank)
+        //showVirtualAccountInfo(data)
     }
 }
