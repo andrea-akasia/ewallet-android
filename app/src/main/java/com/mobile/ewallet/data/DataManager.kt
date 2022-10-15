@@ -449,8 +449,8 @@ class DataManager
             .observeOn(AndroidSchedulers.mainThread())
     }
 
-    fun formLokasiDatill(): Single<Response<MutableList<LokasiDatill>>> {
-        return api.formlokasiDatill()
+    fun formLokasiDatill(keyword: String): Single<Response<MutableList<LokasiDatill>>> {
+        return api.formlokasiDatill(keyword)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }

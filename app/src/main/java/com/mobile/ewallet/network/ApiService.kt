@@ -383,8 +383,11 @@ interface APIService {
     @POST("DDM_StatusRumah.aspx")
     fun formStatusRumah(): Single<Response<MutableList<StatusRumah>>>
 
+    @FormUrlEncoded
     @POST("DDM_LokasiDatiII.aspx")
-    fun formlokasiDatill(): Single<Response<MutableList<LokasiDatill>>>
+    fun formlokasiDatill(
+        @Field("keyword") keyword: String
+    ): Single<Response<MutableList<LokasiDatill>>>
 
     @FormUrlEncoded
     @POST("DDM_KodePos.aspx")

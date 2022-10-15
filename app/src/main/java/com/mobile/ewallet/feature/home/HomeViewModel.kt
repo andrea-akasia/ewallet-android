@@ -247,7 +247,7 @@ class HomeViewModel
                         res.body()?.let { response ->
                             if(response.isNotEmpty()){
                                 balanceData = response[0]
-                                onDashboardBalanceLoaded.postValue(response[0]/*.apply { iDPendanaanDisetujui = "0" }*/)
+                                onDashboardBalanceLoaded.postValue(response[0].apply { iDPendanaanDisetujui = "0" })
                             }else{
                                 warningMessage.postValue("empty data dashboard")
                             }

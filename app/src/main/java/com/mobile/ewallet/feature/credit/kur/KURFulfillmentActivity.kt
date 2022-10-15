@@ -10,17 +10,21 @@ import androidx.core.content.ContextCompat
 import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityKurFulfillmentBinding
+import com.mobile.ewallet.feature.credit.DatillSearchDialog
 import com.mobile.ewallet.feature.credit.KodePosSearchDialog
 import com.mobile.ewallet.model.api.credit.KodePos
+import com.mobile.ewallet.model.api.credit.LokasiDatill
 import com.mobile.ewallet.util.DatePickerFragment
 
 class KURFulfillmentActivity: BaseActivity<KURFulfillmentViewModel>(),
-    DatePickerFragment.DateListener, KodePosSearchDialog.SearchKodePosListener {
+    DatePickerFragment.DateListener, KodePosSearchDialog.SearchKodePosListener,
+    DatillSearchDialog.SearchDatillListener {
 
     override val viewModelClass: Class<KURFulfillmentViewModel> get() = KURFulfillmentViewModel::class.java
     private lateinit var binding: ActivityKurFulfillmentBinding
 
     private var searchKodePosDialog: KodePosSearchDialog? = null
+    private var searchDatillDialog: DatillSearchDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +58,12 @@ class KURFulfillmentActivity: BaseActivity<KURFulfillmentViewModel>(),
             searchKodePosDialog = KodePosSearchDialog().newInstance()
             searchKodePosDialog?.listener = this@KURFulfillmentActivity
             searchKodePosDialog?.show(supportFragmentManager, null)
+        }
+
+        binding.etDatill.setOnClickListener {
+            searchDatillDialog = DatillSearchDialog().newInstance()
+            searchDatillDialog?.listener = this@KURFulfillmentActivity
+            searchDatillDialog?.show(supportFragmentManager, null)
         }
 
         binding.etBekerjaTanggalMenikah.setOnClickListener {
@@ -153,20 +163,7 @@ class KURFulfillmentActivity: BaseActivity<KURFulfillmentViewModel>(),
         }
 
         viewModel.onFormLokasiDatillLoaded.observe(this){
-            ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, it).also { adptr ->
-                adptr.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
-                binding.spinnerDatill.adapter = adptr
-                binding.spinnerDatill.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                        if(position > 0){
-                            viewModel.selectedLokasiDatill = viewModel.lokasiDatills[position]
-                        }else{
-                            viewModel.selectedLokasiDatill = null
-                        }
-                    }
-                    override fun onNothingSelected(parent: AdapterView<*>?) {}
-                }
-            }
+            searchDatillDialog?.updateData(it)
         }
 
         viewModel.onFormStatusPernikahanLoaded.observe(this){
@@ -353,5 +350,15 @@ class KURFulfillmentActivity: BaseActivity<KURFulfillmentViewModel>(),
             viewModel.selectedKodePosKantor = data
         }
         searchKodePosDialog?.dismiss()
+    }
+
+    override fun onDatillKeywordSubmited(keyword: String) {
+        viewModel.loadLokasiDatill(keyword)
+    }
+
+    override fun onDatillSelected(data: LokasiDatill) {
+        viewModel.selectedLokasiDatill = data
+        binding.etDatill.setText(data.description)
+        searchDatillDialog?.dismiss()
     }
 }

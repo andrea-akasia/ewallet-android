@@ -536,16 +536,19 @@
                 android:layout_marginBottom="@dimen/_4sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Lokasi Datill Rumah"
+                android:text="Dati II Rumah"
                 android:textColor="@android:color/black"
                 android:textSize="12sp" />
 
-            <Spinner
-                android:id="@+id/spinner_datill"
+            <EditText
+                android:id="@+id/et_datill"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_32sdp"
                 android:textSize="14sp"
-                android:background="@drawable/spinner_bg"
+                android:focusable="false"
+                android:background="@drawable/textfield_border_bg"
                 android:layout_marginBottom="@dimen/_8sdp"/>
 
             <TextView

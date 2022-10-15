@@ -21,7 +21,7 @@ class FulfillmentViewModel
     internal var onFormTempatBekerjaLoaded = MutableLiveData<MutableList<String>>()
     internal var onFormKodePosLoaded = MutableLiveData<MutableList<KodePos>>()
     internal var onFormStatusPernikahanLoaded = MutableLiveData<MutableList<String>>()
-    internal var onFormLokasiDatillLoaded = MutableLiveData<MutableList<String>>()
+    internal var onFormLokasiDatillLoaded = MutableLiveData<MutableList<LokasiDatill>>()
     internal var onFormSumberDanaLoaded = MutableLiveData<MutableList<String>>()
     internal var onFormKomoditasLoaded = MutableLiveData<MutableList<String>>()
     internal var onFormJenisDebiturLoaded = MutableLiveData<MutableList<String>>()
@@ -236,22 +236,15 @@ class FulfillmentViewModel
             )
     }
 
-    fun loadLokasiDatill() {
+    fun loadLokasiDatill(keyword: String) {
         lokasiDatills.clear()
-        selectedLokasiDatill = null
-        dataManager.formLokasiDatill()
+        dataManager.formLokasiDatill(keyword)
             .doOnSubscribe(this::addDisposable)
             .subscribe(
                 { res ->
                     if (res.isSuccessful) {
                         res.body()?.let { response ->
-                            val dataString = mutableListOf<String>()
-                            response.forEach {
-                                lokasiDatills.add(it)
-                                dataString.add(it.description)
-                            }
-                            onFormLokasiDatillLoaded.postValue(dataString)
-                            loadSumberDana()
+                            onFormLokasiDatillLoaded.postValue(response)
                         }
                     } else {
                         // not 20x
@@ -282,7 +275,7 @@ class FulfillmentViewModel
                                 dataString.add(it.description)
                             }
                             onFormStatusPernikahanLoaded.postValue(dataString)
-                            loadLokasiDatill()
+                            loadSumberDana()
                         }
                     } else {
                         // not 20x

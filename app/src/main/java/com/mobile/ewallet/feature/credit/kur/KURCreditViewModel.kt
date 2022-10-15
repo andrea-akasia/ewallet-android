@@ -16,7 +16,7 @@ class KURCreditViewModel
     internal var onFormJenisKelaminLoaded = MutableLiveData<MutableList<String>>()
     internal var onFormPendidikanLoaded = MutableLiveData<MutableList<String>>()
     internal var onFormKodePosLoaded = MutableLiveData<MutableList<KodePos>>()
-    internal var onFormLokasiDatillLoaded = MutableLiveData<MutableList<String>>()
+    internal var onFormLokasiDatillLoaded = MutableLiveData<MutableList<LokasiDatill>>()
     internal var onFormStatusRumahLoaded = MutableLiveData<MutableList<String>>()
     internal var onFormStatusPernikahanLoaded = MutableLiveData<MutableList<String>>()
     internal var onFormJenisKreditLoaded = MutableLiveData<MutableList<String>>()
@@ -313,22 +313,16 @@ class KURCreditViewModel
             )
     }
 
-    fun loadLokasiDatill() {
+    fun loadLokasiDatill(keyword: String) {
         lokasiDatills.clear()
-        selectedLokasiDatill = null
-        dataManager.formLokasiDatill()
+        dataManager.formLokasiDatill(keyword)
             .doOnSubscribe(this::addDisposable)
             .subscribe(
                 { res ->
                     if (res.isSuccessful) {
                         res.body()?.let { response ->
-                            val dataString = mutableListOf<String>()
-                            response.forEach {
-                                lokasiDatills.add(it)
-                                dataString.add(it.description)
-                            }
-                            onFormLokasiDatillLoaded.postValue(dataString)
-                            loadStatusRumah()
+                            onFormLokasiDatillLoaded.postValue(response)
+
                         }
                     } else {
                         // not 20x
@@ -387,7 +381,7 @@ class KURCreditViewModel
                                 dataString.add(it.description)
                             }
                             onFormPendidikanLoaded.postValue(dataString)
-                            loadLokasiDatill()
+                            loadStatusRumah()
                         }
                     } else {
                         // not 20x

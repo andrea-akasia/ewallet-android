@@ -11,18 +11,21 @@ import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityKumPrescreeningBinding
 import com.mobile.ewallet.feature.credit.CreditViewModel
+import com.mobile.ewallet.feature.credit.DatillSearchDialog
 import com.mobile.ewallet.feature.credit.KodePosSearchDialog
 import com.mobile.ewallet.model.api.credit.KodePos
+import com.mobile.ewallet.model.api.credit.LokasiDatill
 import com.mobile.ewallet.util.DatePickerFragment
 import com.mobile.ewallet.util.getMaxDateForBirthDate
 
 class KUMPrescreeningActivity: BaseActivity<CreditViewModel>(), DatePickerFragment.DateListener,
-    KodePosSearchDialog.SearchKodePosListener {
+    KodePosSearchDialog.SearchKodePosListener, DatillSearchDialog.SearchDatillListener {
 
     override val viewModelClass: Class<CreditViewModel> get() = CreditViewModel::class.java
     private lateinit var binding: ActivityKumPrescreeningBinding
 
     private var searchKodePosDialog: KodePosSearchDialog? = null
+    private var searchDatillDialog: DatillSearchDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,6 +76,12 @@ class KUMPrescreeningActivity: BaseActivity<CreditViewModel>(), DatePickerFragme
             datePicker.isCancelable = true
             datePicker.listener = this@KUMPrescreeningActivity
             datePicker.show(supportFragmentManager, null)
+        }
+
+        binding.etDatill.setOnClickListener {
+            searchDatillDialog = DatillSearchDialog().newInstance()
+            searchDatillDialog?.listener = this@KUMPrescreeningActivity
+            searchDatillDialog?.show(supportFragmentManager, null)
         }
 
         binding.btnContinue.setOnClickListener {
@@ -226,20 +235,7 @@ class KUMPrescreeningActivity: BaseActivity<CreditViewModel>(), DatePickerFragme
         }
 
         viewModel.onFormLokasiDatillLoaded.observe(this){
-            ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, it).also { adptr ->
-                adptr.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
-                binding.spinnerDatill.adapter = adptr
-                binding.spinnerDatill.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                        if(position > 0){
-                            viewModel.selectedLokasiDatill = viewModel.lokasiDatills[position]
-                        }else{
-                            viewModel.selectedLokasiDatill = null
-                        }
-                    }
-                    override fun onNothingSelected(parent: AdapterView<*>?) {}
-                }
-            }
+            searchDatillDialog?.updateData(it)
         }
 
         viewModel.onFormKodePosLoaded.observe(this){
@@ -308,5 +304,15 @@ class KUMPrescreeningActivity: BaseActivity<CreditViewModel>(), DatePickerFragme
             viewModel.selectedKodePosRumah = data
         }
         searchKodePosDialog?.dismiss()
+    }
+
+    override fun onDatillKeywordSubmited(keyword: String) {
+        viewModel.loadLokasiDatill(keyword)
+    }
+
+    override fun onDatillSelected(data: LokasiDatill) {
+        viewModel.selectedLokasiDatill = data
+        binding.etDatill.setText(data.description)
+        searchDatillDialog?.dismiss()
     }
 }
