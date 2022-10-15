@@ -93,6 +93,7 @@ class KUMFulfillmentActivity: BaseActivity<FulfillmentViewModel>(),
                 telpAreaKantor = binding.etPhoneAreaKantor.text.toString(),
                 telpKantor = binding.etPhoneKantor.text.toString(),
                 emergencyName = binding.etEmergencyName.text.toString(),
+                hubungan = binding.etHubungan.text.toString(),
                 tanggalMenikah = binding.etBekerjaTanggalMenikah.text.toString(),
                 luasLahan = binding.etLuasLahan.text.toString(),
             )
@@ -163,31 +164,6 @@ class KUMFulfillmentActivity: BaseActivity<FulfillmentViewModel>(),
 
         viewModel.onFormLokasiDatillLoaded.observe(this){
             searchDatillDialog?.updateData(it)
-        }
-
-        viewModel.onFormStatusPernikahanLoaded.observe(this){
-            ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, it).also { adptr ->
-                adptr.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
-                binding.spinnerHubungan.adapter = adptr
-                binding.spinnerHubungan.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                        if(position > 0){
-                            viewModel.selectedStatusPernikahan = viewModel.statusPernikahans[position]
-                            viewModel.selectedStatusPernikahan?.let { status ->
-                                if(status.code == "1"){
-                                    binding.viewPernikahanOptional.visibility = View.VISIBLE
-                                }else{
-                                    binding.viewPernikahanOptional.visibility = View.GONE
-                                }
-                            }
-                        }else{
-                            viewModel.selectedStatusPernikahan = null
-                            binding.viewPernikahanOptional.visibility = View.GONE
-                        }
-                    }
-                    override fun onNothingSelected(parent: AdapterView<*>?) {}
-                }
-            }
         }
 
         viewModel.onFormKodePosLoaded.observe(this){

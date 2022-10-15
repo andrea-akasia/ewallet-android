@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import com.mobile.ewallet.base.BaseViewModel
 import com.mobile.ewallet.data.DataManager
 import com.mobile.ewallet.model.api.credit.*
-import retrofit2.http.Field
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -74,6 +73,7 @@ class FulfillmentViewModel
         telpAreaKantor: String,
         telpKantor: String,
         emergencyName: String,
+        hubungan: String,
         tanggalMenikah: String,
         luasLahan: String
     ) {
@@ -102,7 +102,7 @@ class FulfillmentViewModel
                 telpAreaKantor = telpAreaKantor,
                 telpKantor = telpKantor,
                 kontakDarurat = emergencyName,
-                codeHubungan = if (selectedStatusPernikahan != null) selectedStatusPernikahan!!.code else "",
+                hubungan = hubungan,
                 codeProfesiPasangan = if (selectedProfesiPasangan != null) selectedProfesiPasangan!!.code else "",
                 codeTempatBekerjaPasangan = if (selectedTempatBekerjaPasangan != null) selectedTempatBekerjaPasangan!!.code else "",
                 codeBidangUsahaPasangan = if (selectedBidangUsahaPasangan != null) selectedBidangUsahaPasangan!!.code else "",

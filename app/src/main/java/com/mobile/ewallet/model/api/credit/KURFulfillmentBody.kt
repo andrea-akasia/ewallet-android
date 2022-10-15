@@ -24,7 +24,7 @@ data class KURFulfillmentBody(
     var telpAreaKantor: String = "",
     var telpKantor: String = "",
     var kontakDarurat: String = "",
-    var codeHubungan: String = "",
+    var hubungan: String = "",
     var codeProfesiPasangan: String = "",
     var codeTempatBekerjaPasangan: String = "",
     var codeBidangUsahaPasangan: String = "",
