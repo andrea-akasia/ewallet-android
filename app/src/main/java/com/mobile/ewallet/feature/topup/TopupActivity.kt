@@ -1,9 +1,9 @@
 package com.mobile.ewallet.feature.topup
 
-import android.R.attr.label
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -17,10 +17,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityTopupBinding
+import com.mobile.ewallet.feature.credit.kum.KUMPrescreeningActivity
+import com.mobile.ewallet.feature.credit.kur.KURPrecreeningActivity
 import com.mobile.ewallet.model.api.topup.TopupInstruction
 import com.mobile.ewallet.model.api.topup.TopupVA
 import com.mobile.ewallet.util.GlideApp
-
 
 class TopupActivity: BaseActivity<TopupViewModel>(), VirtualAccAdapter.VAListener {
 
@@ -42,6 +43,9 @@ class TopupActivity: BaseActivity<TopupViewModel>(), VirtualAccAdapter.VAListene
                 binding.viewCreditReqPrompt.visibility = View.GONE
             }else{
                 binding.viewCreditReqPrompt.visibility = View.VISIBLE
+                binding.btnApplyCredit.setOnClickListener {
+                    showSelectPengajuanTypeDialog()
+                }
             }
         }
 
@@ -112,5 +116,29 @@ class TopupActivity: BaseActivity<TopupViewModel>(), VirtualAccAdapter.VAListene
         viewModel.selectedVA = data
         viewModel.loadTopupInstructions(data.iDBank)
         //showVirtualAccountInfo(data)
+    }
+
+    private fun showSelectPengajuanTypeDialog(){
+        val dialog = BottomSheetDialog(this)
+        val viewDialog = layoutInflater.inflate(R.layout.dialog_select_pengajuan_type, null)
+
+
+        viewDialog.findViewById<TextView>(R.id.action_close).setOnClickListener {
+            dialog.dismiss()
+        }
+        viewDialog.findViewById<TextView>(R.id.btn_kum).setOnClickListener {
+            startActivity(
+                Intent(this, KUMPrescreeningActivity::class.java)
+            )
+            dialog.dismiss()
+        }
+        viewDialog.findViewById<TextView>(R.id.btn_kur).setOnClickListener {
+            startActivity(
+                Intent(this, KURPrecreeningActivity::class.java)
+            )
+            dialog.dismiss()
+        }
+        dialog.setContentView(viewDialog)
+        dialog.show()
     }
 }
