@@ -92,6 +92,10 @@ fun String.removeCharExceptNumber(): String {
     return re.replace(this, "")
 }
 
+fun String.unformatPhoneNUmber(): String {
+    return replace('-', ' ').replace('+', ' ').replace("\\s".toRegex(), "")
+}
+
 fun getCameraPhotoOrientation(imagePath: String): Int {
     var rotate = 0
     try {

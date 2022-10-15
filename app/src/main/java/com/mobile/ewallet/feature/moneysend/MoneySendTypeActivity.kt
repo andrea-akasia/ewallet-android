@@ -19,6 +19,7 @@ import com.mobile.ewallet.databinding.ActivitySendTypeBinding
 import com.mobile.ewallet.feature.scantosendmoney.ScannerActivity
 import com.mobile.ewallet.model.contact.Contact
 import com.mobile.ewallet.util.Constant
+import com.mobile.ewallet.util.unformatPhoneNUmber
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -101,15 +102,20 @@ class MoneySendTypeActivity: BaseActivity<SendMoneyViewModel>() {
         viewModel.onEwalletUserLoaded.observe(this){
             if(it.isNotEmpty()){
                 viewModel.localContact.forEach { lc ->
-                    lc.numbers.forEach { num ->
+                    lc.numbers.forEach { n ->
+                        val num = n.unformatPhoneNUmber()
                         val compareValue = if(num[0] == '0') num.substring(1, num.length) else num.substring(2, num.length)
-                        //Timber.i(compareValue)
-                        it.findLast { cu -> cu.phone.contains(compareValue, true) }?.let { found ->
+                        it.findLast { cu ->
+                            //cu.phone.contains(compareValue, true)
+                            cu.phone.substring(1, cu.phone.length) == compareValue
+                        }?.let { found ->
+                            //Timber.i("found contact: ${found.phone} by ${found.nama} compared to $compareValue ($num)")
                             val isExist = viewModel.foundContacts.findLast { search -> search == found }
                             if(isExist == null){
                                 viewModel.foundContacts.add(found)
                             }
                         }
+
                     }
                 }
                 Timber.i("total matching contacts: ${viewModel.foundContacts.size}")
@@ -158,8 +164,6 @@ class MoneySendTypeActivity: BaseActivity<SendMoneyViewModel>() {
                 viewModel.localContact.add(it)
             }
             Timber.i("total contact fetched: ${viewModel.localContact.size}")
-            //val bw = viewModel.localContact.findLast { it.name == "Beloved Wife" }
-            //bw?.let { Timber.i("sample data: ${it.numbers}") }
             if(viewModel.localContact.isNotEmpty()){
                 viewModel.loadEwalletUser()
             }else{
