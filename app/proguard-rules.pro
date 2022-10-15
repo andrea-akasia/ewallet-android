@@ -75,7 +75,4 @@
     public static ** valueOf(java.lang.String);
 }
 
--keep public class android.support.design.widget.BottomNavigationView { *; }
--keep public class android.support.design.internal.BottomNavigationMenuView { *; }
--keep public class android.support.design.internal.BottomNavigationPresenter { *; }
--keep public class android.support.design.internal.BottomNavigationItemView { *; }
+-keep class com.esafirm.imagepicker.** { *; }
