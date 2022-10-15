@@ -2,6 +2,7 @@ package com.mobile.ewallet.feature.topup
 
 import android.text.Html
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mobile.ewallet.databinding.ViewItemTopupVaInstructionBinding
@@ -23,6 +24,14 @@ class InstructionAdapter(val data: MutableList<TopupInstruction>): RecyclerView.
             val item = data[bindingAdapterPosition]
             binding.method.text = item.method
             binding.instructions.text = Html.fromHtml(item.instructions, Html.FROM_HTML_MODE_COMPACT)
+
+            binding.actionToggle.setOnClickListener {
+                if(binding.instructions.visibility == View.GONE) {
+                    binding.instructions.visibility = View.VISIBLE
+                }else{
+                    binding.instructions.visibility = View.GONE
+                }
+            }
         }
     }
 
