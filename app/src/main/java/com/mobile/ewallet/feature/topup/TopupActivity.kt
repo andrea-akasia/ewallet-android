@@ -90,7 +90,6 @@ class TopupActivity: BaseActivity<TopupViewModel>(), VirtualAccAdapter.VAListene
             .placeholder(R.drawable.img_placeholder)
             .diskCacheStrategy(DiskCacheStrategy.NONE)
             .skipMemoryCache(true)
-            .centerCrop()
             .into(viewDialog.findViewById(R.id.image))
         viewDialog.findViewById<TextView>(R.id.name).text = "Virtual Account ${data.namaBank}"
         viewDialog.findViewById<TextView>(R.id.description).text = data.keterangan

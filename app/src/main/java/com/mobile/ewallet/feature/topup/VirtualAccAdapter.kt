@@ -29,7 +29,6 @@ class VirtualAccAdapter(
             GlideApp.with(holder.itemView.context)
                 .load(item.logo)
                 .placeholder(R.drawable.img_placeholder)
-                .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
                 .into(binding.image)
