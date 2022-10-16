@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import com.atwa.filepicker.core.FilePicker
 import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityKurDocumentBinding
@@ -19,6 +20,8 @@ class KURUploadDocumentsActivity: BaseActivity<KURDocumentViewModel>(),
 
     override val viewModelClass: Class<KURDocumentViewModel> get() = KURDocumentViewModel::class.java
     private lateinit var binding: ActivityKurDocumentBinding
+
+    private val filePicker = FilePicker.getInstance(this)
 
     private val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
         uri?.let {
@@ -70,8 +73,9 @@ class KURUploadDocumentsActivity: BaseActivity<KURDocumentViewModel>(),
         }
 
         binding.actionUploadSuratPengajuan.setOnClickListener {
-            viewModel.TAG = "SURAT"
-            pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+            filePicker.pickPdf { result ->
+                result?.second?.let { file -> viewModel.uploadSurat(file) }
+            }
         }
 
         binding.actionUploadSiup.setOnClickListener {

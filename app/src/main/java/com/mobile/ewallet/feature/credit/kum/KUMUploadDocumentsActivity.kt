@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import com.atwa.filepicker.core.FilePicker
 import com.bumptech.glide.Glide
 import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
@@ -21,6 +22,8 @@ class KUMUploadDocumentsActivity: BaseActivity<KUMDocumentViewModel>(),
 
     override val viewModelClass: Class<KUMDocumentViewModel> get() = KUMDocumentViewModel::class.java
     private lateinit var binding: ActivityKumDocumentBinding
+
+    private val filePicker = FilePicker.getInstance(this)
 
     private val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
         uri?.let {
@@ -70,8 +73,9 @@ class KUMUploadDocumentsActivity: BaseActivity<KUMDocumentViewModel>(),
         }
 
         binding.actionUploadSuratPengajuan.setOnClickListener {
-            viewModel.TAG = "SURAT"
-            pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+            filePicker.pickPdf { result ->
+                result?.second?.let { file -> viewModel.uploadSurat(file) }
+            }
         }
 
         binding.btnContinue.setOnClickListener {
