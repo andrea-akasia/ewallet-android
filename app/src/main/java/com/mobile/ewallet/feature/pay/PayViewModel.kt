@@ -24,6 +24,7 @@ class PayViewModel
     internal var onMinimumNominalLoaded = MutableLiveData<MinimumNominalResponse>()
     internal var onAdminFeeLoaded = MutableLiveData<AdminFeeResponse>()
     internal var onTransactionSuccess = MutableLiveData<SendMoneyResult>()
+    internal var onfailedReadQR = MutableLiveData<String>()
 
     internal var onAdminFeeTransferLoaded = MutableLiveData<AdminFeeTrfResponse>()
     lateinit var transferBankMinimumNominalData: MinimumNominalTrfResponse
@@ -315,13 +316,13 @@ class PayViewModel
                         // not 20x
                         val code = res.code()
                         Timber.w(Throwable("Server Error $code, ${res.message()}"))
-                        warningMessage.postValue(res.message())
+                        onfailedReadQR.postValue("Read QR Data Failed, Server error $code")
                     }
                 },
                 { err ->
                     isLoading.postValue(false)
                     Timber.e(err)
-                    warningMessage.postValue(err.message)
+                    onfailedReadQR.postValue("Read QR Data Failed. ${err.message}")
                 }
             )
     }

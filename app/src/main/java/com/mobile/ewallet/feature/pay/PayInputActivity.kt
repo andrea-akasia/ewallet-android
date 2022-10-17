@@ -154,6 +154,11 @@ class PayInputActivity: BaseActivity<PayViewModel>() {
     }
 
     private fun observeViewModel(){
+        viewModel.onfailedReadQR.observe(this){
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+            this@PayInputActivity.finish()
+        }
+
         viewModel.onAdminFeeTransferLoaded.observe(this){
             showConfirmationDialog(
                 AdminFeeResponse(
