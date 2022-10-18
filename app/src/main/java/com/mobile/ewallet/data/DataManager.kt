@@ -612,8 +612,7 @@ class DataManager
             .observeOn(AndroidSchedulers.mainThread())
     }
 
-    fun saveProfile(name: String, phone: String, birthDate: String = "", nik: String = "")
-    : Single<Response<MutableList<BaseAPIResponse>>> {
+    fun saveProfile(name: String, phone: String, birthDate: String = "", nik: String = ""): Single<Response<MutableList<BaseAPIResponse>>> {
         return api.saveProfile(getIdMember(), phone, name, birthDate, nik)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

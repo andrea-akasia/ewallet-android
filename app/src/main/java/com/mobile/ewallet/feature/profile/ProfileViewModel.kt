@@ -80,7 +80,7 @@ class ProfileViewModel
             )
     }
 
-    fun save(phone: String, name: String, birthDate: String = ""){
+    fun save(phone: String, name: String, birthDate: String = "", nik: String = ""){
         isLoading.postValue(true)
         if(isNeedUpdatePhoto){
             Timber.i("filepath: ${photoFile!!.path}")
@@ -88,15 +88,16 @@ class ProfileViewModel
                 file = photoFile!!,
                 name = name,
                 phone = phone,
-                birthDate = birthDate
+                birthDate = birthDate,
+                nik = nik
             )
         }else{
-            saveProfile(phone, name, birthDate)
+            saveProfile(phone, name, birthDate, nik)
         }
     }
 
-    private fun saveProfile(phone: String, name: String, birthDate: String = ""){
-        dataManager.saveProfile(name, phone, birthDate)
+    private fun saveProfile(phone: String, name: String, birthDate: String = "", nik: String = ""){
+        dataManager.saveProfile(name, phone, birthDate, nik)
             .doOnSubscribe(this::addDisposable)
             .subscribe(
                 { res ->
@@ -128,7 +129,7 @@ class ProfileViewModel
             )
     }
 
-    private fun uploadPhoto(file: File, phone: String, name: String, birthDate: String = ""){
+    private fun uploadPhoto(file: File, phone: String, name: String, birthDate: String = "", nik: String = ""){
         isNeedUpdatePhoto = false
         dataManager.uploadPhotoProfile(
             createMultipartFromImageFile(file, "PHOTO_PROFILE")
@@ -141,7 +142,7 @@ class ProfileViewModel
                         res.body()?.let { response ->
                             if(response.isNotEmpty()){
                                 if(response[0].status == "1"){
-                                    saveProfile(phone, name, birthDate)
+                                    saveProfile(phone, name, birthDate, nik)
                                 }else{
                                     warningMessage.postValue(response[0].message!!)
                                 }

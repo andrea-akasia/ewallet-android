@@ -170,7 +170,8 @@ class UpdateProfileActivity: BaseActivity<ProfileViewModel>(), DatePickerFragmen
             viewModel.save(
                 phone = viewModel.profileData!!.nOWA!!,
                 name = viewModel.profileData!!.nama!!,
-                birthDate = binding.etDate.text.toString()
+                birthDate = binding.etDate.text.toString(),
+                nik = binding.etNik.text.toString()
             )
         }
 
