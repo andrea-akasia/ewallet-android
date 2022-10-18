@@ -14,7 +14,7 @@ class AuthViewModel
 
     internal var isLoading = MutableLiveData<Boolean>()
     internal var warningMessage = MutableLiveData<String>()
-    internal var onSplashscreenLoaded = MutableLiveData<SplashscreenAPIResponse>()
+    internal var onSplashscreenLoaded = MutableLiveData<MutableList<SplashscreenAPIResponse>>()
     internal var onReqOTPRegisterSuccess = MutableLiveData<String>()
     internal var onReqOTPLoginSuccess = MutableLiveData<String>()
     internal var onResendOTPRegisterSuccess = MutableLiveData<String>()
@@ -258,11 +258,7 @@ class AuthViewModel
                     isLoading.postValue(false)
                     if (res.isSuccessful) {
                         res.body()?.let { response ->
-                            if(response.isNotEmpty()){
-                                onSplashscreenLoaded.postValue(response[0])
-                            }else{
-                                warningMessage.postValue("empty data")
-                            }
+                            onSplashscreenLoaded.postValue(response)
                         }
                     } else {
                         // not 20x

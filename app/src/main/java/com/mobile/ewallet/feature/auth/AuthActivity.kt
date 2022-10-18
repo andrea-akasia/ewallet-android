@@ -43,14 +43,14 @@ class AuthActivity: BaseActivity<AuthViewModel>() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.loadSplashScreen()
+        //viewModel.loadSplashScreen()
     }
 
     private fun observeViewModel(){
-        viewModel.onSplashscreenLoaded.observe(this){
+        /*viewModel.onSplashscreenLoaded.observe(this){
             binding.title.text = it.title
             binding.subtitle.text = it.message
-        }
+        }*/
 
         viewModel.isLoading.observe(this){
 

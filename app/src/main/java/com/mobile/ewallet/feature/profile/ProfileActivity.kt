@@ -16,6 +16,7 @@ import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityProfileBinding
 import com.mobile.ewallet.feature.auth.AuthActivity
+import com.mobile.ewallet.feature.auth.SplashcreenActivity
 import com.mobile.ewallet.feature.credit.CreditDetailActivity
 import com.mobile.ewallet.model.api.dashboard.DashboardBalance
 
@@ -85,7 +86,7 @@ class ProfileActivity: BaseActivity<ProfileViewModel>() {
             logoutDialog.setPositiveButton("Keluar") { d, _ ->
                 viewModel.logout()
                 startActivity(
-                    Intent(this@ProfileActivity, AuthActivity::class.java)
+                    Intent(this@ProfileActivity, SplashcreenActivity::class.java)
                         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 )

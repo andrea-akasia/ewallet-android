@@ -23,6 +23,7 @@ import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityHomeBinding
 import com.mobile.ewallet.feature.auth.AuthActivity
+import com.mobile.ewallet.feature.auth.SplashcreenActivity
 import com.mobile.ewallet.feature.credit.CreditDetailActivity
 import com.mobile.ewallet.feature.credit.kum.KUMPrescreeningActivity
 import com.mobile.ewallet.feature.credit.kur.KURPrecreeningActivity
@@ -161,7 +162,7 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
         super.onResume()
         if(!viewModel.isLoggedIn()){
             startActivity(
-                Intent(this@HomeActivity, AuthActivity::class.java)
+                Intent(this@HomeActivity, SplashcreenActivity::class.java)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             )

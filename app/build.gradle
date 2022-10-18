@@ -200,6 +200,7 @@ dependencies {
     implementation 'com.google.zxing:core:3.5.0'
     implementation 'com.github.esafirm:android-image-picker:3.0.0-beta5'
     implementation 'com.github.Atwa:filepicker:1.0.3'
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
 
     //scanner
     implementation 'com.google.mlkit:barcode-scanning:17.0.2'

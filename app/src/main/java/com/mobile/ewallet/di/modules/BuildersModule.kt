@@ -34,6 +34,9 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class BuildersModule{
     @ContributesAndroidInjector(modules = [FragmentBuildersModule::class])
+    abstract fun bindSplashcreenActivity(): SplashcreenActivity
+
+    @ContributesAndroidInjector(modules = [FragmentBuildersModule::class])
     abstract fun bindFaqActivity(): FaqActivity
 
     @ContributesAndroidInjector(modules = [FragmentBuildersModule::class])
