@@ -649,8 +649,8 @@ class DataManager
             .observeOn(AndroidSchedulers.mainThread())
     }
 
-    fun finishRegister(phone: String, fullName: String): Single<Response<MutableList<BaseAPIResponse>>> {
-        return api.finishRegister(phone, getIdMember(), fullName)
+    fun finishRegister(phone: String, fullName: String, nik: String): Single<Response<MutableList<BaseAPIResponse>>> {
+        return api.finishRegister(phone, getIdMember(), fullName, nik)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }

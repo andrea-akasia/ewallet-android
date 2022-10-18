@@ -59,9 +59,14 @@ class CreateAccountActivity: BaseActivity<AuthViewModel>() {
             Toast.makeText(this, "Nama harus diisi", Toast.LENGTH_SHORT).show()
             return
         }
+        if(binding.etNik.text.toString().isEmpty()){
+            Toast.makeText(this, "NIK harus diisi", Toast.LENGTH_SHORT).show()
+            return
+        }
         viewModel.finishRegister(
             phone = phone,
-            fullName = binding.etName.text.toString()
+            fullName = binding.etName.text.toString(),
+            nik = binding.etNik.text.toString()
         )
     }
 

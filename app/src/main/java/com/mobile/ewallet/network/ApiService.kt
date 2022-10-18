@@ -608,7 +608,8 @@ interface APIService {
     fun finishRegister(
         @Field("NOWA") phone: String,
         @Field("IDMember") idmember: String,
-        @Field("NamaLengkap") fullName: String
+        @Field("NamaLengkap") fullName: String,
+        @Field("NIK") nik: String
     ): Single<Response<MutableList<BaseAPIResponse>>>
 
     @FormUrlEncoded

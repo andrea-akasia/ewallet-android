@@ -118,9 +118,9 @@ class AuthViewModel
             )
     }
 
-    fun finishRegister(phone: String, fullName: String) {
+    fun finishRegister(phone: String, fullName: String, nik: String) {
         isLoading.postValue(true)
-        dataManager.finishRegister(phone, fullName)
+        dataManager.finishRegister(phone, fullName, nik)
             .doOnSubscribe(this::addDisposable)
             .subscribe(
                 { res ->
