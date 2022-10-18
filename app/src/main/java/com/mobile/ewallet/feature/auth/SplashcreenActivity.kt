@@ -6,12 +6,11 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.tabs.TabLayoutMediator
 import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivitySplashscreenBinding
-import timber.log.Timber
 
 class SplashcreenActivity: BaseActivity<AuthViewModel>() {
 
@@ -46,10 +45,6 @@ class SplashcreenActivity: BaseActivity<AuthViewModel>() {
         }
 
         observeViewModel()
-    }
-
-    override fun onResume() {
-        super.onResume()
         viewModel.loadSplashScreen()
     }
 
@@ -64,7 +59,9 @@ class SplashcreenActivity: BaseActivity<AuthViewModel>() {
                 ))
             }
             binding.viewpager.adapter = fragmentAdapter
-            Timber.i("adapter size: ${fragmentAdapter.itemCount}")
+            TabLayoutMediator(binding.tabLayout, binding.viewpager) { tab, pos ->
+
+            }.attach()
         }
 
         viewModel.isLoading.observe(this){
@@ -85,19 +82,6 @@ class SplashcreenActivity: BaseActivity<AuthViewModel>() {
         fun addFragment(f: Fragment){
             fragments.add(f)
         }
-
-        /*@NonNull
-        fun getItem(position: Int): Fragment {
-            return arrayList[position]
-        }
-
-        fun addFragment(fragment: Fragment) {
-            arrayList.add(fragment)
-        }
-
-        override fun getItemCount(): Int {
-            return arrayList.size()
-        }*/
     }
 
 }
