@@ -7,6 +7,7 @@ import com.mobile.ewallet.data.DataManager
 import com.mobile.ewallet.model.api.credit.billing.BillingCredit
 import com.mobile.ewallet.model.api.credit.billing.BillingTransaction
 import com.mobile.ewallet.model.api.credit.billing.BillingVA
+import com.mobile.ewallet.model.api.topup.TopupInstruction
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -18,8 +19,36 @@ class BillingViewModel
     internal var isLoading = MutableLiveData<Boolean>()
     internal var onBillingDetailLoaded = MutableLiveData<MutableList<BillingVA>>()
     internal var onBillingHistoryLoaded = MutableLiveData<MutableList<BillingTransaction>>()
+    internal var onTopupInstructionsLoaded = MutableLiveData<MutableList<TopupInstruction>>()
 
     lateinit var billingData: BillingCredit
+    var selectedVA: BillingVA? = null
+
+    fun loadTopupInstructions(idBank: String) {
+        isLoading.postValue(true)
+        dataManager.topupVAInstruction(idBank)
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    isLoading.postValue(false)
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            onTopupInstructionsLoaded.postValue(response)
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue("Server Error $code, ${res.message()}")
+                    }
+                },
+                { err ->
+                    isLoading.postValue(false)
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun loadBillingHistory() {
         isLoading.postValue(true)

@@ -1,17 +1,29 @@
 package com.mobile.ewallet.feature.credit.billing
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityBillingDetailBinding
+import com.mobile.ewallet.feature.topup.InstructionAdapter
 import com.mobile.ewallet.feature.topup.VirtualAccAdapter
 import com.mobile.ewallet.model.api.credit.billing.BillingCredit
 import com.mobile.ewallet.model.api.credit.billing.BillingVA
+import com.mobile.ewallet.model.api.topup.TopupInstruction
+import com.mobile.ewallet.model.api.topup.TopupVA
+import com.mobile.ewallet.util.GlideApp
 import com.mobile.ewallet.util.formatToCurrency
 
 class BillingDetailActivity: BaseActivity<BillingViewModel>(), BillingVAAdapter.BillingVAListener {
@@ -46,6 +58,10 @@ class BillingDetailActivity: BaseActivity<BillingViewModel>(), BillingVAAdapter.
     }
 
     private fun observeViewModel(){
+        viewModel.onTopupInstructionsLoaded.observe(this){
+            showVirtualAccountInfo(viewModel.selectedVA!!, it)
+        }
+
         viewModel.onBillingHistoryLoaded.observe(this){
             if(it.isNotEmpty()){
                 val historyAdapter = BillingHistoryAdapter(it)
@@ -73,6 +89,46 @@ class BillingDetailActivity: BaseActivity<BillingViewModel>(), BillingVAAdapter.
     }
 
     override fun onVASelected(data: BillingVA) {
+        viewModel.selectedVA = data
+        viewModel.loadTopupInstructions(data.iDBank)
+    }
 
+    private fun showVirtualAccountInfo(data: BillingVA, instructions: MutableList<TopupInstruction>){
+        val dialog = BottomSheetDialog(this)
+        val viewDialog = layoutInflater.inflate(R.layout.dialog_va, null)
+
+        val instructionAdapter = InstructionAdapter(instructions)
+        viewDialog.findViewById<RecyclerView>(R.id.rv).layoutManager = LinearLayoutManager(this)
+        viewDialog.findViewById<RecyclerView>(R.id.rv).adapter = instructionAdapter
+
+        GlideApp.with(this)
+            .load(data.logo)
+            .placeholder(R.drawable.img_placeholder)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .skipMemoryCache(true)
+            .into(viewDialog.findViewById(R.id.image))
+        viewDialog.findViewById<TextView>(R.id.name).text = "Virtual Account ${data.namaBank}"
+        viewDialog.findViewById<TextView>(R.id.description).text = data.keterangan
+        viewDialog.findViewById<TextView>(R.id.va_number).text = data.nOVA.replace("....".toRegex(), "$0 ")
+        viewDialog.findViewById<TextView>(R.id.account_name).text = data.namaVA
+
+        viewDialog.findViewById<Button>(R.id.btn_copy).setOnClickListener {
+            copyToClipboard(data.nOVA)
+        }
+
+        viewDialog.findViewById<TextView>(R.id.action_close).setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.setContentView(viewDialog)
+        dialog.show()
+    }
+
+    private fun copyToClipboard(data: String){
+        val clipboard: ClipboardManager =
+            getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("va", data)
+        clipboard.setPrimaryClip(clip)
+        Toast.makeText(this, "Kode Virtual Account Telah Disalin", Toast.LENGTH_SHORT).show()
     }
 }
