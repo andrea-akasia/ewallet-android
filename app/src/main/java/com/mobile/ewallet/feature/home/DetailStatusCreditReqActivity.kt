@@ -49,6 +49,7 @@ class DetailStatusCreditReqActivity: BaseActivity<HomeViewModel>() {
                 binding.infoInprogress.visibility = View.VISIBLE
                 binding.viewInprogress.visibility = View.VISIBLE
             }else{
+                binding.infoDeclined.text = pendanaanData.alasanReject
                 binding.infoDeclined.visibility = View.VISIBLE
                 binding.viewDeclined.visibility = View.VISIBLE
                 binding.btnReq.visibility = View.VISIBLE

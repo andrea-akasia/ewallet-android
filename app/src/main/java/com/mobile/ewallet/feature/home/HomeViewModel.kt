@@ -37,7 +37,12 @@ class HomeViewModel
                     if (res.isSuccessful) {
                         res.body()?.let { response ->
                             if(response.isNotEmpty()){
-                                onLatestCreditReqLoaded.postValue(response[response.size-1])
+                                onLatestCreditReqLoaded.postValue(
+                                    response[response.size-1]/*.apply {
+                                        statusProses = "DECLINED"
+                                        alsanReject = "keseringan bosss"
+                                    }*/
+                                )
                             }
                         }
                     } else {
@@ -247,7 +252,9 @@ class HomeViewModel
                         res.body()?.let { response ->
                             if(response.isNotEmpty()){
                                 balanceData = response[0]
-                                onDashboardBalanceLoaded.postValue(response[0]/*.apply { iDPendanaanDisetujui = "0" }*/)
+                                onDashboardBalanceLoaded.postValue(
+                                    response[0]/*.apply { iDPendanaanDisetujui = "0" }*/
+                                )
                             }else{
                                 warningMessage.postValue("empty data dashboard")
                             }

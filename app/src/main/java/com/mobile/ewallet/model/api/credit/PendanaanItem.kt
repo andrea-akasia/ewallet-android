@@ -35,5 +35,8 @@ data class PendanaanItem(
 	val timestamp: String? = null,
 
 	@field:SerializedName("TypePengajuan")
-	val typePengajuan: String? = null
+	val typePengajuan: String? = null,
+
+	@field:SerializedName("AlasanReject")
+	var alasanReject: String? = null
 )
