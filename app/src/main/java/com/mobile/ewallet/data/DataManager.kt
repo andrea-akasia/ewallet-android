@@ -14,6 +14,9 @@ import com.mobile.ewallet.model.api.BaseAPIResponse
 import com.mobile.ewallet.model.api.badge.Badge
 import com.mobile.ewallet.model.api.badge.BadgeStatus
 import com.mobile.ewallet.model.api.credit.*
+import com.mobile.ewallet.model.api.credit.billing.BillingCredit
+import com.mobile.ewallet.model.api.credit.billing.BillingTransaction
+import com.mobile.ewallet.model.api.credit.billing.BillingVA
 import com.mobile.ewallet.model.api.dashboard.DashboardBalance
 import com.mobile.ewallet.model.api.dashboard.TransactionItem
 import com.mobile.ewallet.model.api.detailpokemon.DetailPokemonResponse
@@ -78,6 +81,18 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun billingHistory(): Single<Response<MutableList<BillingTransaction>>> {
+        return api.billingHistory(getIdMember())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun billingDetail(idBilling: String): Single<Response<MutableList<BillingVA>>> {
+        return api.billingCreditDetail(getIdMember(), idBilling)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun billingCredit(): Single<Response<MutableList<BillingCredit>>> {
         return api.billingCredit(getIdMember())
             .subscribeOn(Schedulers.io())

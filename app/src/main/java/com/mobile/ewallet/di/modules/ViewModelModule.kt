@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.mobile.ewallet.feature.profile.ProfileViewModel
 import com.mobile.ewallet.feature.auth.AuthViewModel
 import com.mobile.ewallet.feature.credit.CreditViewModel
+import com.mobile.ewallet.feature.credit.billing.BillingViewModel
 import com.mobile.ewallet.feature.credit.kum.FulfillmentViewModel
 import com.mobile.ewallet.feature.credit.kum.KUMDocumentViewModel
 import com.mobile.ewallet.feature.credit.kur.KURCreditViewModel
@@ -27,6 +28,11 @@ import com.mobile.ewallet.feature.topup.TopupViewModel
 
 @Module
 abstract class ViewModelModule {
+    @Binds
+    @IntoMap
+    @ViewModelKey(BillingViewModel::class)
+    abstract fun bindBillingViewModel(billingViewModel: BillingViewModel): ViewModel
+
     @Binds
     @IntoMap
     @ViewModelKey(KURDocumentViewModel::class)

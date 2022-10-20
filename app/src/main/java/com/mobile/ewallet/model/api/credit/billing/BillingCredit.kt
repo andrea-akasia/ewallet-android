@@ -1,4 +1,4 @@
-package com.mobile.ewallet.model.api.credit
+package com.mobile.ewallet.model.api.credit.billing
 
 import com.google.gson.annotations.SerializedName
 

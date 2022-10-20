@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import com.mobile.ewallet.base.BaseViewModel
 import com.mobile.ewallet.data.DataManager
 import com.mobile.ewallet.model.api.credit.*
+import com.mobile.ewallet.model.api.credit.billing.BillingCredit
 import com.mobile.ewallet.model.api.dashboard.TransactionItem
-import retrofit2.http.Field
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -54,6 +54,7 @@ class CreditViewModel
     var selectedJangkaWaktu: JangkaWaktu? = null
 
     fun loadBillingData() {
+        billingData = null
         dataManager.billingCredit()
             .doOnSubscribe(this::addDisposable)
             .subscribe(

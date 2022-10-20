@@ -10,8 +10,10 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityCreditInfoBinding
+import com.mobile.ewallet.feature.credit.billing.BillingDetailActivity
 import com.mobile.ewallet.feature.home.TransactionAdapter
 import com.mobile.ewallet.feature.topup.TopupViaKreditActivity
 
@@ -50,9 +52,12 @@ class CreditDetailActivity: BaseActivity<CreditViewModel>() {
             )
         }
 
-        binding.actionTopup.setOnClickListener {
-            viewModel.billingData?.let {
-
+        binding.actionBilling.setOnClickListener {
+            viewModel.billingData?.let { bc ->
+                startActivity(
+                    Intent(this, BillingDetailActivity::class.java)
+                        .putExtra("DATA", Gson().toJson(bc))
+                )
             }
         }
 

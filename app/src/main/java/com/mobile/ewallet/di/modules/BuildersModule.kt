@@ -2,6 +2,7 @@ package com.mobile.ewallet.di.modules
 
 import com.mobile.ewallet.feature.auth.*
 import com.mobile.ewallet.feature.credit.CreditDetailActivity
+import com.mobile.ewallet.feature.credit.billing.BillingDetailActivity
 import com.mobile.ewallet.feature.credit.kum.KUMFulfillmentActivity
 import com.mobile.ewallet.feature.credit.kum.KUMPrescreeningActivity
 import com.mobile.ewallet.feature.credit.kum.KUMUploadDocumentsActivity
@@ -33,6 +34,9 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class BuildersModule{
+    @ContributesAndroidInjector(modules = [FragmentBuildersModule::class])
+    abstract fun bindBillingDetailActivity(): BillingDetailActivity
+
     @ContributesAndroidInjector(modules = [FragmentBuildersModule::class])
     abstract fun bindSplashcreenActivity(): SplashcreenActivity
 

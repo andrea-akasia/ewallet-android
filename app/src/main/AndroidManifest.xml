@@ -76,6 +76,7 @@
         <activity android:name=".feature.profile.TermConditionActivity" />
         <activity android:name=".feature.profile.FaqActivity" />
         <activity android:name=".feature.auth.SplashcreenActivity" />
+        <activity android:name=".feature.credit.billing.BillingDetailActivity" />
     </application>
 
 </manifest>

@@ -4,6 +4,9 @@ import com.mobile.ewallet.model.api.BaseAPIResponse
 import com.mobile.ewallet.model.api.badge.Badge
 import com.mobile.ewallet.model.api.badge.BadgeStatus
 import com.mobile.ewallet.model.api.credit.*
+import com.mobile.ewallet.model.api.credit.billing.BillingCredit
+import com.mobile.ewallet.model.api.credit.billing.BillingTransaction
+import com.mobile.ewallet.model.api.credit.billing.BillingVA
 import com.mobile.ewallet.model.api.dashboard.DashboardBalance
 import com.mobile.ewallet.model.api.dashboard.TransactionItem
 import com.mobile.ewallet.model.api.detailpokemon.DetailPokemonResponse
@@ -36,6 +39,19 @@ import retrofit2.http.*
 
 
 interface APIService {
+    @FormUrlEncoded
+    @POST("Pendanaan_History_Pengembalian.aspx")
+    fun billingHistory(
+        @Field("IDMember") idMember: String
+    ): Single<Response<MutableList<BillingTransaction>>>
+
+    @FormUrlEncoded
+    @POST("Pendanaan_Billing_Detail.aspx")
+    fun billingCreditDetail(
+        @Field("IDMember") idMember: String,
+        @Field("IDBilling") idBilling: String
+    ): Single<Response<MutableList<BillingVA>>>
+
     @FormUrlEncoded
     @POST("Pendanaan_Billing.aspx")
     fun billingCredit(
