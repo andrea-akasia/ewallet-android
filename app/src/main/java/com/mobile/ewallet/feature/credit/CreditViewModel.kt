@@ -25,6 +25,9 @@ class CreditViewModel
     internal var onFormJenisKreditLoaded = MutableLiveData<MutableList<String>>()
     internal var onFormJangkaWaktuLoaded = MutableLiveData<MutableList<String>>()
     internal var onPrescreeningSuccess = MutableLiveData<Boolean>()
+    internal var onBillingAvailable = MutableLiveData<Boolean>()
+
+    var billingData: BillingCredit? = null
 
     //form data
     var creditRequestId = ""
@@ -49,6 +52,32 @@ class CreditViewModel
     var jenisKreditParameter: JenisKreditParameter? = null
     var jangkaWaktus = mutableListOf<JangkaWaktu>()
     var selectedJangkaWaktu: JangkaWaktu? = null
+
+    fun loadBillingData() {
+        dataManager.billingCredit()
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            if(response.isNotEmpty()){
+                                billingData = response[0]
+                                onBillingAvailable.postValue(true)
+                            }
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue("Server Error $code. ${res.message()}")
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun submitPrescreeningKUM(
         namaPelapor: String,

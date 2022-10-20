@@ -78,6 +78,12 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun billingCredit(): Single<Response<MutableList<BillingCredit>>> {
+        return api.billingCredit(getIdMember())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun faq(): Single<Response<MutableList<Faq>>> {
         return api.faq()
             .subscribeOn(Schedulers.io())

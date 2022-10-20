@@ -50,15 +50,32 @@ class CreditDetailActivity: BaseActivity<CreditViewModel>() {
             )
         }
 
+        binding.actionTopup.setOnClickListener {
+            viewModel.billingData?.let {
+
+            }
+        }
+
         observeViewModel()
     }
 
     override fun onResume() {
         super.onResume()
         viewModel.loadCreditHistoryTransaction()
+        viewModel.loadBillingData()
     }
 
     private fun observeViewModel(){
+        viewModel.onBillingAvailable.observe(this) {
+            if(it){
+                binding.viewBillingAvailable.visibility = View.VISIBLE
+                binding.viewBillingUnavailable.visibility = View.GONE
+            }else{
+                binding.viewBillingAvailable.visibility = View.GONE
+                binding.viewBillingUnavailable.visibility = View.VISIBLE
+            }
+        }
+
         viewModel.onCreditHistoryTransactionLoaded.observe(this){
             if(it.isNotEmpty()){
                 binding.rv.visibility = View.VISIBLE
