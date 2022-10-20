@@ -6,16 +6,28 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowInsetsController
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
+import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityCreditInfoBinding
 import com.mobile.ewallet.feature.credit.billing.BillingDetailActivity
 import com.mobile.ewallet.feature.home.TransactionAdapter
+import com.mobile.ewallet.feature.topup.InstructionAdapter
 import com.mobile.ewallet.feature.topup.TopupViaKreditActivity
+import com.mobile.ewallet.model.api.credit.billing.BillingVA
+import com.mobile.ewallet.model.api.topup.TopupInstruction
+import com.mobile.ewallet.util.GlideApp
+import org.w3c.dom.Text
 
 class CreditDetailActivity: BaseActivity<CreditViewModel>() {
 
@@ -61,6 +73,8 @@ class CreditDetailActivity: BaseActivity<CreditViewModel>() {
             }
         }
 
+        binding.btnApplyIncreaseLimit.setOnClickListener { showIncreaseLimitFormDialog() }
+
         observeViewModel()
     }
 
@@ -71,6 +85,10 @@ class CreditDetailActivity: BaseActivity<CreditViewModel>() {
     }
 
     private fun observeViewModel(){
+        viewModel.onIncreaseLimitSubmitted.observe(this) {
+            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+        }
+
         viewModel.onBillingAvailable.observe(this) {
             if(it){
                 binding.viewBillingAvailable.visibility = View.VISIBLE
@@ -98,5 +116,32 @@ class CreditDetailActivity: BaseActivity<CreditViewModel>() {
         viewModel.warningMessage.observe(this){
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun showIncreaseLimitFormDialog(){
+        val dialog = BottomSheetDialog(this)
+        val viewDialog = layoutInflater.inflate(R.layout.dialog_apply_increase_limit, null)
+
+        val etAmount = viewDialog.findViewById<EditText>(R.id.et_amount)
+
+        viewDialog.findViewById<Button>(R.id.btn_submit).setOnClickListener {
+            if(etAmount.text.toString().isNotEmpty()){
+                viewModel.submitIncreaseLimit(etAmount.text.toString())
+                dialog.dismiss()
+            }else{
+                Toast.makeText(
+                    this@CreditDetailActivity,
+                    "jumlah tidak boleh kosong",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+        viewDialog.findViewById<TextView>(R.id.action_close).setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.setContentView(viewDialog)
+        dialog.show()
     }
 }

@@ -81,6 +81,12 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun submitLimitIncrease(limit: String): Single<Response<MutableList<BaseAPIResponse>>> {
+        return api.submitLimitIncrease(getIdMember(), limit)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun billingHistory(): Single<Response<MutableList<BillingTransaction>>> {
         return api.billingHistory(getIdMember())
             .subscribeOn(Schedulers.io())

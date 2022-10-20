@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/_14sdp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Minta Naikkan Limit"
+        android:textAlignment="center"
+        android:textColor="@color/colorTextBlack"
+        android:textStyle="bold"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/notes"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Kamu punya kesempatan untuk naikkan limit. Data pengajuan kamu sudah lengkap dan akan dilakukan pengecekan sekitar 3-4 hari. Permintaan kenaikan hanya bisa dilakukan 3 bulan sekali"
+        android:textAlignment="center"
+        android:textColor="#7A7A7A"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/et_amount"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_32sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:paddingStart="@dimen/_8sdp"
+        android:paddingEnd="@dimen/_8sdp"
+        android:hint="Jumlah"
+        android:textSize="14sp"
+        android:inputType="numberSigned"
+        android:imeOptions="actionDone"
+        android:background="@drawable/textfield_border_bg"/>
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_32sdp"
+        android:background="@drawable/orange_button_bg"
+        android:text="Ajukan Kenaikan"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/action_close"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:text="Batalkan"
+        android:textAlignment="center"
+        android:textColor="#A7A7A7"
+        android:padding="@dimen/_10sdp"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+</LinearLayout>
