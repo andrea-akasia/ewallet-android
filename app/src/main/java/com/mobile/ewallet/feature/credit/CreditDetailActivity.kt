@@ -124,9 +124,9 @@ class CreditDetailActivity: BaseActivity<CreditViewModel>() {
             }else if(it.mode == "1B"){
                 //in progress
                 binding.viewApplyLimitIncrease.visibility = View.VISIBLE
-                binding.viewIncreaseLimitBg.background = ContextCompat.getDrawable(this, R.drawable.apply_increase_limit_bg_yellow)
+                binding.viewIncreaseLimitBg.background = ContextCompat.getDrawable(this, R.drawable.apply_increase_limit_bg_green)
                 binding.btnApplyIncreaseLimit.visibility = View.VISIBLE
-                binding.btnApplyIncreaseLimit.setTextColor(Color.parseColor("#FF8C32"))
+                binding.btnApplyIncreaseLimit.setTextColor(Color.parseColor("#41B92A"))
                 binding.btnApplyIncreaseLimit.isClickable = false
                 binding.btnApplyIncreaseLimit.background = ContextCompat.getDrawable(this, R.drawable.white_button_bg_inactive)
                 binding.actionClose.visibility = View.GONE
