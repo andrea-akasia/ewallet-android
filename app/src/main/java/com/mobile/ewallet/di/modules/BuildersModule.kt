@@ -11,10 +11,7 @@ import com.mobile.ewallet.feature.credit.kur.KURPrecreeningActivity
 import com.mobile.ewallet.feature.credit.kur.KURUploadDocumentsActivity
 import com.mobile.ewallet.feature.listpokemon.ListPokemonActivity
 import com.mobile.ewallet.feature.detailpokemon.DetailPokemonActivity
-import com.mobile.ewallet.feature.home.BadgeActivity
-import com.mobile.ewallet.feature.home.DetailStatusCreditReqActivity
-import com.mobile.ewallet.feature.home.HomeActivity
-import com.mobile.ewallet.feature.home.TransactionDetailActivity
+import com.mobile.ewallet.feature.home.*
 import com.mobile.ewallet.feature.moneyreq.MoneyRequestActivity
 import com.mobile.ewallet.feature.moneysend.ContactListActivity
 import com.mobile.ewallet.feature.moneysend.MoneySendBankActivity
@@ -34,6 +31,9 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class BuildersModule{
+    @ContributesAndroidInjector(modules = [FragmentBuildersModule::class])
+    abstract fun bindAllHistoryTransactionActivity(): AllHistoryTransactionActivity
+
     @ContributesAndroidInjector(modules = [FragmentBuildersModule::class])
     abstract fun bindBillingDetailActivity(): BillingDetailActivity
 

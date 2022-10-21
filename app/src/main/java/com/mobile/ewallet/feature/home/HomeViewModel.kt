@@ -26,6 +26,7 @@ class HomeViewModel
     internal var onBadgeStatusLoaded = MutableLiveData<BadgeStatus>()
     internal var onTransactionDetailLoaded = MutableLiveData<TransactionDetail>()
     internal var onLatestCreditReqLoaded = MutableLiveData<PendanaanItem>()
+    internal var onAllHistoryTransactionLoaded = MutableLiveData<MutableList<TransactionItem>>()
 
     var balanceData: DashboardBalance? = null
 
@@ -211,6 +212,29 @@ class HomeViewModel
                         val code = res.code()
                         Timber.w(Throwable("Server Error $code, ${res.message()}"))
                         warningMessage.postValue(res.message())
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
+
+    fun loadAllHistoryTransaction() {
+        dataManager.loadAllHistoryTransaction()
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            onAllHistoryTransactionLoaded.postValue(response)
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue("Server Error $code, ${res.message()}")
                     }
                 },
                 { err ->

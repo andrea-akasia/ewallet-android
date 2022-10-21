@@ -639,6 +639,12 @@ class DataManager
             .observeOn(AndroidSchedulers.mainThread())
     }
 
+    fun loadAllHistoryTransaction(): Single<Response<MutableList<TransactionItem>>> {
+        return api.transactionHistoryAll(getIdMember())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun loadHistoryTransaction(): Single<Response<MutableList<TransactionItem>>> {
         return api.transactionHistory(getIdMember())
             .subscribeOn(Schedulers.io())

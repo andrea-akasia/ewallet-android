@@ -155,6 +155,12 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
             showSelectPengajuanTypeDialog()
         }
 
+        binding.actionSeeAll.setOnClickListener {
+            startActivity(
+                Intent(this, AllHistoryTransactionActivity::class.java)
+            )
+        }
+
         observeViewModel()
     }
 

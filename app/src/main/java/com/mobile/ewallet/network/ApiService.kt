@@ -588,6 +588,12 @@ interface APIService {
     ): Single<Response<MutableList<Badge>>>
 
     @FormUrlEncoded
+    @POST("HISTORY_Transaksi_ALL.aspx")
+    fun transactionHistoryAll(
+        @Field("IDMember") idMember: String
+    ): Single<Response<MutableList<TransactionItem>>>
+
+    @FormUrlEncoded
     @POST("HISTORY_Transaksi.aspx")
     fun transactionHistory(
         @Field("IDMember") idMember: String
