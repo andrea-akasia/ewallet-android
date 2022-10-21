@@ -6,10 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowInsetsController
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,10 +21,13 @@ import com.mobile.ewallet.feature.credit.billing.BillingDetailActivity
 import com.mobile.ewallet.feature.home.TransactionAdapter
 import com.mobile.ewallet.feature.topup.InstructionAdapter
 import com.mobile.ewallet.feature.topup.TopupViaKreditActivity
+import com.mobile.ewallet.model.api.credit.NominalIncreaseLimit
 import com.mobile.ewallet.model.api.credit.billing.BillingVA
 import com.mobile.ewallet.model.api.topup.TopupInstruction
 import com.mobile.ewallet.util.GlideApp
+import com.mobile.ewallet.util.removeCharExceptNumber
 import org.w3c.dom.Text
+import timber.log.Timber
 
 class CreditDetailActivity: BaseActivity<CreditViewModel>() {
 
@@ -73,7 +73,11 @@ class CreditDetailActivity: BaseActivity<CreditViewModel>() {
             }
         }
 
-        binding.btnApplyIncreaseLimit.setOnClickListener { showIncreaseLimitFormDialog() }
+        binding.btnApplyIncreaseLimit.setOnClickListener {
+            viewModel.increaseLimitInfo?.let {
+                viewModel.loadNominalIncreaseLimit()
+            }
+        }
         binding.actionClose.setOnClickListener { binding.viewApplyLimitIncrease.visibility = View.GONE }
 
         observeViewModel()
@@ -87,6 +91,20 @@ class CreditDetailActivity: BaseActivity<CreditViewModel>() {
     }
 
     private fun observeViewModel(){
+        viewModel.isLoading.observe(this) {
+            if(it){
+                binding.btnApplyIncreaseLimit.isClickable = false
+                binding.btnApplyIncreaseLimit.background = ContextCompat.getDrawable(this, R.drawable.white_button_bg_inactive)
+            }else{
+                binding.btnApplyIncreaseLimit.isClickable = true
+                binding.btnApplyIncreaseLimit.background = ContextCompat.getDrawable(this, R.drawable.white_button_bg)
+            }
+        }
+
+        viewModel.onNominalIncreaseLimitLoaded.observe(this) {
+            showIncreaseLimitFormDialog(viewModel.increaseLimitInfo!!.formIntro, it)
+        }
+
         viewModel.onIncreaseLimitInfoLoaded.observe(this) {
             binding.increaseLimitTitle.text = it.title
             binding.increaseLimitSubtitle.text = it.message
@@ -161,23 +179,29 @@ class CreditDetailActivity: BaseActivity<CreditViewModel>() {
         }
     }
 
-    private fun showIncreaseLimitFormDialog(){
+    private fun showIncreaseLimitFormDialog(notes: String, nominals: MutableList<String>){
         val dialog = BottomSheetDialog(this)
         val viewDialog = layoutInflater.inflate(R.layout.dialog_apply_increase_limit, null)
+        var selectedNominal = "0"
 
-        val etAmount = viewDialog.findViewById<EditText>(R.id.et_amount)
+        viewDialog.findViewById<TextView>(R.id.notes).text = notes
+
+        val spinnerAmount = viewDialog.findViewById<Spinner>(R.id.spinner_amount)
+        ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, nominals).also { adptr ->
+            adptr.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
+            spinnerAmount.adapter = adptr
+            spinnerAmount.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    Timber.i("nominal selected: ${nominals[position]}")
+                    selectedNominal = nominals[position].removeCharExceptNumber()
+                }
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+        }
 
         viewDialog.findViewById<Button>(R.id.btn_submit).setOnClickListener {
-            if(etAmount.text.toString().isNotEmpty()){
-                viewModel.submitIncreaseLimit(etAmount.text.toString())
-                dialog.dismiss()
-            }else{
-                Toast.makeText(
-                    this@CreditDetailActivity,
-                    "jumlah tidak boleh kosong",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+            viewModel.submitIncreaseLimit(selectedNominal)
+            dialog.dismiss()
         }
 
         viewDialog.findViewById<TextView>(R.id.action_close).setOnClickListener {

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:padding="@dimen/_14sdp">
 
@@ -20,23 +20,18 @@
         android:layout_marginTop="@dimen/_4sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Kamu punya kesempatan untuk naikkan limit. Data pengajuan kamu sudah lengkap dan akan dilakukan pengecekan sekitar 3-4 hari. Permintaan kenaikan hanya bisa dilakukan 3 bulan sekali"
+        tools:text="Kamu punya kesempatan untuk naikkan limit. Data pengajuan kamu sudah lengkap dan akan dilakukan pengecekan sekitar 3-4 hari. Permintaan kenaikan hanya bisa dilakukan 3 bulan sekali"
         android:textAlignment="center"
         android:textColor="#7A7A7A"
         android:textSize="14sp" />
 
-    <EditText
-        android:id="@+id/et_amount"
+    <Spinner
+        android:id="@+id/spinner_amount"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_32sdp"
         android:layout_marginTop="@dimen/_10sdp"
-        android:paddingStart="@dimen/_8sdp"
-        android:paddingEnd="@dimen/_8sdp"
-        android:hint="Jumlah"
         android:textSize="14sp"
-        android:inputType="numberSigned"
-        android:imeOptions="actionDone"
-        android:background="@drawable/textfield_border_bg"/>
+        android:background="@drawable/spinner_bg"/>
 
     <Button
         android:id="@+id/btn_submit"

@@ -14,6 +14,7 @@ import javax.inject.Inject
 class CreditViewModel
 @Inject constructor(private val dataManager: DataManager) : BaseViewModel(){
     internal var warningMessage = MutableLiveData<String>()
+    internal var isLoading = MutableLiveData<Boolean>()
     internal var onCreditHistoryTransactionLoaded = MutableLiveData<MutableList<TransactionItem>>()
 
     internal var onFormJenisKelaminLoaded = MutableLiveData<MutableList<String>>()
@@ -28,8 +29,10 @@ class CreditViewModel
     internal var onBillingAvailable = MutableLiveData<Boolean>()
     internal var onIncreaseLimitSubmitted = MutableLiveData<String>()
     internal var onIncreaseLimitInfoLoaded = MutableLiveData<IncreaseLimitInfo>()
+    internal var onNominalIncreaseLimitLoaded = MutableLiveData<MutableList<String>>()
 
     var billingData: BillingCredit? = null
+    var increaseLimitInfo: IncreaseLimitInfo? = null
 
     //form data
     var creditRequestId = ""
@@ -55,17 +58,47 @@ class CreditViewModel
     var jangkaWaktus = mutableListOf<JangkaWaktu>()
     var selectedJangkaWaktu: JangkaWaktu? = null
 
+    fun loadNominalIncreaseLimit() {
+        isLoading.postValue(true)
+        dataManager.listNominalIncreaseLimit()
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    isLoading.postValue(false)
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            val result = mutableListOf<String>()
+                            response.forEach { nominal -> result.add(nominal.description) }
+                            onNominalIncreaseLimitLoaded.postValue(result)
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue("Server Error $code. ${res.message()}")
+                    }
+                },
+                { err ->
+                    isLoading.postValue(false)
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
+
     fun loadIncreaseLimitInfo() {
+        increaseLimitInfo = null
         dataManager.increaseLimitInfo()
             .doOnSubscribe(this::addDisposable)
             .subscribe(
                 { res ->
                     if (res.isSuccessful) {
                         res.body()?.let { response ->
+                            increaseLimitInfo = response[0]
                             onIncreaseLimitInfoLoaded.postValue(
-                                response[0]/*.apply {
-                                    mode = "3"
-                                }*/
+                                increaseLimitInfo?.apply {
+                                    /*formIntro = "teeessss"*/
+                                }
                             )
                         }
                     } else {

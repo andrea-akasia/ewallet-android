@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class IncreaseLimitInfo(
 
 	@field:SerializedName("Form_Intro")
-	val formIntro: String = "",
+	var formIntro: String = "",
 
 	@field:SerializedName("Message")
 	val message: String = "",

@@ -81,6 +81,12 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun listNominalIncreaseLimit(): Single<Response<MutableList<NominalIncreaseLimit>>> {
+        return api.listNominalIncreaseLimit(getIdMember())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun increaseLimitInfo(): Single<Response<MutableList<IncreaseLimitInfo>>> {
         return api.increaseLimitInfo(getIdMember())
             .subscribeOn(Schedulers.io())
