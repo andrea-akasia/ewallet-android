@@ -146,6 +146,7 @@ class UpdateProfileActivity: BaseActivity<ProfileViewModel>(), DatePickerFragmen
             binding.etPhone.setText(viewModel.profileData!!.nOWA!!.substring(1, viewModel.profileData!!.nOWA!!.length))
             binding.etName.setText(viewModel.profileData!!.nama)
             binding.etDate.setText(viewModel.profileData!!.tanggalLahir)
+            binding.etNik.setText(viewModel.profileData!!.nIK)
         }
 
         binding.actionSelectPhoto.setOnClickListener {
