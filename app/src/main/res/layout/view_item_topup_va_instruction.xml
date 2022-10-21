@@ -10,6 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/action_toggle"
         android:padding="@dimen/_8sdp"
+        android:background="#F4F4F4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
