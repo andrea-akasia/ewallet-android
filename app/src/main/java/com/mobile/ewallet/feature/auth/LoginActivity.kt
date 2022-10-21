@@ -91,6 +91,16 @@ class LoginActivity: BaseActivity<AuthViewModel>(), OTPDialog.OTPListener {
             otpDialog.show(supportFragmentManager, null)
         }
 
+        viewModel.isLoading.observe(this) {
+            if(it){
+                binding.btnSubmit.isClickable = false
+                binding.btnSubmit.background = ContextCompat.getDrawable(this, R.drawable.white_button_bg_inactive)
+            }else{
+                binding.btnSubmit.isClickable = true
+                binding.btnSubmit.background = ContextCompat.getDrawable(this, R.drawable.white_button_bg)
+            }
+        }
+
         viewModel.warningMessage.observe(this){
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
