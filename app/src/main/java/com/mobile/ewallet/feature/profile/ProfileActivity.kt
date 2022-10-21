@@ -2,6 +2,7 @@ package com.mobile.ewallet.feature.profile
 
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -15,7 +16,6 @@ import com.google.gson.Gson
 import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityProfileBinding
-import com.mobile.ewallet.feature.auth.AuthActivity
 import com.mobile.ewallet.feature.auth.SplashcreenActivity
 import com.mobile.ewallet.feature.credit.CreditDetailActivity
 import com.mobile.ewallet.model.api.dashboard.DashboardBalance
@@ -46,6 +46,7 @@ class ProfileActivity: BaseActivity<ProfileViewModel>() {
             binding.balance.text = viewModel.dashboardData.sisaSaldo
             binding.balanceIn.text = viewModel.dashboardData.dATAIN
             binding.balanceOut.text = viewModel.dashboardData.dATAOUT
+            binding.csTime.text = viewModel.dashboardData.jamOperasional
 
             if(viewModel.dashboardData.iDPendanaanDisetujui != "0"){
                 //has credit approved
@@ -104,6 +105,13 @@ class ProfileActivity: BaseActivity<ProfileViewModel>() {
             startActivity(
                 Intent(this, FaqActivity::class.java)
             )
+        }
+
+        binding.actionContact.setOnClickListener {
+            val url = "https://api.whatsapp.com/send?phone=${viewModel.dashboardData.contactPhone}"
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(url)
+            startActivity(i)
         }
 
         observeViewModel()

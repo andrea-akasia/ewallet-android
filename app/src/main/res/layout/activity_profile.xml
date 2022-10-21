@@ -558,6 +558,7 @@
                     android:layout_marginBottom="@dimen/_10sdp"/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/action_contact"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -585,7 +586,7 @@
                         android:id="@+id/cs_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="08:00 - 24:00 WIB"
+                        tools:text="08:00 - 24:00 WIB"
                         android:textColor="@android:color/black"
                         android:textSize="13sp"
                         app:layout_constraintBottom_toBottomOf="parent"

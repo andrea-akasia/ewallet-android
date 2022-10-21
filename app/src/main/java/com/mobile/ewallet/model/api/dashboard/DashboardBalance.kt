@@ -29,5 +29,11 @@ data class DashboardBalance(
 	val pinjamanAktif: String? = null,
 
 	@field:SerializedName("Badge")
-	val badge: String? = null
+	val badge: String? = null,
+
+	@field:SerializedName("ContactPhone")
+	val contactPhone: String? = null,
+
+	@field:SerializedName("JamOperasional")
+	val jamOperasional: String? = null
 )
