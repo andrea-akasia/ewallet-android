@@ -18,13 +18,10 @@ import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityBillingDetailBinding
 import com.mobile.ewallet.feature.topup.InstructionAdapter
-import com.mobile.ewallet.feature.topup.VirtualAccAdapter
 import com.mobile.ewallet.model.api.credit.billing.BillingCredit
 import com.mobile.ewallet.model.api.credit.billing.BillingVA
 import com.mobile.ewallet.model.api.topup.TopupInstruction
-import com.mobile.ewallet.model.api.topup.TopupVA
 import com.mobile.ewallet.util.GlideApp
-import com.mobile.ewallet.util.formatToCurrency
 
 class BillingDetailActivity: BaseActivity<BillingViewModel>(), BillingVAAdapter.BillingVAListener {
 
@@ -45,11 +42,11 @@ class BillingDetailActivity: BaseActivity<BillingViewModel>(), BillingVAAdapter.
         observeViewModel()
         intent.getStringExtra("DATA")?.let {
             viewModel.billingData = Gson().fromJson(it, BillingCredit::class.java)
-            binding.totalInvoice.text = viewModel.billingData.totalTagihan.formatToCurrency()
-            binding.valueCreditActive.text = viewModel.billingData.pinjamanAktif.formatToCurrency()
+            binding.totalInvoice.text = viewModel.billingData.totalTagihan
+            binding.valueCreditActive.text = viewModel.billingData.pinjamanAktif
             binding.valueDeadline.text = viewModel.billingData.tanggalJatuhTempo
-            binding.valueBunga.text = viewModel.billingData.bunga.formatToCurrency()
-            binding.valueDenda.text = viewModel.billingData.dendaKeterlambatan.formatToCurrency()
+            binding.valueBunga.text = viewModel.billingData.bunga
+            binding.valueDenda.text = viewModel.billingData.dendaKeterlambatan
 
             viewModel.loadBillingDetail(viewModel.billingData.iD)
         }

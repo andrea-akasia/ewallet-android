@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mobile.ewallet.databinding.ViewItemBillingHistoryBinding
 import com.mobile.ewallet.model.api.credit.billing.BillingTransaction
-import com.mobile.ewallet.util.formatToCurrency
 
 class BillingHistoryAdapter(
     val data: MutableList<BillingTransaction>
@@ -24,7 +23,7 @@ class BillingHistoryAdapter(
         with(holder){
             val item = data[bindingAdapterPosition]
 
-            binding.balance.text = item.trxAmount.formatToCurrency()
+            binding.balance.text = item.trxAmount
             binding.timestamp.text = item.timestamp
             binding.description.text = "${item.namaBank} Virtual Account"
         }
