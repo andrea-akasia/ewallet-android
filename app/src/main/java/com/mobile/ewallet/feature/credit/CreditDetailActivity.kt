@@ -74,6 +74,7 @@ class CreditDetailActivity: BaseActivity<CreditViewModel>() {
         }
 
         binding.btnApplyIncreaseLimit.setOnClickListener { showIncreaseLimitFormDialog() }
+        binding.actionClose.setOnClickListener { binding.viewApplyLimitIncrease.visibility = View.GONE }
 
         observeViewModel()
     }
@@ -82,11 +83,53 @@ class CreditDetailActivity: BaseActivity<CreditViewModel>() {
         super.onResume()
         viewModel.loadCreditHistoryTransaction()
         viewModel.loadBillingData()
+        viewModel.loadIncreaseLimitInfo()
     }
 
     private fun observeViewModel(){
+        viewModel.onIncreaseLimitInfoLoaded.observe(this) {
+            binding.increaseLimitTitle.text = it.title
+            binding.increaseLimitSubtitle.text = it.message
+            binding.btnApplyIncreaseLimit.text = it.subMessage
+            binding.actionClose.text = it.subMessage
+            if(it.mode == "0"){
+                binding.viewApplyLimitIncrease.visibility = View.GONE
+            }else if(it.mode == "1A"){
+                //user can req
+                binding.viewApplyLimitIncrease.visibility = View.VISIBLE
+                binding.viewIncreaseLimitBg.background = ContextCompat.getDrawable(this, R.drawable.apply_increase_limit_bg_green)
+                binding.btnApplyIncreaseLimit.visibility = View.VISIBLE
+                binding.btnApplyIncreaseLimit.setTextColor(Color.parseColor("#41B92A"))
+                binding.btnApplyIncreaseLimit.isClickable = true
+                binding.btnApplyIncreaseLimit.background = ContextCompat.getDrawable(this, R.drawable.white_button_bg)
+                binding.actionClose.visibility = View.GONE
+            }else if(it.mode == "1B"){
+                //in progress
+                binding.viewApplyLimitIncrease.visibility = View.VISIBLE
+                binding.viewIncreaseLimitBg.background = ContextCompat.getDrawable(this, R.drawable.apply_increase_limit_bg_yellow)
+                binding.btnApplyIncreaseLimit.visibility = View.VISIBLE
+                binding.btnApplyIncreaseLimit.setTextColor(Color.parseColor("#FF8C32"))
+                binding.btnApplyIncreaseLimit.isClickable = false
+                binding.btnApplyIncreaseLimit.background = ContextCompat.getDrawable(this, R.drawable.white_button_bg_inactive)
+                binding.actionClose.visibility = View.GONE
+            }else if(it.mode == "2"){
+                //approved
+                binding.viewApplyLimitIncrease.visibility = View.VISIBLE
+                binding.viewIncreaseLimitBg.background = ContextCompat.getDrawable(this, R.drawable.apply_increase_limit_bg_blue)
+                binding.btnApplyIncreaseLimit.visibility = View.GONE
+                binding.actionClose.visibility = View.VISIBLE
+            }else if(it.mode == "3"){
+                //rejected
+                binding.viewApplyLimitIncrease.visibility = View.VISIBLE
+                binding.viewIncreaseLimitBg.background = ContextCompat.getDrawable(this, R.drawable.apply_increase_limit_bg_red)
+                binding.btnApplyIncreaseLimit.visibility = View.GONE
+                binding.actionClose.visibility = View.VISIBLE
+            }
+        }
+
         viewModel.onIncreaseLimitSubmitted.observe(this) {
             Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+            onResume()
         }
 
         viewModel.onBillingAvailable.observe(this) {

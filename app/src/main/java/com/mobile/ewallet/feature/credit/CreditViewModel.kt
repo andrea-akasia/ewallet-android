@@ -27,6 +27,7 @@ class CreditViewModel
     internal var onPrescreeningSuccess = MutableLiveData<Boolean>()
     internal var onBillingAvailable = MutableLiveData<Boolean>()
     internal var onIncreaseLimitSubmitted = MutableLiveData<String>()
+    internal var onIncreaseLimitInfoLoaded = MutableLiveData<IncreaseLimitInfo>()
 
     var billingData: BillingCredit? = null
 
@@ -53,6 +54,33 @@ class CreditViewModel
     var jenisKreditParameter: JenisKreditParameter? = null
     var jangkaWaktus = mutableListOf<JangkaWaktu>()
     var selectedJangkaWaktu: JangkaWaktu? = null
+
+    fun loadIncreaseLimitInfo() {
+        dataManager.increaseLimitInfo()
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            onIncreaseLimitInfoLoaded.postValue(
+                                response[0]/*.apply {
+                                    mode = "3"
+                                }*/
+                            )
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue("Server Error $code. ${res.message()}")
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun submitIncreaseLimit(amount: String) {
         dataManager.submitLimitIncrease(amount)

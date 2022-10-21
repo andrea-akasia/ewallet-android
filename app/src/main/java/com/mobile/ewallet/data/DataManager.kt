@@ -69,11 +69,11 @@ class DataManager
 
     fun setIdMember(username: String) { prefs.putString(KEY_ID_MEMBER, username) }
 
-    fun getIdMember(): String = prefs.getString(KEY_ID_MEMBER, "")!!
+    fun getIdMember(): String = /*"22092314153995866"*/prefs.getString(KEY_ID_MEMBER, "")!!
 
     fun setLoginState(isLoggedIn: Boolean) { prefs.putBoolean(KEY_IS_LOGGED_IN, isLoggedIn) }
 
-    fun getLoginState(): Boolean = prefs.getBoolean(KEY_IS_LOGGED_IN)
+    fun getLoginState(): Boolean = /*true*/prefs.getBoolean(KEY_IS_LOGGED_IN)
 
     fun clearPrefs(){
         prefs.putBoolean(KEY_IS_LOGGED_IN, false)
@@ -81,6 +81,12 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun increaseLimitInfo(): Single<Response<MutableList<IncreaseLimitInfo>>> {
+        return api.increaseLimitInfo(getIdMember())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun submitLimitIncrease(limit: String): Single<Response<MutableList<BaseAPIResponse>>> {
         return api.submitLimitIncrease(getIdMember(), limit)
             .subscribeOn(Schedulers.io())
