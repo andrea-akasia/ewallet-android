@@ -6,7 +6,7 @@ import com.mobile.ewallet.base.BaseViewModel
 import com.mobile.ewallet.data.DataManager
 import com.mobile.ewallet.model.api.badge.Badge
 import com.mobile.ewallet.model.api.badge.BadgeStatus
-import com.mobile.ewallet.model.api.credit.PendanaanItem
+import com.mobile.ewallet.model.api.credit.PendanaanInfo
 import com.mobile.ewallet.model.api.dashboard.DashboardBalance
 import com.mobile.ewallet.model.api.dashboard.TransactionItem
 import com.mobile.ewallet.model.api.profile.ProfileAPIResponse
@@ -25,24 +25,28 @@ class HomeViewModel
     internal var onBadgesLoaded = MutableLiveData<MutableList<Badge>>()
     internal var onBadgeStatusLoaded = MutableLiveData<BadgeStatus>()
     internal var onTransactionDetailLoaded = MutableLiveData<TransactionDetail>()
-    internal var onLatestCreditReqLoaded = MutableLiveData<PendanaanItem>()
     internal var onAllHistoryTransactionLoaded = MutableLiveData<MutableList<TransactionItem>>()
+    internal var onApplyCreditInfoLoaded = MutableLiveData<PendanaanInfo>()
 
     var balanceData: DashboardBalance? = null
+    var pendanaanInfo: PendanaanInfo? = null
 
-    fun loadLatestPendanaanReqStatus() {
-        dataManager.listPendanaanReq()
+    fun loadPendanaanInfo() {
+        pendanaanInfo = null
+        dataManager.pendanaanInfo()
             .doOnSubscribe(this::addDisposable)
             .subscribe(
                 { res ->
                     if (res.isSuccessful) {
                         res.body()?.let { response ->
                             if(response.isNotEmpty()){
-                                onLatestCreditReqLoaded.postValue(
-                                    response[response.size-1]/*.apply {
-                                        statusProses = "DECLINED"
-                                        alsanReject = "keseringan bosss"
-                                    }*/
+                                pendanaanInfo = response[0]
+                                onApplyCreditInfoLoaded.postValue(
+                                    pendanaanInfo?.apply {
+                                        /*mode = "1B"
+                                        title = "Sedang Diproses!"
+                                        subMessage = "Detail Pengajuan"*/
+                                    }
                                 )
                             }
                         }
@@ -50,7 +54,7 @@ class HomeViewModel
                         // not 20x
                         val code = res.code()
                         Timber.w(Throwable("Server Error $code, ${res.message()}"))
-                        warningMessage.postValue(res.message())
+                        warningMessage.postValue("load pendanaan info failed, Server Error $code")
                     }
                 },
                 { err ->
@@ -253,6 +257,8 @@ class HomeViewModel
                         res.body()?.let { response ->
                             onHistoryTransactionLoaded.postValue(response)
                         }
+
+                        loadPendanaanInfo()
                     } else {
                         // not 20x
                         val code = res.code()
@@ -283,6 +289,8 @@ class HomeViewModel
                                 warningMessage.postValue("empty data dashboard")
                             }
                         }
+
+                        loadHistoryTransaction()
                     } else {
                         // not 20x
                         val code = res.code()
@@ -314,6 +322,8 @@ class HomeViewModel
                                 warningMessage.postValue("empty data profile")
                             }
                         }
+
+                        loadDashboardBalance()
                     } else {
                         // not 20x
                         val code = res.code()

@@ -6,11 +6,13 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.text.InputType
 import android.view.View
 import android.view.WindowInsetsController
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -22,7 +24,6 @@ import com.google.gson.Gson
 import com.mobile.ewallet.R
 import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityHomeBinding
-import com.mobile.ewallet.feature.auth.AuthActivity
 import com.mobile.ewallet.feature.auth.SplashcreenActivity
 import com.mobile.ewallet.feature.credit.CreditDetailActivity
 import com.mobile.ewallet.feature.credit.kum.KUMPrescreeningActivity
@@ -151,10 +152,6 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
             }
         }
 
-        binding.btnApplyCredit.setOnClickListener {
-            showSelectPengajuanTypeDialog()
-        }
-
         binding.actionSeeAll.setOnClickListener {
             startActivity(
                 Intent(this, AllHistoryTransactionActivity::class.java)
@@ -175,30 +172,71 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
             this@HomeActivity.finish()
         }else{
             viewModel.loadProfile()
-            viewModel.loadDashboardBalance()
-            viewModel.loadHistoryTransaction()
         }
     }
 
     private fun observeViewModel(){
-        viewModel.onLatestCreditReqLoaded.observe(this){
-            binding.viewCreditReqPrompt.visibility = View.GONE
-            binding.viewCreditReqStatus.visibility = View.VISIBLE
-            if(it.statusProses == "PENDING"){
+        viewModel.onApplyCreditInfoLoaded.observe(this) {
+            binding.applyCreditTitle.text = it.title
+            binding.applyCreditSubtitle.text = Html.fromHtml(it.message, Html.FROM_HTML_MODE_COMPACT)
+            binding.btnApplyCredit.text = it.subMessage
+            if(it.mode == "0"){
+                binding.viewCreditReqPrompt.visibility = View.GONE
+            }else if(it.mode == "1A"){
+                //user can req
+                binding.viewCreditReqPrompt.visibility = View.VISIBLE
+                binding.viewApplyCreditBg.background = ContextCompat.getDrawable(this, R.drawable.apply_credit_bg_orange)
+                binding.btnApplyCredit.visibility = View.VISIBLE
+                binding.btnApplyCredit.setTextColor(Color.parseColor("#FFFFFF"))
+                binding.btnApplyCredit.isClickable = true
+                binding.btnApplyCredit.background = ContextCompat.getDrawable(this, R.drawable.orange_button_bg)
+                binding.actionCloseApplyCredit.visibility = View.GONE
+                binding.btnApplyCredit.setOnClickListener {
+                    showSelectPengajuanTypeDialog()
+                }
+                binding.actionCancelPendanaan.visibility = View.GONE
+            }else if(it.mode == "1B"){
                 //in progress
-                binding.tvInProgress.visibility = View.VISIBLE
-                binding.tvDeclined.visibility = View.GONE
-            }else{
-                //ditolak
-                binding.tvInProgress.visibility = View.GONE
-                binding.tvDeclined.visibility = View.VISIBLE
-            }
-
-            binding.viewCreditReqStatus.setOnClickListener { v ->
-                startActivity(
-                    Intent(this, DetailStatusCreditReqActivity::class.java)
-                        .putExtra("DATA", Gson().toJson(it/*.apply { statusProses = "DECLINED" }*/))
-                )
+                binding.viewCreditReqPrompt.visibility = View.VISIBLE
+                binding.viewApplyCreditBg.background = ContextCompat.getDrawable(this, R.drawable.apply_credit_bg_orange)
+                binding.btnApplyCredit.visibility = View.VISIBLE
+                binding.btnApplyCredit.setTextColor(Color.parseColor("#FFFFFF"))
+                binding.btnApplyCredit.isClickable = true
+                binding.btnApplyCredit.background = ContextCompat.getDrawable(this, R.drawable.orange_button_bg)
+                binding.actionCloseApplyCredit.visibility = View.GONE
+                binding.btnApplyCredit.setOnClickListener {
+                    //TODO go to detail pendanaan
+                }
+                binding.actionCancelPendanaan.visibility = View.VISIBLE
+                binding.actionCancelPendanaan.setOnClickListener {
+                    val logoutDialog = AlertDialog.Builder(this)
+                    logoutDialog.setMessage("Anda yakin ingin Membatalkan?")
+                    logoutDialog.setCancelable(false)
+                    logoutDialog.setNegativeButton("tutup") { d, _ ->
+                        d.dismiss()
+                    }
+                    logoutDialog.setPositiveButton("Batalkan Pendanaan") { d, _ ->
+                        //TODO call api to cancel pendanaan
+                        d.dismiss()
+                    }
+                    logoutDialog.show()
+                }
+            }else if(it.mode == "2"){
+                //approved
+                binding.viewCreditReqPrompt.visibility = View.VISIBLE
+                binding.viewApplyCreditBg.background = ContextCompat.getDrawable(this, R.drawable.apply_credit_bg_blue)
+                binding.btnApplyCredit.visibility = View.GONE
+                binding.actionCloseApplyCredit.visibility = View.VISIBLE
+                binding.actionCloseApplyCredit.setOnClickListener { binding.viewCreditReqPrompt.visibility = View.GONE }
+                binding.actionCancelPendanaan.visibility = View.GONE
+            }else if(it.mode == "3"){
+                //rejected
+                binding.viewCreditReqPrompt.visibility = View.VISIBLE
+                binding.viewApplyCreditBg.background = ContextCompat.getDrawable(this, R.drawable.apply_credit_bg_red)
+                binding.btnApplyCredit.visibility = View.GONE
+                binding.actionCloseApplyCredit.visibility = View.VISIBLE
+                binding.actionCloseApplyCredit.setOnClickListener { binding.viewCreditReqPrompt.visibility = View.GONE }
+                binding.actionCancelPendanaan.visibility = View.GONE
             }
         }
 
@@ -223,7 +261,6 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
             it.iDPendanaanDisetujui?.let { approvedPendanaanId ->
                 if(approvedPendanaanId != "0"){
                     //show credit info
-                    binding.viewCreditReqPrompt.visibility = View.GONE
                     binding.viewCreditInfo.visibility = View.VISIBLE
                     binding.valueLimitCredit.text = it.limitPinjaman
                     binding.valueActiveCredit.text = it.pinjamanAktif
@@ -235,11 +272,6 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
                                 .putExtra("LIMIT", it.limitPinjaman)
                         )
                     }
-                }else{
-                    binding.btnDetailCredit.setOnClickListener(null)
-                    binding.viewCreditInfo.visibility = View.GONE
-                    binding.viewCreditReqPrompt.visibility = View.VISIBLE
-                    viewModel.loadLatestPendanaanReqStatus()
                 }
             }
         }

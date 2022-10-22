@@ -23,7 +23,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/logo_home" />
 
-        <com.google.android.material.card.MaterialCardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/action_profile"
             android:layout_width="@dimen/_28sdp"
             android:layout_height="@dimen/_28sdp"
@@ -43,7 +43,7 @@
                 android:scaleType="centerCrop"
                 tools:srcCompat="@drawable/sample_avatar" />
 
-        </com.google.android.material.card.MaterialCardView>
+        </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -381,6 +381,8 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:visibility="gone"
+                tools:visibility="visible"
                 android:id="@+id/view_credit_req_prompt"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:layout_width="match_parent"
@@ -388,39 +390,69 @@
                 app:cardCornerRadius="@dimen/_4sdp">
 
                 <LinearLayout
-                    android:background="@drawable/apply_credit_bg"
+                    android:id="@+id/view_apply_credit_bg"
                     android:layout_width="match_parent"
+                    android:background="@drawable/apply_credit_bg_orange"
+                    android:padding="@dimen/_10sdp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="@dimen/_14sdp">
+                    android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/apply_credit_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/home_apply_credit_desc"
+                        tools:text="Pengajuan Pinjaman"
                         android:textColor="@color/colorTextBlack"
-                        android:textSize="14sp" />
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
                     <TextView
-                        android:layout_marginTop="@dimen/_4sdp"
+                        android:id="@+id/apply_credit_subtitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="+ Rp50.000.000"
-                        android:textColor="@color/colorTrxIn"
-                        android:textStyle="bold"
-                        android:textSize="18sp" />
+                        android:text="Kamu berkesempatan naikkan limit, silahkan ajukan dengan mengisi form berikut"
+                        android:textSize="12sp" />
 
                     <Button
+                        android:visibility="gone"
+                        tools:visibility="visible"
                         android:id="@+id/btn_apply_credit"
+                        android:layout_marginTop="@dimen/_10sdp"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_30sdp"
-                        android:layout_marginTop="@dimen/_12sdp"
-                        android:background="@drawable/orange_button_bg_2"
+                        android:background="@drawable/orange_button_bg"
                         android:text="Ajukan Sekarang"
                         android:textAllCaps="false"
                         android:textColor="@android:color/white"
-                        android:textSize="11sp"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
+
+                    <TextView
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:id="@+id/action_cancel_pendanaan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:text="Batalkan"
+                        android:textAlignment="center"
+                        android:textColor="#EB4646"
+                        android:padding="@dimen/_10sdp"
+                        android:textSize="12sp"
+                        android:letterSpacing="0.05"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:id="@+id/action_close_apply_credit"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:text="Tutup"
+                        android:textColor="@color/colorTextBlack"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
                 </LinearLayout>
 
@@ -436,7 +468,7 @@
                 app:cardCornerRadius="@dimen/_4sdp">
 
                 <LinearLayout
-                    android:background="@drawable/apply_credit_bg"
+                    android:background="@drawable/apply_credit_bg_orange"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"

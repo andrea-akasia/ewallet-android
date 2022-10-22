@@ -40,6 +40,12 @@ import retrofit2.http.*
 
 interface APIService {
     @FormUrlEncoded
+    @POST("Box_Pendanaan.aspx")
+    fun pendanaanInfo(
+        @Field("IDMember") idMember: String
+    ): Single<Response<MutableList<PendanaanInfo>>>
+
+    @FormUrlEncoded
     @POST("DD_Kenaikan_limit.aspx")
     fun listNominalIncreaseLimit(
         @Field("IDMember") idMember: String

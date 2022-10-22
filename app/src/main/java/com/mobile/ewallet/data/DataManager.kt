@@ -81,6 +81,12 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun pendanaanInfo(): Single<Response<MutableList<PendanaanInfo>>> {
+        return api.pendanaanInfo(getIdMember())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun listNominalIncreaseLimit(): Single<Response<MutableList<NominalIncreaseLimit>>> {
         return api.listNominalIncreaseLimit(getIdMember())
             .subscribeOn(Schedulers.io())
