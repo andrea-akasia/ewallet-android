@@ -17,6 +17,7 @@ import com.mobile.ewallet.model.api.credit.*
 import com.mobile.ewallet.model.api.credit.billing.BillingCredit
 import com.mobile.ewallet.model.api.credit.billing.BillingTransaction
 import com.mobile.ewallet.model.api.credit.billing.BillingVA
+import com.mobile.ewallet.model.api.credit.detailrequest.kur.DetailKUMDocument
 import com.mobile.ewallet.model.api.dashboard.DashboardBalance
 import com.mobile.ewallet.model.api.dashboard.TransactionItem
 import com.mobile.ewallet.model.api.detailpokemon.DetailPokemonResponse
@@ -81,6 +82,12 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun detailKUMDocument(id: String): Single<Response<MutableList<DetailKUMDocument>>> {
+        return api.detailKUMDocument(getIdMember(), id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun cancelPendanaan(id: String): Single<Response<MutableList<BaseAPIResponse>>> {
         return api.cancelPendanaan(getIdMember(), id)
             .subscribeOn(Schedulers.io())

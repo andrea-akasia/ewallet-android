@@ -176,11 +176,12 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
         }
     }
 
-    private fun gotoDetailPendanaan(type: String){
+    private fun gotoDetailPendanaan(type: String, id: String){
         if(type.isNotEmpty()){
             startActivity(
                 Intent(this, DetailPendanaanActivity::class.java)
                     .putExtra("TYPE", type)
+                    .putExtra("ID", id)
             )
         }
     }
@@ -215,7 +216,7 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
                 binding.btnApplyCredit.background = ContextCompat.getDrawable(this, R.drawable.orange_button_bg)
                 binding.actionCloseApplyCredit.visibility = View.GONE
                 binding.btnApplyCredit.setOnClickListener { _ ->
-                    gotoDetailPendanaan(it.typePengajuan)
+                    gotoDetailPendanaan(it.typePengajuan, it.iDPendanaan)
                 }
                 binding.actionCancelPendanaan.visibility = View.VISIBLE
                 binding.actionCancelPendanaan.setOnClickListener { _ ->
@@ -239,7 +240,7 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
                 binding.btnApplyCredit.background = ContextCompat.getDrawable(this, R.drawable.white_button_bg)
                 binding.btnApplyCredit.setTextColor(Color.parseColor("#2196f3"))
                 binding.btnApplyCredit.setOnClickListener { _ ->
-                    gotoDetailPendanaan(it.typePengajuan)
+                    gotoDetailPendanaan(it.typePengajuan, it.iDPendanaan)
                 }
                 binding.actionCloseApplyCredit.visibility = View.GONE
                 binding.actionCancelPendanaan.visibility = View.GONE
@@ -252,7 +253,7 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
                 binding.btnApplyCredit.background = ContextCompat.getDrawable(this, R.drawable.white_button_bg)
                 binding.btnApplyCredit.setTextColor(Color.parseColor("#BC2727"))
                 binding.btnApplyCredit.setOnClickListener { _ ->
-                    gotoDetailPendanaan(it.typePengajuan)
+                    gotoDetailPendanaan(it.typePengajuan, it.iDPendanaan)
                 }
                 binding.actionCloseApplyCredit.visibility = View.GONE
                 binding.actionCancelPendanaan.visibility = View.GONE

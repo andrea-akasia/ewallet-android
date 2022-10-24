@@ -35,11 +35,12 @@ class DetailPendanaanActivity: BaseActivity<CreditViewModel>(), HasAndroidInject
         binding.topbar.title.text = "Detail Pendanaan"
 
         val type = intent.getStringExtra("TYPE")
+        val id = intent.getStringExtra("ID")
         if(type == "KUM"){
             val fragmentAdapter = PendanaanFragmentAdapter(this@DetailPendanaanActivity)
             fragmentAdapter.addFragment(DetailKUMPrescreeningFragment())
             fragmentAdapter.addFragment(DetailKUMFulfillmentFragment())
-            fragmentAdapter.addFragment(DetailKUMDocumentsFragment())
+            fragmentAdapter.addFragment(DetailKUMDocumentsFragment.newInstance(id!!))
             binding.viewpager.adapter = fragmentAdapter
 
             TabLayoutMediator(binding.tabLayout, binding.viewpager) { tab, pos ->
