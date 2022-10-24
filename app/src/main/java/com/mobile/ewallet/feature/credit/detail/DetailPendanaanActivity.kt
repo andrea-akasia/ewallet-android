@@ -39,8 +39,8 @@ class DetailPendanaanActivity: BaseActivity<CreditViewModel>(), HasAndroidInject
         if(type == "KUM"){
             val fragmentAdapter = PendanaanFragmentAdapter(this@DetailPendanaanActivity)
             fragmentAdapter.addFragment(DetailKUMPrescreeningFragment())
-            fragmentAdapter.addFragment(DetailKUMFulfillmentFragment())
-            fragmentAdapter.addFragment(DetailKUMDocumentsFragment.newInstance(id!!))
+            fragmentAdapter.addFragment(DetailKUMFulfillmentFragment.newInstance(id!!))
+            fragmentAdapter.addFragment(DetailKUMDocumentsFragment.newInstance(id))
             binding.viewpager.adapter = fragmentAdapter
 
             TabLayoutMediator(binding.tabLayout, binding.viewpager) { tab, pos ->

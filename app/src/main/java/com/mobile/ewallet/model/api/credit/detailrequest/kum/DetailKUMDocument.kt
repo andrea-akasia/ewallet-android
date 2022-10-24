@@ -1,4 +1,4 @@
-package com.mobile.ewallet.model.api.credit.detailrequest.kur
+package com.mobile.ewallet.model.api.credit.detailrequest.kum
 
 import com.google.gson.annotations.SerializedName
 
