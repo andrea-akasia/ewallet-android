@@ -40,6 +40,13 @@ import retrofit2.http.*
 
 interface APIService {
     @FormUrlEncoded
+    @POST("Pendanaan_CANCEL_Pengajuan.aspx")
+    fun cancelPendanaan(
+        @Field("IDMember") idMember: String,
+        @Field("IDPendanaan") idPendanaan: String
+    ): Single<Response<MutableList<BaseAPIResponse>>>
+
+    @FormUrlEncoded
     @POST("Box_Pendanaan.aspx")
     fun pendanaanInfo(
         @Field("IDMember") idMember: String

@@ -31,6 +31,33 @@ class HomeViewModel
     var balanceData: DashboardBalance? = null
     var pendanaanInfo: PendanaanInfo? = null
 
+    fun cancelPendanaan(id: String) {
+        dataManager.cancelPendanaan(id)
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            if(response.isNotEmpty()){
+                                warningMessage.postValue(response[0].message!!)
+                            }else{
+                                warningMessage.postValue("empty data response")
+                            }
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue("request failed, Server Error $code")
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
+
     fun loadPendanaanInfo() {
         pendanaanInfo = null
         dataManager.pendanaanInfo()

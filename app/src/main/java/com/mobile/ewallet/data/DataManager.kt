@@ -81,6 +81,12 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun cancelPendanaan(id: String): Single<Response<MutableList<BaseAPIResponse>>> {
+        return api.cancelPendanaan(getIdMember(), id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun pendanaanInfo(): Single<Response<MutableList<PendanaanInfo>>> {
         return api.pendanaanInfo(getIdMember())
             .subscribeOn(Schedulers.io())

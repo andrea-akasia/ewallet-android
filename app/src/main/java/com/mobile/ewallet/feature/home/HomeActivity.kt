@@ -218,7 +218,7 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
                     gotoDetailPendanaan(it.typePengajuan)
                 }
                 binding.actionCancelPendanaan.visibility = View.VISIBLE
-                binding.actionCancelPendanaan.setOnClickListener {
+                binding.actionCancelPendanaan.setOnClickListener { _ ->
                     val logoutDialog = AlertDialog.Builder(this)
                     logoutDialog.setMessage("Anda yakin ingin Membatalkan?")
                     logoutDialog.setCancelable(false)
@@ -226,7 +226,7 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
                         d.dismiss()
                     }
                     logoutDialog.setPositiveButton("Batalkan Pendanaan") { d, _ ->
-                        //TODO call api to cancel pendanaan
+                        viewModel.cancelPendanaan(it.iDPendanaan)
                         d.dismiss()
                     }
                     logoutDialog.show()
