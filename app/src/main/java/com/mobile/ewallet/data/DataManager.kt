@@ -19,6 +19,7 @@ import com.mobile.ewallet.model.api.credit.billing.BillingTransaction
 import com.mobile.ewallet.model.api.credit.billing.BillingVA
 import com.mobile.ewallet.model.api.credit.detailrequest.kum.DetailKUMDocument
 import com.mobile.ewallet.model.api.credit.detailrequest.kum.DetailKUMFulfillment
+import com.mobile.ewallet.model.api.credit.detailrequest.kum.DetailKUMPrescreening
 import com.mobile.ewallet.model.api.dashboard.DashboardBalance
 import com.mobile.ewallet.model.api.dashboard.TransactionItem
 import com.mobile.ewallet.model.api.detailpokemon.DetailPokemonResponse
@@ -83,6 +84,12 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun detailKUMPrescreening(id: String): Single<Response<MutableList<DetailKUMPrescreening>>> {
+        return api.detailKUMPrescreening(getIdMember(), id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun detailKUMFulfillment(id: String): Single<Response<MutableList<DetailKUMFulfillment>>> {
         return api.detailKUMFulfillment(getIdMember(), id)
             .subscribeOn(Schedulers.io())

@@ -9,6 +9,7 @@ import com.mobile.ewallet.model.api.credit.billing.BillingTransaction
 import com.mobile.ewallet.model.api.credit.billing.BillingVA
 import com.mobile.ewallet.model.api.credit.detailrequest.kum.DetailKUMDocument
 import com.mobile.ewallet.model.api.credit.detailrequest.kum.DetailKUMFulfillment
+import com.mobile.ewallet.model.api.credit.detailrequest.kum.DetailKUMPrescreening
 import com.mobile.ewallet.model.api.dashboard.DashboardBalance
 import com.mobile.ewallet.model.api.dashboard.TransactionItem
 import com.mobile.ewallet.model.api.detailpokemon.DetailPokemonResponse
@@ -41,6 +42,13 @@ import retrofit2.http.*
 
 
 interface APIService {
+    @FormUrlEncoded
+    @POST("Pendanaan_DETAIL_KUM.aspx")
+    fun detailKUMPrescreening(
+        @Field("IDMember") idMember: String,
+        @Field("IDPendanaan") idPendanaan: String
+    ): Single<Response<MutableList<DetailKUMPrescreening>>>
+
     @FormUrlEncoded
     @POST("Pendanaan_DETAIL_KUM2.aspx")
     fun detailKUMFulfillment(

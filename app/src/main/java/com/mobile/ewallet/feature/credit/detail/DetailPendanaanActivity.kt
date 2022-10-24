@@ -38,8 +38,8 @@ class DetailPendanaanActivity: BaseActivity<CreditViewModel>(), HasAndroidInject
         val id = intent.getStringExtra("ID")
         if(type == "KUM"){
             val fragmentAdapter = PendanaanFragmentAdapter(this@DetailPendanaanActivity)
-            fragmentAdapter.addFragment(DetailKUMPrescreeningFragment())
-            fragmentAdapter.addFragment(DetailKUMFulfillmentFragment.newInstance(id!!))
+            fragmentAdapter.addFragment(DetailKUMPrescreeningFragment.newInstance(id!!))
+            fragmentAdapter.addFragment(DetailKUMFulfillmentFragment.newInstance(id))
             fragmentAdapter.addFragment(DetailKUMDocumentsFragment.newInstance(id))
             binding.viewpager.adapter = fragmentAdapter
 
