@@ -44,7 +44,6 @@
         <activity android:name=".feature.auth.CreateAccountActivity" />
         <activity
             android:name=".feature.home.HomeActivity"
-            android:theme="@style/AppMaterialTheme.NoActionBar"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -78,6 +77,7 @@
         <activity android:name=".feature.auth.SplashcreenActivity" />
         <activity android:name=".feature.credit.billing.BillingDetailActivity" />
         <activity android:name=".feature.home.AllHistoryTransactionActivity" />
+        <activity android:name=".feature.credit.detail.DetailPendanaanActivity" />
     </application>
 
 </manifest>

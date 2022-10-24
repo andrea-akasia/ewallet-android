@@ -26,6 +26,7 @@ import com.mobile.ewallet.base.BaseActivity
 import com.mobile.ewallet.databinding.ActivityHomeBinding
 import com.mobile.ewallet.feature.auth.SplashcreenActivity
 import com.mobile.ewallet.feature.credit.CreditDetailActivity
+import com.mobile.ewallet.feature.credit.detail.DetailPendanaanActivity
 import com.mobile.ewallet.feature.credit.kum.KUMPrescreeningActivity
 import com.mobile.ewallet.feature.credit.kur.KURPrecreeningActivity
 import com.mobile.ewallet.feature.moneyreq.MoneyRequestActivity
@@ -175,6 +176,15 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
         }
     }
 
+    private fun gotoDetailPendanaan(type: String){
+        if(type.isNotEmpty()){
+            startActivity(
+                Intent(this, DetailPendanaanActivity::class.java)
+                    .putExtra("TYPE", type)
+            )
+        }
+    }
+
     private fun observeViewModel(){
         viewModel.onApplyCreditInfoLoaded.observe(this) {
             binding.applyCreditTitle.text = it.title
@@ -204,8 +214,8 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
                 binding.btnApplyCredit.isClickable = true
                 binding.btnApplyCredit.background = ContextCompat.getDrawable(this, R.drawable.orange_button_bg)
                 binding.actionCloseApplyCredit.visibility = View.GONE
-                binding.btnApplyCredit.setOnClickListener {
-                    //TODO go to detail pendanaan
+                binding.btnApplyCredit.setOnClickListener { _ ->
+                    gotoDetailPendanaan(it.typePengajuan)
                 }
                 binding.actionCancelPendanaan.visibility = View.VISIBLE
                 binding.actionCancelPendanaan.setOnClickListener {
@@ -225,17 +235,26 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
                 //approved
                 binding.viewCreditReqPrompt.visibility = View.VISIBLE
                 binding.viewApplyCreditBg.background = ContextCompat.getDrawable(this, R.drawable.apply_credit_bg_blue)
-                binding.btnApplyCredit.visibility = View.GONE
-                binding.actionCloseApplyCredit.visibility = View.VISIBLE
-                binding.actionCloseApplyCredit.setOnClickListener { binding.viewCreditReqPrompt.visibility = View.GONE }
+                binding.btnApplyCredit.visibility = View.VISIBLE
+                binding.btnApplyCredit.background = ContextCompat.getDrawable(this, R.drawable.white_button_bg)
+                binding.btnApplyCredit.setTextColor(Color.parseColor("#2196f3"))
+                binding.btnApplyCredit.setOnClickListener { _ ->
+                    gotoDetailPendanaan(it.typePengajuan)
+                }
+                binding.actionCloseApplyCredit.visibility = View.GONE
                 binding.actionCancelPendanaan.visibility = View.GONE
             }else if(it.mode == "3"){
                 //rejected
                 binding.viewCreditReqPrompt.visibility = View.VISIBLE
                 binding.viewApplyCreditBg.background = ContextCompat.getDrawable(this, R.drawable.apply_credit_bg_red)
                 binding.btnApplyCredit.visibility = View.GONE
-                binding.actionCloseApplyCredit.visibility = View.VISIBLE
-                binding.actionCloseApplyCredit.setOnClickListener { binding.viewCreditReqPrompt.visibility = View.GONE }
+                binding.btnApplyCredit.visibility = View.VISIBLE
+                binding.btnApplyCredit.background = ContextCompat.getDrawable(this, R.drawable.white_button_bg)
+                binding.btnApplyCredit.setTextColor(Color.parseColor("#BC2727"))
+                binding.btnApplyCredit.setOnClickListener { _ ->
+                    gotoDetailPendanaan(it.typePengajuan)
+                }
+                binding.actionCloseApplyCredit.visibility = View.GONE
                 binding.actionCancelPendanaan.visibility = View.GONE
             }
         }

@@ -23,5 +23,5 @@ data class PendanaanInfo(
 	var title: String = "",
 
 	@field:SerializedName("TypePengajuan")
-	val typePengajuan: String = ""
+    var typePengajuan: String = ""
 )
