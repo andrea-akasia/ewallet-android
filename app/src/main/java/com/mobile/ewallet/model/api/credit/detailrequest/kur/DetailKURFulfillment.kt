@@ -118,8 +118,8 @@ data class DetailKURFulfillment(
 	@field:SerializedName("ProfesiPasanganTEXT")
 	val profesiPasanganTEXT: String = "",
 
-	@field:SerializedName("NoIjinUsaha1")
-	val noIjinUsaha1: String = "",
+	@field:SerializedName("NoSurat")
+	val noSurat: String = "",
 
 	@field:SerializedName("LuasLahan")
 	val luasLahan: String = "",

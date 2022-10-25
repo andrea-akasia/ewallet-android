@@ -20,6 +20,7 @@ import com.mobile.ewallet.model.api.credit.billing.BillingVA
 import com.mobile.ewallet.model.api.credit.detailrequest.kum.DetailKUMDocument
 import com.mobile.ewallet.model.api.credit.detailrequest.kum.DetailKUMFulfillment
 import com.mobile.ewallet.model.api.credit.detailrequest.kum.DetailKUMPrescreening
+import com.mobile.ewallet.model.api.credit.detailrequest.kur.DetailKURDocument
 import com.mobile.ewallet.model.api.credit.detailrequest.kur.DetailKURFulfillment
 import com.mobile.ewallet.model.api.credit.detailrequest.kur.DetailKURPrescreening
 import com.mobile.ewallet.model.api.dashboard.DashboardBalance
@@ -86,6 +87,12 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun detailKURDocument(id: String): Single<Response<MutableList<DetailKURDocument>>> {
+        return api.detailKURDocument(getIdMember(), id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun detailKURFulfillment(id: String): Single<Response<MutableList<DetailKURFulfillment>>> {
         return api.detailKURFulfillment(getIdMember(), id)
             .subscribeOn(Schedulers.io())

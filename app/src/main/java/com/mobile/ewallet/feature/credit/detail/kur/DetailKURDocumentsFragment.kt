@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import com.mobile.ewallet.base.BaseFragment
 import com.mobile.ewallet.databinding.FragmentDetailKurDocumentsBinding
+import com.mobile.ewallet.util.GlideApp
 
 class DetailKURDocumentsFragment: BaseFragment<DetailKURViewModel>() {
     override val viewModelClass: Class<DetailKURViewModel> = DetailKURViewModel::class.java
@@ -41,12 +43,41 @@ class DetailKURDocumentsFragment: BaseFragment<DetailKURViewModel>() {
             _binding?.let { _ ->
                 observeViewModel()
 
-
+                viewModel.loadDocument(idPendanaan)
             }
         }
     }
 
     private fun observeViewModel() {
+        viewModel.onDocumentLoaded.observe(viewLifecycleOwner) {
+            GlideApp.with(this).load(it.photoKTP).centerCrop().into(_binding!!.imgKtp)
+            GlideApp.with(this).load(it.photoKK).centerCrop().into(_binding!!.imgKk)
+            GlideApp.with(this).load(it.photoSelfie).centerCrop().into(_binding!!.imgSelfie)
+            GlideApp.with(this).load(it.photoNPWP).centerCrop().into(_binding!!.imgNpwp)
+            GlideApp.with(this).load(it.fileSIUPP).centerCrop().into(_binding!!.imgSiup)
 
+            if(!it.suratPengajuan.contains("nopic", true)){
+                _binding!!.statusSurat.visibility = View.VISIBLE
+            }
+            if(it.photoKTP.contains("nopic", true)){
+                _binding!!.imgKtp.visibility = View.GONE
+            }
+            if(it.photoKK.contains("nopic", true)){
+                _binding!!.imgKk.visibility = View.GONE
+            }
+            if(it.photoSelfie.contains("nopic", true)){
+                _binding!!.imgSelfie.visibility = View.GONE
+            }
+            if(it.photoNPWP.contains("nopic", true)){
+                _binding!!.imgNpwp.visibility = View.GONE
+            }
+            if(it.fileSIUPP.contains("nopic", true)){
+                _binding!!.imgSiup.visibility = View.GONE
+            }
+        }
+
+        viewModel.warningMessage.observe(viewLifecycleOwner) {
+            Toast.makeText(activity, it, Toast.LENGTH_SHORT).show()
+        }
     }
 }

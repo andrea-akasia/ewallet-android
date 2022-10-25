@@ -82,8 +82,8 @@ class DetailKURFulfillmentFragment: BaseFragment<DetailKURViewModel>() {
             _binding!!.etKomoditas.setText(it.komoditasTEXT)
             _binding!!.etLuasLahan.setText(it.luasLahan)
             _binding!!.etJenisDebitur.setText(it.jenisDebiturTEXT)
-            _binding!!.etNoSuratPermohonan.setText(it.noIjinUsaha)
-            _binding!!.etNoIjinUsaha.setText(it.noIjinUsaha1)
+            _binding!!.etNoSuratPermohonan.setText(it.noSurat)
+            _binding!!.etNoIjinUsaha.setText(it.noIjinUsaha)
         }
 
         viewModel.warningMessage.observe(viewLifecycleOwner) {
