@@ -1,5 +1,6 @@
 package com.mobile.ewallet.feature.auth
 
+import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -42,6 +43,11 @@ class OTPDialog: DialogFragment() {
                 listener?.onResendTrigger()
             }
         }
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        countdownTimer.cancel()
+        super.onDismiss(dialog)
     }
 
     override fun onResume() {

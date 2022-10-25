@@ -18,6 +18,7 @@ class LoginActivity: BaseActivity<AuthViewModel>(), OTPDialog.OTPListener {
 
     override val viewModelClass: Class<AuthViewModel> get() = AuthViewModel::class.java
     private lateinit var binding: ActivityLoginBinding
+    private var otpDialog: OTPDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,6 +72,7 @@ class LoginActivity: BaseActivity<AuthViewModel>(), OTPDialog.OTPListener {
 
     private fun observeViewModel(){
         viewModel.onConfirmOTPSuccess.observe(this){
+            otpDialog?.dismiss()
             startActivity(
                 Intent(this@LoginActivity, HomeActivity::class.java)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -85,10 +87,10 @@ class LoginActivity: BaseActivity<AuthViewModel>(), OTPDialog.OTPListener {
 
         viewModel.onReqOTPLoginSuccess.observe(this){
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-            val otpDialog = OTPDialog().newInstance("0${binding.etPhone.text}")
-            otpDialog.listener = this@LoginActivity
-            otpDialog.isCancelable = true
-            otpDialog.show(supportFragmentManager, null)
+            otpDialog = OTPDialog().newInstance("0${binding.etPhone.text}")
+            otpDialog?.listener = this@LoginActivity
+            otpDialog?.isCancelable = true
+            otpDialog?.show(supportFragmentManager, null)
         }
 
         viewModel.isLoading.observe(this) {
