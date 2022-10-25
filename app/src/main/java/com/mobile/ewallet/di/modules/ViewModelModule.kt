@@ -13,6 +13,7 @@ import com.mobile.ewallet.feature.auth.AuthViewModel
 import com.mobile.ewallet.feature.credit.CreditViewModel
 import com.mobile.ewallet.feature.credit.billing.BillingViewModel
 import com.mobile.ewallet.feature.credit.detail.kum.DetailKUMViewModel
+import com.mobile.ewallet.feature.credit.detail.kur.DetailKURViewModel
 import com.mobile.ewallet.feature.credit.kum.FulfillmentViewModel
 import com.mobile.ewallet.feature.credit.kum.KUMDocumentViewModel
 import com.mobile.ewallet.feature.credit.kur.KURCreditViewModel
@@ -29,6 +30,11 @@ import com.mobile.ewallet.feature.topup.TopupViewModel
 
 @Module
 abstract class ViewModelModule {
+    @Binds
+    @IntoMap
+    @ViewModelKey(DetailKURViewModel::class)
+    abstract fun bindDetailKURViewModel(detailKURViewModel: DetailKURViewModel): ViewModel
+
     @Binds
     @IntoMap
     @ViewModelKey(DetailKUMViewModel::class)

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -695,6 +696,44 @@
 
         <EditText
             android:id="@+id/et_jenis_debitur"
+            android:paddingStart="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_8sdp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_32sdp"
+            android:textSize="14sp"
+            android:focusable="false"
+            android:background="@drawable/textfield_disabled_bg"
+            android:layout_marginBottom="@dimen/_8sdp"/>
+
+        <TextView
+            android:layout_marginBottom="@dimen/_4sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nomor Surat Permohonan"
+            android:textColor="@android:color/black"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/et_no_surat_permohonan"
+            android:paddingStart="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_8sdp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_32sdp"
+            android:textSize="14sp"
+            android:focusable="false"
+            android:background="@drawable/textfield_disabled_bg"
+            android:layout_marginBottom="@dimen/_8sdp"/>
+
+        <TextView
+            android:layout_marginBottom="@dimen/_4sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nomor Ijin Usaha"
+            android:textColor="@android:color/black"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/et_no_ijin_usaha"
             android:paddingStart="@dimen/_8sdp"
             android:paddingEnd="@dimen/_8sdp"
             android:layout_width="match_parent"

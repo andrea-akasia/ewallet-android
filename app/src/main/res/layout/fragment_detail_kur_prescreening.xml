@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -24,12 +25,12 @@
             android:layout_marginBottom="@dimen/_4sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Kewarganegaraan"
+            android:text="Nama Pelaporan"
             android:textColor="@android:color/black"
             android:textSize="12sp" />
 
         <EditText
-            android:id="@+id/et_kewarganegaraan"
+            android:id="@+id/et_pelaporan_name"
             android:paddingStart="@dimen/_8sdp"
             android:paddingEnd="@dimen/_8sdp"
             android:layout_width="match_parent"
@@ -43,12 +44,138 @@
             android:layout_marginBottom="@dimen/_4sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nomor Ponsel"
+            android:text="Nomor Kartu Keluarga"
             android:textColor="@android:color/black"
             android:textSize="12sp" />
 
         <EditText
-            android:id="@+id/et_phone"
+            android:id="@+id/et_nomor_kk"
+            android:paddingStart="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_8sdp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_32sdp"
+            android:textSize="14sp"
+            android:focusable="false"
+            android:background="@drawable/textfield_disabled_bg"
+            android:layout_marginBottom="@dimen/_8sdp"/>
+
+        <TextView
+            android:layout_marginBottom="@dimen/_4sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tempat Lahir"
+            android:textColor="@android:color/black"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/et_tempat_lahir"
+            android:paddingStart="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_8sdp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_32sdp"
+            android:textSize="14sp"
+            android:focusable="false"
+            android:background="@drawable/textfield_disabled_bg"
+            android:layout_marginBottom="@dimen/_8sdp"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:weightSum="1.0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_8sdp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="0.47"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Jenis Kelamin"
+                    android:textColor="@android:color/black"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/et_jenis_kelamin"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_32sdp"
+                    android:textSize="14sp"
+                    android:focusable="false"
+                    android:background="@drawable/textfield_disabled_bg"
+                    android:layout_marginBottom="@dimen/_8sdp"/>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_weight="0.06"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="0.47"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_marginBottom="@dimen/_4sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tanggal Lahir"
+                    android:textColor="@android:color/black"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/et_tanggal_lahir"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_32sdp"
+                    android:textSize="14sp"
+                    android:focusable="false"
+                    android:background="@drawable/textfield_disabled_bg"
+                    android:layout_marginBottom="@dimen/_8sdp"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_marginBottom="@dimen/_4sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pendidikan Terakhir"
+            android:textColor="@android:color/black"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/et_pendidikan"
+            android:paddingStart="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_8sdp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_32sdp"
+            android:textSize="14sp"
+            android:focusable="false"
+            android:background="@drawable/textfield_disabled_bg"
+            android:layout_marginBottom="@dimen/_8sdp"/>
+
+        <TextView
+            android:layout_marginBottom="@dimen/_4sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nama Gadis Ibu Kandung"
+            android:textColor="@android:color/black"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/et_mother_name"
             android:paddingStart="@dimen/_8sdp"
             android:paddingEnd="@dimen/_8sdp"
             android:layout_width="match_parent"
@@ -75,12 +202,12 @@
                     android:layout_marginBottom="@dimen/_4sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Fax Area"
+                    android:text="No Telp Area"
                     android:textColor="@android:color/black"
                     android:textSize="12sp" />
 
                 <EditText
-                    android:id="@+id/et_fax_area"
+                    android:id="@+id/et_phone_area"
                     android:paddingStart="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_8sdp"
                     android:layout_width="match_parent"
@@ -107,12 +234,12 @@
                     android:layout_marginBottom="@dimen/_4sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="No Fax"
+                    android:text="No Telp"
                     android:textColor="@android:color/black"
                     android:textSize="12sp" />
 
                 <EditText
-                    android:id="@+id/et_fax"
+                    android:id="@+id/et_phone"
                     android:paddingStart="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_8sdp"
                     android:layout_width="match_parent"
@@ -123,6 +250,7 @@
                     android:layout_marginBottom="@dimen/_8sdp"/>
 
             </LinearLayout>
+
 
         </LinearLayout>
 
@@ -131,7 +259,7 @@
             android:layout_marginBottom="@dimen/_8sdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Informasi Pekerjaan"
+            android:text="Informasi KTP"
             android:textColor="#7A7A7A"
             android:textStyle="bold"
             android:textSize="14sp"/>
@@ -140,12 +268,12 @@
             android:layout_marginBottom="@dimen/_4sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Profesi"
+            android:text="Nomor KTP"
             android:textColor="@android:color/black"
             android:textSize="12sp" />
 
         <EditText
-            android:id="@+id/et_profesi"
+            android:id="@+id/et_nomor_ktp"
             android:paddingStart="@dimen/_8sdp"
             android:paddingEnd="@dimen/_8sdp"
             android:layout_width="match_parent"
@@ -159,12 +287,12 @@
             android:layout_marginBottom="@dimen/_4sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Jabatan"
+            android:text="Nama Sesuai KTP"
             android:textColor="@android:color/black"
             android:textSize="12sp" />
 
         <EditText
-            android:id="@+id/et_jabatan"
+            android:id="@+id/et_ktp_name"
             android:paddingStart="@dimen/_8sdp"
             android:paddingEnd="@dimen/_8sdp"
             android:layout_width="match_parent"
@@ -178,12 +306,12 @@
             android:layout_marginBottom="@dimen/_4sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Bidang Usaha"
+            android:text="Alamat Sesuai KTP"
             android:textColor="@android:color/black"
             android:textSize="12sp" />
 
         <EditText
-            android:id="@+id/et_bidang_usaha"
+            android:id="@+id/et_ktp_address"
             android:paddingStart="@dimen/_8sdp"
             android:paddingEnd="@dimen/_8sdp"
             android:layout_width="match_parent"
@@ -197,12 +325,12 @@
             android:layout_marginBottom="@dimen/_4sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Berdiri Sejak"
+            android:text="Kota Sesuai KTP"
             android:textColor="@android:color/black"
             android:textSize="12sp" />
 
         <EditText
-            android:id="@+id/et_berdiri_sejak"
+            android:id="@+id/et_ktp_kota"
             android:paddingStart="@dimen/_8sdp"
             android:paddingEnd="@dimen/_8sdp"
             android:layout_width="match_parent"
@@ -216,12 +344,12 @@
             android:layout_marginBottom="@dimen/_4sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Bekerja Sejak"
+            android:text="Kecamatan Sesuai KTP"
             android:textColor="@android:color/black"
             android:textSize="12sp" />
 
         <EditText
-            android:id="@+id/et_bekerja_sejak"
+            android:id="@+id/et_ktp_kecamatan"
             android:paddingStart="@dimen/_8sdp"
             android:paddingEnd="@dimen/_8sdp"
             android:layout_width="match_parent"
@@ -235,12 +363,12 @@
             android:layout_marginBottom="@dimen/_4sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tempat Bekerja"
+            android:text="Kelurahan Sesuai KTP"
             android:textColor="@android:color/black"
             android:textSize="12sp" />
 
         <EditText
-            android:id="@+id/et_tempat_bekerja"
+            android:id="@+id/et_ktp_kelurahan"
             android:paddingStart="@dimen/_8sdp"
             android:paddingEnd="@dimen/_8sdp"
             android:layout_width="match_parent"
@@ -250,13 +378,31 @@
             android:background="@drawable/textfield_disabled_bg"
             android:layout_marginBottom="@dimen/_8sdp"/>
 
+        <TextView
+            android:layout_marginBottom="@dimen/_4sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kode Pos Sesuai KTP"
+            android:textColor="@android:color/black"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/et_ktp_kodepos"
+            android:paddingStart="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_8sdp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_32sdp"
+            android:textSize="14sp"
+            android:focusable="false"
+            android:background="@drawable/textfield_disabled_bg"
+            android:layout_marginBottom="@dimen/_8sdp"/>
 
         <TextView
             android:layout_marginTop="@dimen/_14sdp"
             android:layout_marginBottom="@dimen/_8sdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Informasi Perusahaan"
+            android:text="Informasi Rumah"
             android:textColor="#7A7A7A"
             android:textStyle="bold"
             android:textSize="14sp"/>
@@ -265,12 +411,12 @@
             android:layout_marginBottom="@dimen/_4sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nama Perusahaan"
+            android:text="Alamat Rumah"
             android:textColor="@android:color/black"
             android:textSize="12sp" />
 
         <EditText
-            android:id="@+id/et_nama_perusahaan"
+            android:id="@+id/et_home_address"
             android:paddingStart="@dimen/_8sdp"
             android:paddingEnd="@dimen/_8sdp"
             android:layout_width="match_parent"
@@ -284,12 +430,12 @@
             android:layout_marginBottom="@dimen/_4sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Alamat Kantor 1"
+            android:text="Kota Alamat Rumah"
             android:textColor="@android:color/black"
             android:textSize="12sp" />
 
         <EditText
-            android:id="@+id/et_alamat_kantor_1"
+            android:id="@+id/et_home_kota"
             android:paddingStart="@dimen/_8sdp"
             android:paddingEnd="@dimen/_8sdp"
             android:layout_width="match_parent"
@@ -303,12 +449,12 @@
             android:layout_marginBottom="@dimen/_4sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Alamat Kantor 2"
+            android:text="Kecamatan Rumah"
             android:textColor="@android:color/black"
             android:textSize="12sp" />
 
         <EditText
-            android:id="@+id/et_alamat_kantor_2"
+            android:id="@+id/et_home_kecamatan"
             android:paddingStart="@dimen/_8sdp"
             android:paddingEnd="@dimen/_8sdp"
             android:layout_width="match_parent"
@@ -322,12 +468,12 @@
             android:layout_marginBottom="@dimen/_4sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Alamat Kantor 3"
+            android:text="Kelurahan Rumah"
             android:textColor="@android:color/black"
             android:textSize="12sp" />
 
         <EditText
-            android:id="@+id/et_alamat_kantor_3"
+            android:id="@+id/et_home_kelurahan"
             android:paddingStart="@dimen/_8sdp"
             android:paddingEnd="@dimen/_8sdp"
             android:layout_width="match_parent"
@@ -341,12 +487,12 @@
             android:layout_marginBottom="@dimen/_4sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Kecamatan Kantor"
+            android:text="Kode Pos Rumah"
             android:textColor="@android:color/black"
             android:textSize="12sp" />
 
         <EditText
-            android:id="@+id/et_kecamatan_kantor"
+            android:id="@+id/et_home_kodepos"
             android:paddingStart="@dimen/_8sdp"
             android:paddingEnd="@dimen/_8sdp"
             android:layout_width="match_parent"
@@ -360,249 +506,7 @@
             android:layout_marginBottom="@dimen/_4sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Kelurahan Kantor"
-            android:textColor="@android:color/black"
-            android:textSize="12sp" />
-
-        <EditText
-            android:id="@+id/et_kelurahan_kantor"
-            android:paddingStart="@dimen/_8sdp"
-            android:paddingEnd="@dimen/_8sdp"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_32sdp"
-            android:textSize="14sp"
-            android:focusable="false"
-            android:background="@drawable/textfield_disabled_bg"
-            android:layout_marginBottom="@dimen/_8sdp"/>
-
-        <TextView
-            android:layout_marginBottom="@dimen/_4sdp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Kode Pos Kantor"
-            android:textColor="@android:color/black"
-            android:textSize="12sp" />
-
-        <EditText
-            android:id="@+id/et_kodepos_kantor"
-            android:paddingStart="@dimen/_8sdp"
-            android:paddingEnd="@dimen/_8sdp"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_32sdp"
-            android:textSize="14sp"
-            android:focusable="false"
-            android:background="@drawable/textfield_disabled_bg"
-            android:layout_marginBottom="@dimen/_8sdp"/>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:weightSum="1.0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_8sdp">
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_weight="0.3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_marginBottom="@dimen/_4sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Fax Area kantor"
-                    android:textColor="@android:color/black"
-                    android:textSize="12sp" />
-
-                <EditText
-                    android:id="@+id/et_fax_area_kantor"
-                    android:paddingStart="@dimen/_8sdp"
-                    android:paddingEnd="@dimen/_8sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_32sdp"
-                    android:textSize="14sp"
-                    android:focusable="false"
-                    android:background="@drawable/textfield_disabled_bg"
-                    android:layout_marginBottom="@dimen/_8sdp"/>
-
-            </LinearLayout>
-
-            <RelativeLayout
-                android:layout_weight="0.05"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"/>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_weight="0.65"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_marginBottom="@dimen/_4sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="No Fax Kantor"
-                    android:textColor="@android:color/black"
-                    android:textSize="12sp" />
-
-                <EditText
-                    android:id="@+id/et_fax_kantor"
-                    android:paddingStart="@dimen/_8sdp"
-                    android:paddingEnd="@dimen/_8sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_32sdp"
-                    android:textSize="14sp"
-                    android:focusable="false"
-                    android:background="@drawable/textfield_disabled_bg"
-                    android:layout_marginBottom="@dimen/_8sdp"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:weightSum="1.0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_8sdp">
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_weight="0.3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_marginBottom="@dimen/_4sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="No Telp Area kantor"
-                    android:textColor="@android:color/black"
-                    android:textSize="12sp" />
-
-                <EditText
-                    android:id="@+id/et_phone_area_kantor"
-                    android:paddingStart="@dimen/_8sdp"
-                    android:paddingEnd="@dimen/_8sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_32sdp"
-                    android:textSize="14sp"
-                    android:focusable="false"
-                    android:background="@drawable/textfield_disabled_bg"
-                    android:layout_marginBottom="@dimen/_8sdp"/>
-
-            </LinearLayout>
-
-            <RelativeLayout
-                android:layout_weight="0.05"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"/>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_weight="0.65"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_marginBottom="@dimen/_4sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="No Telp Kantor"
-                    android:textColor="@android:color/black"
-                    android:textSize="12sp" />
-
-                <EditText
-                    android:id="@+id/et_phone_kantor"
-                    android:paddingStart="@dimen/_8sdp"
-                    android:paddingEnd="@dimen/_8sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_32sdp"
-                    android:textSize="14sp"
-                    android:focusable="false"
-                    android:background="@drawable/textfield_disabled_bg"
-                    android:layout_marginBottom="@dimen/_8sdp"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-
-        <TextView
-            android:layout_marginTop="@dimen/_14sdp"
-            android:layout_marginBottom="@dimen/_8sdp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Informasi Kontak"
-            android:textColor="#7A7A7A"
-            android:textStyle="bold"
-            android:textSize="14sp"/>
-
-        <TextView
-            android:layout_marginBottom="@dimen/_4sdp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Nama Kontak Darurat"
-            android:textColor="@android:color/black"
-            android:textSize="12sp" />
-
-        <EditText
-            android:id="@+id/et_emergency_name"
-            android:paddingStart="@dimen/_8sdp"
-            android:paddingEnd="@dimen/_8sdp"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_32sdp"
-            android:textSize="14sp"
-            android:focusable="false"
-            android:background="@drawable/textfield_disabled_bg"
-            android:layout_marginBottom="@dimen/_8sdp"/>
-
-        <TextView
-            android:layout_marginBottom="@dimen/_4sdp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Hubungan"
-            android:textColor="@android:color/black"
-            android:textSize="12sp" />
-
-        <EditText
-            android:id="@+id/et_hubungan"
-            android:paddingStart="@dimen/_8sdp"
-            android:paddingEnd="@dimen/_8sdp"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_32sdp"
-            android:textSize="14sp"
-            android:focusable="false"
-            android:background="@drawable/textfield_disabled_bg"
-            android:layout_marginBottom="@dimen/_8sdp"/>
-
-        <TextView
-            android:layout_marginBottom="@dimen/_4sdp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tanggal Menikah"
-            android:textColor="@android:color/black"
-            android:textSize="12sp" />
-
-        <EditText
-            android:id="@+id/et_bekerja_tanggal_menikah"
-            android:paddingStart="@dimen/_8sdp"
-            android:paddingEnd="@dimen/_8sdp"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_32sdp"
-            android:textSize="14sp"
-            android:focusable="false"
-            android:background="@drawable/textfield_disabled_bg"
-            android:layout_marginBottom="@dimen/_8sdp"/>
-
-        <TextView
-            android:layout_marginBottom="@dimen/_4sdp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Dati II Usaha"
+            android:text="Dati II Rumah"
             android:textColor="@android:color/black"
             android:textSize="12sp" />
 
@@ -617,6 +521,140 @@
             android:background="@drawable/textfield_disabled_bg"
             android:layout_marginBottom="@dimen/_8sdp"/>
 
+        <TextView
+            android:layout_marginBottom="@dimen/_4sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Status Rumah"
+            android:textColor="@android:color/black"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/et_status_rumah"
+            android:paddingStart="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_8sdp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_32sdp"
+            android:textSize="14sp"
+            android:focusable="false"
+            android:background="@drawable/textfield_disabled_bg"
+            android:layout_marginBottom="@dimen/_8sdp"/>
+
+        <TextView
+            android:layout_marginBottom="@dimen/_4sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tanggal Mulai Menempati"
+            android:textColor="@android:color/black"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/et_home_tanggal_menempati"
+            android:paddingStart="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_8sdp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_32sdp"
+            android:textSize="14sp"
+            android:focusable="false"
+            android:background="@drawable/textfield_disabled_bg"
+            android:layout_marginBottom="@dimen/_8sdp"/>
+
+
+        <TextView
+            android:layout_marginTop="@dimen/_14sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Data Pernikahan"
+            android:textColor="#7A7A7A"
+            android:textStyle="bold"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:layout_marginBottom="@dimen/_4sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Status Pernikahan"
+            android:textColor="@android:color/black"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/et_status_pernikahan"
+            android:paddingStart="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_8sdp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_32sdp"
+            android:textSize="14sp"
+            android:focusable="false"
+            android:background="@drawable/textfield_disabled_bg"
+            android:layout_marginBottom="@dimen/_8sdp"/>
+
+        <LinearLayout
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:id="@+id/view_pernikahan_optional"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_marginBottom="@dimen/_4sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nama Pasangan"
+                android:textColor="@android:color/black"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/et_nama_pasangan"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_32sdp"
+                android:textSize="14sp"
+                android:focusable="false"
+                android:background="@drawable/textfield_disabled_bg"
+                android:layout_marginBottom="@dimen/_8sdp"/>
+
+            <TextView
+                android:layout_marginBottom="@dimen/_4sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tanggal Lahir Pasangan"
+                android:textColor="@android:color/black"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/et_tanggal_lahir_pasangan"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_32sdp"
+                android:textSize="14sp"
+                android:focusable="false"
+                android:background="@drawable/textfield_disabled_bg"
+                android:layout_marginBottom="@dimen/_8sdp"/>
+
+            <TextView
+                android:layout_marginBottom="@dimen/_4sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nomor KTP Pasangan"
+                android:textColor="@android:color/black"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/et_ktp_pasangan"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_32sdp"
+                android:textSize="14sp"
+                android:focusable="false"
+                android:background="@drawable/textfield_disabled_bg"
+                android:layout_marginBottom="@dimen/_8sdp"/>
+
+        </LinearLayout>
 
         <TextView
             android:layout_marginTop="@dimen/_14sdp"
@@ -632,12 +670,12 @@
             android:layout_marginBottom="@dimen/_4sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sumber Dana"
+            android:text="Jenis Kredit"
             android:textColor="@android:color/black"
             android:textSize="12sp" />
 
         <EditText
-            android:id="@+id/et_sumber_dana"
+            android:id="@+id/et_jenis_kredit"
             android:paddingStart="@dimen/_8sdp"
             android:paddingEnd="@dimen/_8sdp"
             android:layout_width="match_parent"
@@ -651,12 +689,12 @@
             android:layout_marginBottom="@dimen/_4sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Komoditas"
+            android:text="Limit Awal Yang Diminta"
             android:textColor="@android:color/black"
             android:textSize="12sp" />
 
         <EditText
-            android:id="@+id/et_komoditas"
+            android:id="@+id/et_limit"
             android:paddingStart="@dimen/_8sdp"
             android:paddingEnd="@dimen/_8sdp"
             android:layout_width="match_parent"
@@ -670,12 +708,12 @@
             android:layout_marginBottom="@dimen/_4sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Luas Lahan (m2)"
+            android:text="Jangka Waktu"
             android:textColor="@android:color/black"
             android:textSize="12sp" />
 
         <EditText
-            android:id="@+id/et_luas_lahan"
+            android:id="@+id/et_jangka_waktu"
             android:paddingStart="@dimen/_8sdp"
             android:paddingEnd="@dimen/_8sdp"
             android:layout_width="match_parent"
@@ -689,12 +727,31 @@
             android:layout_marginBottom="@dimen/_4sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Jenis Debitur"
+            android:text="NPWP"
             android:textColor="@android:color/black"
             android:textSize="12sp" />
 
         <EditText
-            android:id="@+id/et_jenis_debitur"
+            android:id="@+id/et_npwp"
+            android:paddingStart="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_8sdp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_32sdp"
+            android:textSize="14sp"
+            android:focusable="false"
+            android:background="@drawable/textfield_disabled_bg"
+            android:layout_marginBottom="@dimen/_8sdp"/>
+
+        <TextView
+            android:layout_marginBottom="@dimen/_4sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nomor Rekening Bank Mandiri"
+            android:textColor="@android:color/black"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/et_norek"
             android:paddingStart="@dimen/_8sdp"
             android:paddingEnd="@dimen/_8sdp"
             android:layout_width="match_parent"

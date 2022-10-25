@@ -13,6 +13,9 @@ import com.mobile.ewallet.feature.credit.CreditViewModel
 import com.mobile.ewallet.feature.credit.detail.kum.DetailKUMDocumentsFragment
 import com.mobile.ewallet.feature.credit.detail.kum.DetailKUMFulfillmentFragment
 import com.mobile.ewallet.feature.credit.detail.kum.DetailKUMPrescreeningFragment
+import com.mobile.ewallet.feature.credit.detail.kur.DetailKURDocumentsFragment
+import com.mobile.ewallet.feature.credit.detail.kur.DetailKURFulfillmentFragment
+import com.mobile.ewallet.feature.credit.detail.kur.DetailKURPrescreeningFragment
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
@@ -41,6 +44,20 @@ class DetailPendanaanActivity: BaseActivity<CreditViewModel>(), HasAndroidInject
             fragmentAdapter.addFragment(DetailKUMPrescreeningFragment.newInstance(id!!))
             fragmentAdapter.addFragment(DetailKUMFulfillmentFragment.newInstance(id))
             fragmentAdapter.addFragment(DetailKUMDocumentsFragment.newInstance(id))
+            binding.viewpager.adapter = fragmentAdapter
+
+            TabLayoutMediator(binding.tabLayout, binding.viewpager) { tab, pos ->
+                when (pos) {
+                    0 -> { tab.text = "Prescreening" }
+                    1 -> { tab.text = "Fulfillment" }
+                    else -> { tab.text = "Documents" }
+                }
+            }.attach()
+        } else {
+            val fragmentAdapter = PendanaanFragmentAdapter(this@DetailPendanaanActivity)
+            fragmentAdapter.addFragment(DetailKURPrescreeningFragment.newInstance(id!!))
+            fragmentAdapter.addFragment(DetailKURFulfillmentFragment.newInstance(id))
+            fragmentAdapter.addFragment(DetailKURDocumentsFragment.newInstance(id))
             binding.viewpager.adapter = fragmentAdapter
 
             TabLayoutMediator(binding.tabLayout, binding.viewpager) { tab, pos ->
