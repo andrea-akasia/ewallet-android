@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import com.mobile.ewallet.base.BaseViewModel
 import com.mobile.ewallet.data.DataManager
+import com.mobile.ewallet.model.api.credit.detailrequest.kur.DetailKURFulfillment
 import com.mobile.ewallet.model.api.credit.detailrequest.kur.DetailKURPrescreening
 import timber.log.Timber
 import javax.inject.Inject
@@ -14,7 +15,7 @@ class DetailKURViewModel
 
     internal var warningMessage = MutableLiveData<String>()
     //internal var onDocumentLoaded = MutableLiveData<DetailKUMDocument>()
-    //internal var onFulfillmentLoaded = MutableLiveData<DetailKUMFulfillment>()
+    internal var onFulfillmentLoaded = MutableLiveData<DetailKURFulfillment>()
     internal var onPrescreeningLoaded = MutableLiveData<DetailKURPrescreening>()
 
     fun loadPrescreening(id: String) {
@@ -44,8 +45,8 @@ class DetailKURViewModel
             )
     }
 
-    /*fun loadFulfillment(id: String) {
-        dataManager.detailKUMFulfillment(id)
+    fun loadFulfillment(id: String) {
+        dataManager.detailKURFulfillment(id)
             .doOnSubscribe(this::addDisposable)
             .subscribe(
                 { res ->
@@ -69,7 +70,7 @@ class DetailKURViewModel
                     warningMessage.postValue(err.message)
                 }
             )
-    }*/
+    }
 
     /*fun loadDocument(id: String) {
         dataManager.detailKUMDocument(id)
