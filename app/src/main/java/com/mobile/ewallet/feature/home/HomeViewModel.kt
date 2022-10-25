@@ -70,10 +70,10 @@ class HomeViewModel
                                 pendanaanInfo = response[0]
                                 onApplyCreditInfoLoaded.postValue(
                                     pendanaanInfo?.apply {
-                                        //mode = "1B"
-                                        //title = "Maaf!"
-                                        //subMessage = "Detail Pengajuan"
-                                        //typePengajuan = "KUM"
+                                        /*mode = "3"
+                                        title = "Maaf!"
+                                        subMessage = "Detail Pengajuan"
+                                        typePengajuan = "KUR"*/
                                     }
                                 )
                             }
