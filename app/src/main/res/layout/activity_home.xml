@@ -293,15 +293,15 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Limit Pinjaman"
+                                android:text="Pinjaman Aktif"
                                 android:textColor="@android:color/black"
                                 android:textSize="11sp" />
 
                             <TextView
-                                android:id="@+id/value_limit_credit"
+                                android:id="@+id/value_active_credit"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Rp12.000.000"
+                                android:text="Rp0"
                                 android:textColor="@android:color/black"
                                 android:textSize="12sp"
                                 android:textStyle="bold"/>
@@ -330,15 +330,15 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Pinjaman Aktif"
+                                android:text="Limit Pinjaman"
                                 android:textColor="@android:color/black"
                                 android:textSize="11sp" />
 
                             <TextView
-                                android:id="@+id/value_active_credit"
+                                android:id="@+id/value_limit_credit"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Rp0"
+                                android:text="Rp12.000.000"
                                 android:textColor="@android:color/black"
                                 android:textSize="12sp"
                                 android:textStyle="bold"/>
