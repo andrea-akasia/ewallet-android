@@ -30,7 +30,8 @@
             <ImageView
                 android:id="@+id/img_ktp"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/_80sdp"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
                 android:layout_marginTop="@dimen/_6sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -60,7 +61,8 @@
             <ImageView
                 android:id="@+id/img_kk"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/_80sdp"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
                 android:layout_marginTop="@dimen/_6sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -90,7 +92,8 @@
             <ImageView
                 android:id="@+id/img_selfie"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/_80sdp"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
                 android:layout_marginTop="@dimen/_6sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -152,7 +155,8 @@
             <ImageView
                 android:id="@+id/img_npwp"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/_80sdp"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
                 android:layout_marginTop="@dimen/_6sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

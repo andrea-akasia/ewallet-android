@@ -62,10 +62,10 @@ class DetailKUMDocumentsFragment : BaseFragment<DetailKUMViewModel>() {
 
     private fun observeViewModel(){
         viewModel.onDocumentLoaded.observe(viewLifecycleOwner) {
-            GlideApp.with(this).load(it.photoKTP).centerCrop().into(_binding!!.imgKtp)
-            GlideApp.with(this).load(it.photoKK).centerCrop().into(_binding!!.imgKk)
-            GlideApp.with(this).load(it.photoSelfie).centerCrop().into(_binding!!.imgSelfie)
-            GlideApp.with(this).load(it.photoNPWP).centerCrop().into(_binding!!.imgNpwp)
+            GlideApp.with(this).load(it.photoKTP).into(_binding!!.imgKtp)
+            GlideApp.with(this).load(it.photoKK).into(_binding!!.imgKk)
+            GlideApp.with(this).load(it.photoSelfie).into(_binding!!.imgSelfie)
+            GlideApp.with(this).load(it.photoNPWP).into(_binding!!.imgNpwp)
 
             if(!it.suratPengajuan.contains("nopic", true)){
                 _binding!!.statusSurat.visibility = View.VISIBLE
