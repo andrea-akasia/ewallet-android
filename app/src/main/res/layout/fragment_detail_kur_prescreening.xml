@@ -724,6 +724,7 @@
             android:layout_marginBottom="@dimen/_8sdp"/>
 
         <TextView
+            android:id="@+id/label_npwp"
             android:layout_marginBottom="@dimen/_4sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

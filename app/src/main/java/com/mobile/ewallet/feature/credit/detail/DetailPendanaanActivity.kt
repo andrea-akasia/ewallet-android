@@ -25,6 +25,9 @@ class DetailPendanaanActivity: BaseActivity<CreditViewModel>(), HasAndroidInject
     override val viewModelClass: Class<CreditViewModel> = CreditViewModel::class.java
     private lateinit var binding: ActivityDetailPendanaanReqBinding
 
+    private lateinit var type: String
+    private lateinit var id: String
+
     @Inject
     lateinit var androidInjector: DispatchingAndroidInjector<Any>
 
@@ -37,38 +40,46 @@ class DetailPendanaanActivity: BaseActivity<CreditViewModel>(), HasAndroidInject
         binding.topbar.actionBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
         binding.topbar.title.text = "Detail Pendanaan"
 
-        val type = intent.getStringExtra("TYPE")
-        val id = intent.getStringExtra("ID")
-        if(type == "KUM"){
-            val fragmentAdapter = PendanaanFragmentAdapter(this@DetailPendanaanActivity)
-            fragmentAdapter.addFragment(DetailKUMPrescreeningFragment.newInstance(id!!))
-            fragmentAdapter.addFragment(DetailKUMFulfillmentFragment.newInstance(id))
-            fragmentAdapter.addFragment(DetailKUMDocumentsFragment.newInstance(id))
-            binding.viewpager.adapter = fragmentAdapter
+        type = intent.getStringExtra("TYPE")!!
+        id = intent.getStringExtra("ID")!!
 
-            TabLayoutMediator(binding.tabLayout, binding.viewpager) { tab, pos ->
-                when (pos) {
-                    0 -> { tab.text = "Prescreening" }
-                    1 -> { tab.text = "Fulfillment" }
-                    else -> { tab.text = "Documents" }
-                }
-            }.attach()
-        } else {
-            val fragmentAdapter = PendanaanFragmentAdapter(this@DetailPendanaanActivity)
-            fragmentAdapter.addFragment(DetailKURPrescreeningFragment.newInstance(id!!))
-            fragmentAdapter.addFragment(DetailKURFulfillmentFragment.newInstance(id))
-            fragmentAdapter.addFragment(DetailKURDocumentsFragment.newInstance(id))
-            binding.viewpager.adapter = fragmentAdapter
+        observeViewModel()
+        viewModel.loadPrescreening(id)
 
-            TabLayoutMediator(binding.tabLayout, binding.viewpager) { tab, pos ->
-                when (pos) {
-                    0 -> { tab.text = "Prescreening" }
-                    1 -> { tab.text = "Fulfillment" }
-                    else -> { tab.text = "Documents" }
-                }
-            }.attach()
+    }
+
+    private fun observeViewModel() {
+        viewModel.onPrescreeningLoaded.observe(this){
+            if(type == "KUM"){
+                val fragmentAdapter = PendanaanFragmentAdapter(this@DetailPendanaanActivity)
+                fragmentAdapter.addFragment(DetailKUMPrescreeningFragment.newInstance(id))
+                fragmentAdapter.addFragment(DetailKUMFulfillmentFragment.newInstance(id))
+                fragmentAdapter.addFragment(DetailKUMDocumentsFragment.newInstance(id, isShowNpwp = it.limitAwalYangDiminta.toInt() > 50000000))
+                binding.viewpager.adapter = fragmentAdapter
+
+                TabLayoutMediator(binding.tabLayout, binding.viewpager) { tab, pos ->
+                    when (pos) {
+                        0 -> { tab.text = "Prescreening" }
+                        1 -> { tab.text = "Fulfillment" }
+                        else -> { tab.text = "Documents" }
+                    }
+                }.attach()
+            } else {
+                val fragmentAdapter = PendanaanFragmentAdapter(this@DetailPendanaanActivity)
+                fragmentAdapter.addFragment(DetailKURPrescreeningFragment.newInstance(id))
+                fragmentAdapter.addFragment(DetailKURFulfillmentFragment.newInstance(id))
+                fragmentAdapter.addFragment(DetailKURDocumentsFragment.newInstance(id, isShowNpwp = it.limitAwalYangDiminta.toInt() > 50000000))
+                binding.viewpager.adapter = fragmentAdapter
+
+                TabLayoutMediator(binding.tabLayout, binding.viewpager) { tab, pos ->
+                    when (pos) {
+                        0 -> { tab.text = "Prescreening" }
+                        1 -> { tab.text = "Fulfillment" }
+                        else -> { tab.text = "Documents" }
+                    }
+                }.attach()
+            }
         }
-
     }
 
     private inner class PendanaanFragmentAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {

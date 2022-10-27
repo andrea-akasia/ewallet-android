@@ -6,6 +6,7 @@ import com.mobile.ewallet.base.BaseViewModel
 import com.mobile.ewallet.data.DataManager
 import com.mobile.ewallet.model.api.credit.*
 import com.mobile.ewallet.model.api.credit.billing.BillingCredit
+import com.mobile.ewallet.model.api.credit.detailrequest.kum.DetailKUMPrescreening
 import com.mobile.ewallet.model.api.dashboard.TransactionItem
 import timber.log.Timber
 import javax.inject.Inject
@@ -30,6 +31,8 @@ class CreditViewModel
     internal var onIncreaseLimitSubmitted = MutableLiveData<String>()
     internal var onIncreaseLimitInfoLoaded = MutableLiveData<IncreaseLimitInfo>()
     internal var onNominalIncreaseLimitLoaded = MutableLiveData<MutableList<String>>()
+
+    internal var onPrescreeningLoaded = MutableLiveData<DetailKUMPrescreening>()
 
     var billingData: BillingCredit? = null
     var increaseLimitInfo: IncreaseLimitInfo? = null
@@ -57,6 +60,33 @@ class CreditViewModel
     var jenisKreditParameter: JenisKreditParameter? = null
     var jangkaWaktus = mutableListOf<JangkaWaktu>()
     var selectedJangkaWaktu: JangkaWaktu? = null
+
+    fun loadPrescreening(id: String) {
+        dataManager.detailKUMPrescreening(id)
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            if(response.isNotEmpty()){
+                                onPrescreeningLoaded.postValue(response[0])
+                            }else{
+                                warningMessage.postValue("empty data response")
+                            }
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue("request failed, Server Error $code")
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun loadNominalIncreaseLimit() {
         isLoading.postValue(true)

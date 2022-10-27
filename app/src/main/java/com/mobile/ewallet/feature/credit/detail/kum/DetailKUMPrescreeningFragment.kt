@@ -85,6 +85,10 @@ class DetailKUMPrescreeningFragment: BaseFragment<DetailKUMViewModel>() {
             _binding!!.etJenisKredit.setText(it.jenisKreditTEXT)
             _binding!!.etLimit.setText(it.limitAwalYangDiminta)
             _binding!!.etJangkaWaktu.setText("${it.jangkaWaktu} Bulan")
+            if(it.limitAwalYangDiminta.toInt() < 50000000){
+                _binding!!.etNpwp.visibility = View.GONE
+                _binding!!.labelNpwp.visibility = View.GONE
+            }
             _binding!!.etNpwp.setText(it.nPWP)
         }
 

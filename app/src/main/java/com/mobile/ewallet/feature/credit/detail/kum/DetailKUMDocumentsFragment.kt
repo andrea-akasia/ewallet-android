@@ -17,9 +17,10 @@ class DetailKUMDocumentsFragment : BaseFragment<DetailKUMViewModel>() {
     private val binding get() = _binding!!
 
     companion object {
-        fun newInstance(id: String) = DetailKUMDocumentsFragment().apply {
+        fun newInstance(id: String, isShowNpwp: Boolean = true) = DetailKUMDocumentsFragment().apply {
             arguments = bundleOf(
-                "ID" to id
+                "ID" to id,
+                "SHOWNPWP" to isShowNpwp
             )
         }
     }
@@ -46,6 +47,14 @@ class DetailKUMDocumentsFragment : BaseFragment<DetailKUMViewModel>() {
                 observeViewModel()
 
                 viewModel.loadDocument(idPendanaan)
+            }
+        }
+
+        arguments?.getBoolean("SHOWNPWP")?.let {
+            if(it){
+                _binding!!.actionUploadNpwp.visibility = View.VISIBLE
+            }else{
+                _binding!!.actionUploadNpwp.visibility = View.GONE
             }
         }
 
