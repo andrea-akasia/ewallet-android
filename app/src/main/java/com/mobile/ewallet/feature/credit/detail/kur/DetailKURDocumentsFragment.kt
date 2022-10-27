@@ -1,13 +1,16 @@
 package com.mobile.ewallet.feature.credit.detail.kur
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
+import com.mindev.mindev_pdfviewer.MindevPDFViewer
 import com.mobile.ewallet.base.BaseFragment
 import com.mobile.ewallet.databinding.FragmentDetailKurDocumentsBinding
+import com.mobile.ewallet.feature.credit.detail.PreviewPDFActivity
 import com.mobile.ewallet.util.GlideApp
 
 class DetailKURDocumentsFragment: BaseFragment<DetailKURViewModel>() {
@@ -65,8 +68,38 @@ class DetailKURDocumentsFragment: BaseFragment<DetailKURViewModel>() {
             GlideApp.with(this).load(it.photoNPWP).into(_binding!!.imgNpwp)
             GlideApp.with(this).load(it.fileSIUPP).into(_binding!!.imgSiup)
 
-            if(!it.suratPengajuan.contains("nopic", true)){
-                _binding!!.statusSurat.visibility = View.VISIBLE
+            if(it.suratPengajuan.contains("nopic", true)){
+                _binding!!.actionUploadSuratPengajuan.visibility = View.GONE
+            }else{
+                _binding!!.pdfView.initializePDFDownloader(it.suratPengajuan, object: MindevPDFViewer.MindevViewerStatusListener {
+                    override fun onFail(error: Throwable) {
+                        Toast.makeText(activity, error.message, Toast.LENGTH_SHORT).show()
+                    }
+
+                    override fun onPageChanged(position: Int, total: Int) {
+                    }
+
+                    override fun onProgressDownload(currentStatus: Int) {
+                    }
+
+                    override fun onStartDownload() {
+                    }
+
+                    override fun onSuccessDownLoad(path: String) {
+                        _binding!!.pdfView.fileInit(path)
+                        _binding!!.actionUploadSuratPengajuan.setOnClickListener { _ ->
+                            startActivity(
+                                Intent(activity, PreviewPDFActivity::class.java)
+                                    .putExtra("URL", it.suratPengajuan)
+                            )
+                        }
+                    }
+
+                    override fun unsupportedDevice() {
+                        Toast.makeText(activity, "unsupported device", Toast.LENGTH_SHORT).show()
+                    }
+
+                })
             }
             if(it.photoKTP.contains("nopic", true)){
                 _binding!!.imgKtp.visibility = View.GONE

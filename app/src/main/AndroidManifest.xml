@@ -78,6 +78,7 @@
         <activity android:name=".feature.credit.billing.BillingDetailActivity" />
         <activity android:name=".feature.home.AllHistoryTransactionActivity" />
         <activity android:name=".feature.credit.detail.DetailPendanaanActivity" />
+        <activity android:name=".feature.credit.detail.PreviewPDFActivity" />
     </application>
 
 </manifest>

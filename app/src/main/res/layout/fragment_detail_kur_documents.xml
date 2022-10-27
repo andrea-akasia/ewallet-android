@@ -111,25 +111,25 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/title_surat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Surat Pengajuan (PDF)"
                 android:textColor="@color/colorTextBlack"
                 android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:visibility="gone"
-                tools:visibility="visible"
-                android:id="@+id/status_surat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
+            <com.mindev.mindev_pdfviewer.MindevPDFViewer
+                android:id="@+id/pdf_view"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_100sdp"
+                app:pdf_animation="false"
+                app:pdf_direction="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_check_green" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/title_surat"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
