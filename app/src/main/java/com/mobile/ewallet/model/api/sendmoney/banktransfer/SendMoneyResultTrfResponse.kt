@@ -27,7 +27,7 @@ data class SendMoneyResultTrfResponse(
 	@field:SerializedName("MetodeBayar")
 	val metodeBayar: String? = null,
 
-	@field:SerializedName("PotalPembayaran")
+	@field:SerializedName("TotalPembayaran")
 	val total: String? = null,
 
 	@field:SerializedName("IDTransaksi")

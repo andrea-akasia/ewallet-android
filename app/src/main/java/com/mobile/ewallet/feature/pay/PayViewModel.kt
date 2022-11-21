@@ -211,10 +211,14 @@ class PayViewModel
                     if (res.isSuccessful) {
                         res.body()?.let { response ->
                             if(response.isNotEmpty()){
-                                Timber.i("adminfee: ${response[0].biayaAdmin.removeCharExceptNumber()}")
-                                adminFee = response[0].biayaAdmin.removeCharExceptNumber().toInt()
-                                total = adminFee + amount.toInt()
-                                onAdminFeeTransferLoaded.postValue(response[0])
+                                if(response[0].status == "1"){
+                                    Timber.i("adminfee: ${response[0].biayaAdmin.removeCharExceptNumber()}")
+                                    adminFee = response[0].biayaAdmin.removeCharExceptNumber().toInt()
+                                    total = adminFee + amount.toInt()
+                                    onAdminFeeTransferLoaded.postValue(response[0])
+                                }else{
+                                    warningMessage.postValue(response[0].message)
+                                }
                             }else{
                                 warningMessage.postValue("empty data")
                             }

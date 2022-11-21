@@ -62,7 +62,11 @@ class SendMoneyViewModel
                     if (res.isSuccessful) {
                         res.body()?.let { response ->
                             if(response.isNotEmpty()){
-                                onTransferBankMinimumNominalLoaded.postValue(response[0])
+                                if(response[0].status == "1"){
+                                    onTransferBankMinimumNominalLoaded.postValue(response[0])
+                                }else{
+                                    warningMessage.postValue(response[0].message)
+                                }
                             }else{
                                 warningMessage.postValue("data is empty")
                             }
