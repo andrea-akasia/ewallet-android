@@ -5,9 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingTop="@dimen/_10sdp"
-    android:paddingStart="@dimen/_10sdp"
-    android:paddingEnd="@dimen/_10sdp"
+    android:padding="@dimen/_6sdp"
     android:background="@android:color/white">
 
     <ImageView
@@ -15,6 +13,7 @@
         android:layout_width="@dimen/_40sdp"
         android:layout_height="@dimen/_40sdp"
         android:layout_gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@drawable/ic_arrow_down_green" />
@@ -27,33 +26,33 @@
         android:textColor="#41B92A"
         android:textSize="14sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/icon"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/icon" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/view_info"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/_170sdp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_12sdp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/balance"
+        app:layout_constraintBottom_toBottomOf="@+id/icon"
         app:layout_constraintStart_toEndOf="@+id/icon"
-        app:layout_constraintTop_toTopOf="@+id/balance">
+        app:layout_constraintTop_toTopOf="@+id/icon">
 
         <TextView
             android:id="@+id/description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Topup Saldo Via BNI VA"
             android:textColor="@android:color/black"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="Kirim Uang via Transfer Bank ke BCA MUZAMRI NURIMANTO 8690360064 (No. Referensi 9582VSB6NA4M3QZL)" />
 
         <TextView
             android:id="@+id/timestamp"
-            android:layout_marginTop="@dimen/_2sdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
             android:text="16 Agustus 2022 13:00 PM"
             android:textColor="#A7A7A7"
             android:textSize="12sp" />
