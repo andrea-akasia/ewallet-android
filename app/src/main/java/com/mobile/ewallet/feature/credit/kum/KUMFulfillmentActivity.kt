@@ -38,6 +38,14 @@ class KUMFulfillmentActivity: BaseActivity<FulfillmentViewModel>(),
 
         intent.getStringExtra("ID_REQUEST")?.let { viewModel.creditRequestId = it}
 
+        intent.getStringExtra("SELECTED_STATUS_KAWIN")?.let {
+            if(it == "1"){
+                binding.viewPernikahanOptional.visibility = View.VISIBLE
+            }else{
+                binding.viewPernikahanOptional.visibility = View.GONE
+            }
+        }
+
         binding.etBerdiriSejak.setOnClickListener {
             viewModel.TAG_DATE = "BERDIRI_SEJAK"
             val datePicker = DatePickerFragment()
@@ -108,6 +116,7 @@ class KUMFulfillmentActivity: BaseActivity<FulfillmentViewModel>(),
             startActivity(
                 Intent(this, KUMUploadDocumentsActivity::class.java)
                     .putExtra("ID_REQUEST", viewModel.creditRequestId)
+                    .putExtra("LIMIT", intent.getIntExtra("LIMIT", 0))
             )
         }
 

@@ -16,6 +16,7 @@ import com.mobile.ewallet.feature.credit.KodePosSearchDialog
 import com.mobile.ewallet.model.api.credit.KodePos
 import com.mobile.ewallet.model.api.credit.LokasiDatill
 import com.mobile.ewallet.util.DatePickerFragment
+import com.mobile.ewallet.util.afterTextChanged
 import com.mobile.ewallet.util.getMaxDateForBirthDate
 
 class KUMPrescreeningActivity: BaseActivity<CreditViewModel>(), DatePickerFragment.DateListener,
@@ -85,8 +86,22 @@ class KUMPrescreeningActivity: BaseActivity<CreditViewModel>(), DatePickerFragme
         }
 
         binding.btnContinue.setOnClickListener {
-            //viewModel.onPrescreeningSuccess.postValue(true)
             validateForm()
+        }
+
+        binding.etLimit.afterTextChanged {
+            if(it.isNotEmpty()){
+                if(it.toInt() >= 50000000){
+                    binding.labelNpwp.visibility = View.VISIBLE
+                    binding.etNpwp.visibility = View.VISIBLE
+                }else{
+                    binding.labelNpwp.visibility = View.GONE
+                    binding.etNpwp.visibility = View.GONE
+                }
+            }else{
+                binding.labelNpwp.visibility = View.GONE
+                binding.etNpwp.visibility = View.GONE
+            }
         }
     }
 
@@ -110,6 +125,44 @@ class KUMPrescreeningActivity: BaseActivity<CreditViewModel>(), DatePickerFragme
                             Toast.LENGTH_SHORT
                         ).show()
                         return
+                    }
+
+                    if(binding.etNomorKk.text.toString().length != 16){
+                        Toast.makeText(
+                            this,
+                            "panjang inputan Nomor KK harus berjumlah 16 digit",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        return
+                    }
+                    if(binding.etNomorKtp.text.toString().length != 16){
+                        Toast.makeText(
+                            this,
+                            "panjang inputan Nomor KTP harus berjumlah 16 digit",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        return
+                    }
+                    if(viewModel.selectedStatusPernikahan!!.code == "1"){
+                        if(binding.etKtpPasangan.text.toString().length != 16){
+                            Toast.makeText(
+                                this,
+                                "panjang inputan Nomor KTP Pasangan harus berjumlah 16 digit",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            return
+                        }
+                    }
+
+                    if(binding.etLimit.text.toString().toInt() >= 50000000){
+                        if(binding.etNpwp.text.toString().length != 16){
+                            Toast.makeText(
+                                this,
+                                "panjang inputan Nomor NPWP harus berjumlah 16 digit",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            return
+                        }
                     }
 
                     viewModel.submitPrescreeningKUM(
@@ -155,6 +208,8 @@ class KUMPrescreeningActivity: BaseActivity<CreditViewModel>(), DatePickerFragme
             startActivity(
                 Intent(this, KUMFulfillmentActivity::class.java)
                     .putExtra("ID_REQUEST", viewModel.creditRequestId)
+                    .putExtra("SELECTED_STATUS_KAWIN", viewModel.selectedStatusPernikahan?.code)
+                    .putExtra("LIMIT", binding.etLimit.text.toString().toInt())
             )
         }
 

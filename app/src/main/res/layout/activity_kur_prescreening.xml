@@ -68,6 +68,7 @@
 
             <EditText
                 android:id="@+id/et_nomor_kk"
+                android:maxLength="16"
                 android:paddingStart="@dimen/_8sdp"
                 android:paddingEnd="@dimen/_8sdp"
                 android:layout_width="match_parent"
@@ -290,6 +291,7 @@
 
             <EditText
                 android:id="@+id/et_nomor_ktp"
+                android:maxLength="16"
                 android:paddingStart="@dimen/_8sdp"
                 android:paddingEnd="@dimen/_8sdp"
                 android:layout_width="match_parent"
@@ -632,6 +634,8 @@
 
                 <EditText
                     android:id="@+id/et_nama_pasangan"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_32sdp"
                     android:textSize="14sp"
@@ -650,6 +654,8 @@
 
                 <EditText
                     android:id="@+id/et_tanggal_lahir_pasangan"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_32sdp"
                     android:textSize="14sp"
@@ -668,6 +674,9 @@
 
                 <EditText
                     android:id="@+id/et_ktp_pasangan"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:maxLength="16"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_32sdp"
                     android:textSize="14sp"
@@ -750,6 +759,7 @@
 
             <EditText
                 android:id="@+id/et_npwp"
+                android:maxLength="16"
                 android:paddingStart="@dimen/_8sdp"
                 android:paddingEnd="@dimen/_8sdp"
                 android:layout_width="match_parent"

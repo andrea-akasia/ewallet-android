@@ -52,6 +52,14 @@ class KUMUploadDocumentsActivity: BaseActivity<KUMDocumentViewModel>(),
 
         intent.getStringExtra("ID_REQUEST")?.let { viewModel.creditRequestId = it }
 
+        intent.getIntExtra("LIMIT", 0).let { limitAwal ->
+            if(limitAwal < 50000000){
+                binding.actionUploadNpwp.visibility = View.GONE
+            }else{
+                binding.actionUploadNpwp.visibility = View.VISIBLE
+            }
+        }
+
         binding.actionUploadKtp.setOnClickListener {
             viewModel.TAG = "KTP"
             pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))

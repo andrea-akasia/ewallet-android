@@ -19,6 +19,8 @@ class DetailKUMViewModel
     internal var onFulfillmentLoaded = MutableLiveData<DetailKUMFulfillment>()
     internal var onPrescreeningLoaded = MutableLiveData<DetailKUMPrescreening>()
 
+    var isKawin = false
+
     fun loadPrescreening(id: String) {
         dataManager.detailKUMPrescreening(id)
             .doOnSubscribe(this::addDisposable)

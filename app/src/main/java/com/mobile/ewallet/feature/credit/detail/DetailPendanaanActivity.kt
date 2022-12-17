@@ -53,7 +53,7 @@ class DetailPendanaanActivity: BaseActivity<CreditViewModel>(), HasAndroidInject
             if(type == "KUM"){
                 val fragmentAdapter = PendanaanFragmentAdapter(this@DetailPendanaanActivity)
                 fragmentAdapter.addFragment(DetailKUMPrescreeningFragment.newInstance(id))
-                fragmentAdapter.addFragment(DetailKUMFulfillmentFragment.newInstance(id))
+                fragmentAdapter.addFragment(DetailKUMFulfillmentFragment.newInstance(id, isKawin = it.statusPernikahan == "1"))
                 fragmentAdapter.addFragment(DetailKUMDocumentsFragment.newInstance(id, isShowNpwp = it.limitAwalYangDiminta.toInt() > 50000000))
                 binding.viewpager.adapter = fragmentAdapter
 
@@ -67,8 +67,8 @@ class DetailPendanaanActivity: BaseActivity<CreditViewModel>(), HasAndroidInject
             } else {
                 val fragmentAdapter = PendanaanFragmentAdapter(this@DetailPendanaanActivity)
                 fragmentAdapter.addFragment(DetailKURPrescreeningFragment.newInstance(id))
-                fragmentAdapter.addFragment(DetailKURFulfillmentFragment.newInstance(id))
-                fragmentAdapter.addFragment(DetailKURDocumentsFragment.newInstance(id, isShowNpwp = it.limitAwalYangDiminta.toInt() > 50000000))
+                fragmentAdapter.addFragment(DetailKURFulfillmentFragment.newInstance(id, isKawin = it.statusPernikahan == "1"))
+                fragmentAdapter.addFragment(DetailKURDocumentsFragment.newInstance(id, isShowNpwp = true))
                 binding.viewpager.adapter = fragmentAdapter
 
                 TabLayoutMediator(binding.tabLayout, binding.viewpager) { tab, pos ->

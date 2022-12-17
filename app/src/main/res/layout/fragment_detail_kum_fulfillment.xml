@@ -579,6 +579,73 @@
             android:background="@drawable/textfield_disabled_bg"
             android:layout_marginBottom="@dimen/_8sdp"/>
 
+        <LinearLayout
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:id="@+id/view_pernikahan_optional"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_marginBottom="@dimen/_4sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Profesi Pasangan"
+                android:textColor="@android:color/black"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/et_profesi_pasangan"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_32sdp"
+                android:textSize="14sp"
+                android:focusable="false"
+                android:background="@drawable/textfield_disabled_bg"
+                android:layout_marginBottom="@dimen/_8sdp"/>
+
+            <TextView
+                android:layout_marginBottom="@dimen/_4sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tempat Bekerja Pasangan"
+                android:textColor="@android:color/black"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/et_tempat_bekerja_pasangan"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_32sdp"
+                android:textSize="14sp"
+                android:focusable="false"
+                android:background="@drawable/textfield_disabled_bg"
+                android:layout_marginBottom="@dimen/_8sdp"/>
+
+            <TextView
+                android:layout_marginBottom="@dimen/_4sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Bidang Usaha Pasangan"
+                android:textColor="@android:color/black"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/et_bidang_usaha_pasangan"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_32sdp"
+                android:textSize="14sp"
+                android:focusable="false"
+                android:background="@drawable/textfield_disabled_bg"
+                android:layout_marginBottom="@dimen/_8sdp"/>
+
+        </LinearLayout>
+
         <TextView
             android:layout_marginBottom="@dimen/_4sdp"
             android:layout_width="match_parent"

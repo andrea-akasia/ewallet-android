@@ -33,7 +33,8 @@ class KUMDocumentViewModel
                     if (res.isSuccessful) {
                         res.body()?.let { response ->
                             if(response.isNotEmpty()){
-                                if(response[0].message!!.lowercase() == "success"){
+                                if(response[0].status == "1"){
+                                    warningMessage.postValue(response[0].message!!)
                                     onSubmitSuccess.postValue(true)
                                 }else{
                                     warningMessage.postValue(response[0].message!!)

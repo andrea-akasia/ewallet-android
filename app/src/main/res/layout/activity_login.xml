@@ -65,7 +65,7 @@
                 android:id="@+id/et_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="81234567890"
+                android:hint="88889999"
                 android:maxLength="12"
                 android:textSize="14sp"
                 android:imeOptions="actionDone"

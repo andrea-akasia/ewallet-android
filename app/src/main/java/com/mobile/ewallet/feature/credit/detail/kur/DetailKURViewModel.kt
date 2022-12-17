@@ -19,6 +19,8 @@ class DetailKURViewModel
     internal var onFulfillmentLoaded = MutableLiveData<DetailKURFulfillment>()
     internal var onPrescreeningLoaded = MutableLiveData<DetailKURPrescreening>()
 
+    var isKawin = false
+
     fun loadPrescreening(id: String) {
         dataManager.detailKURPrescreening(id)
             .doOnSubscribe(this::addDisposable)

@@ -15,9 +15,10 @@ class DetailKUMFulfillmentFragment: BaseFragment<DetailKUMViewModel>() {
     private val binding get() = _binding!!
 
     companion object {
-        fun newInstance(id: String) = DetailKUMFulfillmentFragment().apply {
+        fun newInstance(id: String, isKawin: Boolean = false) = DetailKUMFulfillmentFragment().apply {
             arguments = bundleOf(
-                "ID" to id
+                "ID" to id,
+                "IS_KAWIN" to isKawin
             )
         }
     }
@@ -38,6 +39,7 @@ class DetailKUMFulfillmentFragment: BaseFragment<DetailKUMViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        arguments?.getBoolean("IS_KAWIN", false)?.let { viewModel.isKawin = it }
         arguments?.getString("ID")?.let { idPendanaan ->
             _binding?.let { _ ->
                 observeViewModel()
@@ -75,6 +77,16 @@ class DetailKUMFulfillmentFragment: BaseFragment<DetailKUMViewModel>() {
 
             _binding!!.etEmergencyName.setText(it.namaEmergencyContact)
             _binding!!.etHubungan.setText(it.hubungan)
+
+            if(viewModel.isKawin){
+                _binding!!.viewPernikahanOptional.visibility = View.VISIBLE
+                _binding!!.etProfesiPasangan.setText(it.profesiPasanganTEXT)
+                _binding!!.etBidangUsahaPasangan.setText(it.bidangUsahaPasanganTEXT)
+                _binding!!.etTempatBekerjaPasangan.setText(it.tempatBekerjaPasanganTEXT)
+            }else{
+                _binding!!.viewPernikahanOptional.visibility = View.GONE
+            }
+
             _binding!!.etBekerjaTanggalMenikah.setText(it.mulaiBekerjaTanggalMenikah)
             _binding!!.etDatill.setText(it.lokasiDatiIIUsahaTEXT)
 
