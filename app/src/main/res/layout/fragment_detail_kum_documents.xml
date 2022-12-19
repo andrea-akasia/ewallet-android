@@ -124,7 +124,7 @@
                 android:id="@+id/pdf_view"
                 android:layout_marginTop="@dimen/_6sdp"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_100sdp"
+                android:layout_height="@dimen/_250sdp"
                 app:pdf_animation="false"
                 app:pdf_direction="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
