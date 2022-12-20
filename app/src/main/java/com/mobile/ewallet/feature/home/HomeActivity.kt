@@ -173,6 +173,7 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
             this@HomeActivity.finish()
         }else{
             viewModel.loadProfile()
+            viewModel.loadVersioning()
         }
     }
 
@@ -187,6 +188,16 @@ class HomeActivity: BaseActivity<HomeViewModel>() {
     }
 
     private fun observeViewModel(){
+        viewModel.onVersioningLoaded.observe(this) {
+            GlideApp.with(this)
+                .load(it.logo)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .centerInside()
+                .into(binding.logo)
+            binding.appName.text = it.appsName
+        }
+
         viewModel.onApplyCreditInfoLoaded.observe(this) {
             binding.applyCreditTitle.text = it.title
             binding.applyCreditSubtitle.text = Html.fromHtml(it.message, Html.FROM_HTML_MODE_COMPACT)

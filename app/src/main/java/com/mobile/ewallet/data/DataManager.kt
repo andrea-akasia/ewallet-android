@@ -11,6 +11,7 @@ import io.reactivex.schedulers.Schedulers
 import retrofit2.Response
 import androidx.paging.DataSource
 import com.mobile.ewallet.model.api.BaseAPIResponse
+import com.mobile.ewallet.model.api.VersioningResponse
 import com.mobile.ewallet.model.api.badge.Badge
 import com.mobile.ewallet.model.api.badge.BadgeStatus
 import com.mobile.ewallet.model.api.credit.*
@@ -88,6 +89,12 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun loadVersion(): Single<Response<MutableList<VersioningResponse>>> {
+        return api.versioning()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun previewKUM(idRequest: String): Single<Response<MutableList<KUMPreviewResponse>>> {
         return api.previewKUM(getIdMember(), idRequest)
             .subscribeOn(Schedulers.io())

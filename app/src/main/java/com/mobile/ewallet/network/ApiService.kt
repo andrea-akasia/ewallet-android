@@ -1,6 +1,7 @@
 package com.mobile.ewallet.network
 
 import com.mobile.ewallet.model.api.BaseAPIResponse
+import com.mobile.ewallet.model.api.VersioningResponse
 import com.mobile.ewallet.model.api.badge.Badge
 import com.mobile.ewallet.model.api.badge.BadgeStatus
 import com.mobile.ewallet.model.api.credit.*
@@ -46,6 +47,9 @@ import retrofit2.http.*
 
 
 interface APIService {
+    @POST("Versioning.aspx")
+    fun versioning(): Single<Response<MutableList<VersioningResponse>>>
+
     @FormUrlEncoded
     @POST("Pendanaan_KUM_Preview.aspx")
     fun previewKUM(

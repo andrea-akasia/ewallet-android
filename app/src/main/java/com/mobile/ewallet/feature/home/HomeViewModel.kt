@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import com.mobile.ewallet.base.BaseViewModel
 import com.mobile.ewallet.data.DataManager
+import com.mobile.ewallet.model.api.VersioningResponse
 import com.mobile.ewallet.model.api.badge.Badge
 import com.mobile.ewallet.model.api.badge.BadgeStatus
 import com.mobile.ewallet.model.api.credit.PendanaanInfo
@@ -27,9 +28,35 @@ class HomeViewModel
     internal var onTransactionDetailLoaded = MutableLiveData<TransactionDetail>()
     internal var onAllHistoryTransactionLoaded = MutableLiveData<MutableList<TransactionItem>>()
     internal var onApplyCreditInfoLoaded = MutableLiveData<PendanaanInfo>()
+    internal var onVersioningLoaded = MutableLiveData<VersioningResponse>()
 
     var balanceData: DashboardBalance? = null
     var pendanaanInfo: PendanaanInfo? = null
+
+    fun loadVersioning() {
+        dataManager.loadVersion()
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            if(response.isNotEmpty()){
+                                onVersioningLoaded.postValue(response[0])
+                            }
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue("versioning request failed, Server Error $code")
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun cancelPendanaan(id: String) {
         dataManager.cancelPendanaan(id)
