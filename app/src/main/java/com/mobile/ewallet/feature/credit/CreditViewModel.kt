@@ -69,6 +69,7 @@ class CreditViewModel
             .doOnSubscribe(this::addDisposable)
             .subscribe(
                 { res ->
+                    isLoading.postValue(false)
                     if (res.isSuccessful) {
                         res.body()?.let { response ->
                             if(response.isNotEmpty()){
@@ -84,6 +85,7 @@ class CreditViewModel
                     }
                 },
                 { err ->
+                    isLoading.postValue(false)
                     Timber.e(err)
                     warningMessage.postValue(err.message)
                 }
@@ -419,12 +421,14 @@ class CreditViewModel
 
                     } else {
                         // not 20x
+                        isLoading.postValue(false)
                         val code = res.code()
                         Timber.w(Throwable("Server Error $code, ${res.message()}"))
                         warningMessage.postValue(res.message())
                     }
                 },
                 { err ->
+                    isLoading.postValue(false)
                     Timber.e(err)
                     warningMessage.postValue(err.message)
                 }
@@ -450,12 +454,14 @@ class CreditViewModel
                         }
                     } else {
                         // not 20x
+                        isLoading.postValue(false)
                         val code = res.code()
                         Timber.w(Throwable("Server Error $code, ${res.message()}"))
                         warningMessage.postValue(res.message())
                     }
                 },
                 { err ->
+                    isLoading.postValue(false)
                     Timber.e(err)
                     warningMessage.postValue(err.message)
                 }
@@ -480,6 +486,7 @@ class CreditViewModel
                             loadStatusPernikahan()
                         }
                     } else {
+                        isLoading.postValue(false)
                         // not 20x
                         val code = res.code()
                         Timber.w(Throwable("Server Error $code, ${res.message()}"))
@@ -487,6 +494,7 @@ class CreditViewModel
                     }
                 },
                 { err ->
+                    isLoading.postValue(false)
                     Timber.e(err)
                     warningMessage.postValue(err.message)
                 }
@@ -563,6 +571,7 @@ class CreditViewModel
                             loadStatusRumah()
                         }
                     } else {
+                        isLoading.postValue(false)
                         // not 20x
                         val code = res.code()
                         Timber.w(Throwable("Server Error $code, ${res.message()}"))
@@ -570,6 +579,7 @@ class CreditViewModel
                     }
                 },
                 { err ->
+                    isLoading.postValue(false)
                     Timber.e(err)
                     warningMessage.postValue(err.message)
                 }
@@ -577,6 +587,7 @@ class CreditViewModel
     }
 
     fun loadFormJenisKelamin() {
+        isLoading.postValue(true)
         selectedJenisKelamin = null
         jenisKelamins.clear()
         dataManager.formJenisKelamin()
@@ -595,12 +606,14 @@ class CreditViewModel
                         }
                     } else {
                         // not 20x
+                        isLoading.postValue(false)
                         val code = res.code()
                         Timber.w(Throwable("Server Error $code, ${res.message()}"))
                         warningMessage.postValue(res.message())
                     }
                 },
                 { err ->
+                    isLoading.postValue(false)
                     Timber.e(err)
                     warningMessage.postValue(err.message)
                 }
