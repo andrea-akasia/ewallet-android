@@ -15,6 +15,7 @@ import com.mobile.ewallet.feature.credit.KodePosSearchDialog
 import com.mobile.ewallet.model.api.credit.KodePos
 import com.mobile.ewallet.model.api.credit.LokasiDatill
 import com.mobile.ewallet.util.DatePickerFragment
+import com.mobile.ewallet.util.LoadingDialog
 import com.mobile.ewallet.util.getMaxDateForBirthDate
 
 class KUMFulfillmentActivity: BaseActivity<FulfillmentViewModel>(),
@@ -26,6 +27,7 @@ class KUMFulfillmentActivity: BaseActivity<FulfillmentViewModel>(),
 
     private var searchKodePosDialog: KodePosSearchDialog? = null
     private var searchDatillDialog: DatillSearchDialog? = null
+    private var loadingView: LoadingDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -112,6 +114,115 @@ class KUMFulfillmentActivity: BaseActivity<FulfillmentViewModel>(),
     }
 
     private fun observeViewModel(){
+        viewModel.onKUMPreviewLoaded.observe(this){ data ->
+            data.kewarganegaraan?.let {
+                binding.spinnerKewarganegaraan.setSelection(
+                    viewModel.kewarganegaraans.indexOfFirst { it.code == data.kewarganegaraan }
+                )
+            }
+            binding.etPhone.setText(data.telpHP)
+            binding.etFaxArea.setText(data.faxArea)
+            binding.etFax.setText(data.fax)
+
+            data.profesi?.let {
+                binding.spinnerProfesi.setSelection(
+                    viewModel.profesis.indexOfFirst { it.code == data.profesi }
+                )
+            }
+            data.jabatan?.let {
+                binding.spinnerJabatan.setSelection(
+                    viewModel.jabatans.indexOfFirst { it.code == data.jabatan }
+                )
+            }
+            data.bidangUsaha?.let {
+                binding.spinnerBidangUsaha.setSelection(
+                    viewModel.bidangUsahas.indexOfFirst { it.code == data.bidangUsaha }
+                )
+            }
+            data.tempatBekerja?.let {
+                binding.spinnerTempatBekerja.setSelection(
+                    viewModel.tempatBekerjas.indexOfFirst { it.code == data.tempatBekerja }
+                )
+            }
+            binding.etBerdiriSejak.setText(data.berdiriSejak)
+            binding.etBekerjaSejak.setText(data.bekerjausahasejak)
+
+            binding.etNamaPerusahaan.setText(data.namaPerusahaan)
+            binding.etAlamatKantor1.setText(data.alamatKantorLine1)
+            binding.etAlamatKantor2.setText(data.alamatKantorLine2)
+            binding.etAlamatKantor3.setText(data.alamatKantorLine3)
+            binding.etKecamatanKantor.setText(data.kecamatanKantor)
+            binding.etKelurahanKantor.setText(data.kelurahanKantor)
+            binding.etKodeposKantor.setText(data.kodePosKantorTEXT)
+            data.kodePosKantor?.let { viewModel.selectedKodePosKantor = KodePos().apply { code = it } }
+            binding.etFaxAreaKantor.setText(data.noFaxArea)
+            binding.etFaxKantor.setText(data.noFax)
+            binding.etPhoneAreaKantor.setText(data.noTelpArea)
+            binding.etPhoneKantor.setText(data.noTelp)
+
+            binding.etEmergencyName.setText(data.namaEmergencyContact)
+            binding.etHubungan.setText(data.hubungan)
+
+            data.profesiPasangan?.let {
+                if(it.isNotEmpty()){
+                    binding.spinnerProfesiPasangan.setSelection(
+                        viewModel.profesis.indexOfFirst { pp -> pp.code == data.profesiPasangan }
+                    )
+                }
+            }
+            data.tempatBekerjaPasangan?.let {
+                if(it.isNotEmpty()){
+                    binding.spinnerTempatBekerjaPasangan.setSelection(
+                        viewModel.tempatBekerjas.indexOfFirst { tbp -> tbp.code == data.tempatBekerjaPasangan }
+                    )
+                }
+            }
+            data.bidangUsahaPasangan?.let {
+                if(it.isNotEmpty()){
+                    binding.spinnerBidangUsahaPasangan.setSelection(
+                        viewModel.bidangUsahas.indexOfFirst { bup -> bup.code == data.bidangUsahaPasangan }
+                    )
+                }
+            }
+            binding.etBekerjaTanggalMenikah.setText(data.mulaiBekerjaTanggalMenikah)
+            binding.etDatill.setText(data.lokasiDatiIIUsahaTEXT)
+            data.lokasiDatiIIUsaha?.let { viewModel.selectedLokasiDatill = LokasiDatill().apply { code = it } }
+
+            data.sumberDana?.let {
+                if(it.isNotEmpty()){
+                    binding.spinnerSumberDana.setSelection(
+                        viewModel.sumberDanas.indexOfFirst { sd -> sd.code == data.sumberDana }
+                    )
+                }
+            }
+            data.komoditas?.let {
+                if(it.isNotEmpty()){
+                    binding.spinnerKomoditas.setSelection(
+                        viewModel.komoditass.indexOfFirst { k -> k.code == data.komoditas }
+                    )
+                }
+            }
+            data.jenisDebitur?.let {
+                if(it.isNotEmpty()){
+                    binding.spinnerJenisDebitur.setSelection(
+                        viewModel.jenisDebiturs.indexOfFirst { jd -> jd.code == data.jenisDebitur }
+                    )
+                }
+            }
+            binding.etLuasLahan.setText(data.luasLahan)
+
+        }
+
+        viewModel.isLoading.observe(this){
+            if(it){
+                loadingView = LoadingDialog().newInstance()
+                loadingView?.isCancelable = false
+                loadingView?.show(supportFragmentManager, null)
+            }else{
+                loadingView?.dismiss()
+            }
+        }
+
         viewModel.onFulfillmentSuccess.observe(this){
             startActivity(
                 Intent(this, KUMUploadDocumentsActivity::class.java)

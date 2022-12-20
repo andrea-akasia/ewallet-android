@@ -290,7 +290,7 @@
                 android:layout_marginBottom="@dimen/_4sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Alamat Kantor 1"
+                android:text="Alamat Kantor Line 1"
                 android:textColor="@android:color/black"
                 android:textSize="12sp" />
 
@@ -310,7 +310,7 @@
                 android:layout_marginBottom="@dimen/_4sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Alamat Kantor 2"
+                android:text="Alamat Kantor Line 2"
                 android:textColor="@android:color/black"
                 android:textSize="12sp" />
 
@@ -330,7 +330,7 @@
                 android:layout_marginBottom="@dimen/_4sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Alamat Kantor 3"
+                android:text="Alamat Kantor Line 3"
                 android:textColor="@android:color/black"
                 android:textSize="12sp" />
 
