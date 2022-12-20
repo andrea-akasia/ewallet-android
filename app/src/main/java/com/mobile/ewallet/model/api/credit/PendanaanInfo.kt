@@ -11,7 +11,7 @@ data class PendanaanInfo(
 	var subMessage: String = "",
 
 	@field:SerializedName("IDPendanaan")
-	val iDPendanaan: String = "",
+	var iDPendanaan: String = "",
 
 	@field:SerializedName("Mode")
     var mode: String = "",

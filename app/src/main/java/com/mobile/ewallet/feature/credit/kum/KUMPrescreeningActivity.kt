@@ -143,14 +143,17 @@ class KUMPrescreeningActivity: BaseActivity<CreditViewModel>(), DatePickerFragme
                         ).show()
                         return
                     }
-                    if(viewModel.selectedStatusPernikahan!!.code == "1"){
-                        if(binding.etKtpPasangan.text.toString().length != 16){
-                            Toast.makeText(
-                                this,
-                                "panjang inputan Nomor KTP Pasangan harus berjumlah 16 digit",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            return
+
+                    viewModel.selectedStatusPernikahan?.let {
+                        if(viewModel.selectedStatusPernikahan!!.code == "1"){
+                            if(binding.etKtpPasangan.text.toString().length != 16){
+                                Toast.makeText(
+                                    this,
+                                    "panjang inputan Nomor KTP Pasangan harus berjumlah 16 digit",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                return
+                            }
                         }
                     }
 
@@ -204,6 +207,27 @@ class KUMPrescreeningActivity: BaseActivity<CreditViewModel>(), DatePickerFragme
     }
 
     private fun observeViewModel(){
+        viewModel.onKUMPreviewLoaded.observe(this){ data ->
+
+            //apply selected jenis kredit from preview
+            binding.spinnerJenisKredit.setSelection(
+                viewModel.jenisKredits.indexOfFirst { jenisKredit -> jenisKredit.code == data.jenisKredit }
+            )
+
+            binding.etPelaporanName.setText(data.namaPelaporan)
+            binding.etNomorKk.setText(data.nomorKartuKeluarga)
+            binding.etTempatLahir.setText(data.tempatLahir)
+            data.jenisKelamin?.let {
+                binding.spinnerJenisKelamin.setSelection(
+                    viewModel.jenisKelamins.indexOfFirst { it.code == data.jenisKelamin }
+                )
+            }
+
+            binding.etNomorKtp.setText(data.nomorKTP)
+            binding.etLimit.setText(data.limitAwalYangDiminta)
+            binding.etNpwp.setText(data.nPWP)
+        }
+
         viewModel.onPrescreeningSuccess.observe(this){
             startActivity(
                 Intent(this, KUMFulfillmentActivity::class.java)
@@ -227,6 +251,13 @@ class KUMPrescreeningActivity: BaseActivity<CreditViewModel>(), DatePickerFragme
                     }
                     override fun onNothingSelected(parent: AdapterView<*>?) {}
                 }
+            }
+
+            //load preview data
+            viewModel.previewKUMData?.let { data ->
+                binding.spinnerJangkaWaktu.setSelection(
+                    viewModel.jangkaWaktus.indexOfFirst { jw -> jw.code == data.jangkaWaktu }
+                )
             }
         }
 

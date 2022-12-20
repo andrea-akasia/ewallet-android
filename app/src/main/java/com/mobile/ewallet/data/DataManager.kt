@@ -23,6 +23,7 @@ import com.mobile.ewallet.model.api.credit.detailrequest.kum.DetailKUMPrescreeni
 import com.mobile.ewallet.model.api.credit.detailrequest.kur.DetailKURDocument
 import com.mobile.ewallet.model.api.credit.detailrequest.kur.DetailKURFulfillment
 import com.mobile.ewallet.model.api.credit.detailrequest.kur.DetailKURPrescreening
+import com.mobile.ewallet.model.api.credit.preview.KUMPreviewResponse
 import com.mobile.ewallet.model.api.dashboard.DashboardBalance
 import com.mobile.ewallet.model.api.dashboard.TransactionItem
 import com.mobile.ewallet.model.api.detailpokemon.DetailPokemonResponse
@@ -87,6 +88,12 @@ class DataManager
     }
 
     /* ---------------------------------------- Network ----------------------------------------- */
+    fun previewKUM(idRequest: String): Single<Response<MutableList<KUMPreviewResponse>>> {
+        return api.previewKUM(getIdMember(), idRequest)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     fun detailKURDocument(id: String): Single<Response<MutableList<DetailKURDocument>>> {
         return api.detailKURDocument(getIdMember(), id)
             .subscribeOn(Schedulers.io())

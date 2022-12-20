@@ -7,6 +7,7 @@ import com.mobile.ewallet.data.DataManager
 import com.mobile.ewallet.model.api.credit.*
 import com.mobile.ewallet.model.api.credit.billing.BillingCredit
 import com.mobile.ewallet.model.api.credit.detailrequest.kum.DetailKUMPrescreening
+import com.mobile.ewallet.model.api.credit.preview.KUMPreviewResponse
 import com.mobile.ewallet.model.api.dashboard.TransactionItem
 import timber.log.Timber
 import javax.inject.Inject
@@ -33,9 +34,11 @@ class CreditViewModel
     internal var onNominalIncreaseLimitLoaded = MutableLiveData<MutableList<String>>()
 
     internal var onPrescreeningLoaded = MutableLiveData<DetailKUMPrescreening>()
+    internal var onKUMPreviewLoaded = MutableLiveData<KUMPreviewResponse>()
 
     var billingData: BillingCredit? = null
     var increaseLimitInfo: IncreaseLimitInfo? = null
+    var previewKUMData: KUMPreviewResponse? = null
 
     //form data
     var creditRequestId = ""
@@ -60,6 +63,32 @@ class CreditViewModel
     var jenisKreditParameter: JenisKreditParameter? = null
     var jangkaWaktus = mutableListOf<JangkaWaktu>()
     var selectedJangkaWaktu: JangkaWaktu? = null
+
+    private fun loadKUMPreview(idRequest: String) {
+        dataManager.previewKUM(idRequest)
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            if(response.isNotEmpty()){
+                                previewKUMData = response[0]
+                                onKUMPreviewLoaded.postValue(response[0])
+                            }
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue("request failed, Server Error $code")
+                    }
+                },
+                { err ->
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun loadPrescreening(id: String) {
         dataManager.detailKUMPrescreening(id)
@@ -384,6 +413,10 @@ class CreditViewModel
                             }
                             onFormJenisKreditLoaded.postValue(dataString)
                         }
+
+                        //load preview kum
+                        loadKUMPreview(creditRequestId)
+
                     } else {
                         // not 20x
                         val code = res.code()
