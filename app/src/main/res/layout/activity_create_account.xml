@@ -66,7 +66,7 @@
                 android:focusable="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="81234567890"
+                android:text="88889999"
                 android:maxLength="12"
                 android:textSize="14sp"
                 android:inputType="phone"
