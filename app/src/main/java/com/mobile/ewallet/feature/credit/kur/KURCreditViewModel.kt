@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.mobile.ewallet.base.BaseViewModel
 import com.mobile.ewallet.data.DataManager
 import com.mobile.ewallet.model.api.credit.*
+import com.mobile.ewallet.model.api.credit.preview.KURPreviewResponse
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -12,6 +13,7 @@ import javax.inject.Inject
 class KURCreditViewModel
 @Inject constructor(private val dataManager: DataManager) : BaseViewModel() {
     internal var warningMessage = MutableLiveData<String>()
+    internal var isLoading = MutableLiveData<Boolean>()
 
     internal var onFormJenisKelaminLoaded = MutableLiveData<MutableList<String>>()
     internal var onFormPendidikanLoaded = MutableLiveData<MutableList<String>>()
@@ -22,8 +24,10 @@ class KURCreditViewModel
     internal var onFormJenisKreditLoaded = MutableLiveData<MutableList<String>>()
     internal var onFormJangkaWaktuLoaded = MutableLiveData<MutableList<String>>()
     internal var onPrescreeningSuccess = MutableLiveData<Boolean>()
+    internal var onKURPreviewLoaded = MutableLiveData<KURPreviewResponse>()
 
     //form data
+    var previewKURData: KURPreviewResponse? = null
     var creditRequestId = ""
     var jenisKelamins = mutableListOf<JenisKelamin>()
     var selectedJenisKelamin: JenisKelamin? = null
@@ -45,6 +49,36 @@ class KURCreditViewModel
     var jenisKreditParameter: JenisKreditParameter? = null
     var jangkaWaktus = mutableListOf<JangkaWaktu>()
     var selectedJangkaWaktu: JangkaWaktu? = null
+
+    private fun loadKURPreview(idRequest: String) {
+        dataManager.previewKUR(idRequest)
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    isLoading.postValue(false)
+                    isLoading.postValue(false)
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            if(response.isNotEmpty()){
+                                previewKURData = response[0]
+                                onKURPreviewLoaded.postValue(response[0])
+                            }
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue("request failed, Server Error $code")
+                    }
+                },
+                { err ->
+                    isLoading.postValue(false)
+                    isLoading.postValue(false)
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun submitPrescreeningKUR(
         namaPelapor: String,
@@ -237,14 +271,17 @@ class KURCreditViewModel
                             }
                             onFormJenisKreditLoaded.postValue(dataString)
                         }
+                        loadKURPreview(creditRequestId)
                     } else {
                         // not 20x
+                        isLoading.postValue(false)
                         val code = res.code()
                         Timber.w(Throwable("Server Error $code, ${res.message()}"))
-                        warningMessage.postValue(res.message())
+                        warningMessage.postValue("Server Error $code, ${res.message()}")
                     }
                 },
                 { err ->
+                    isLoading.postValue(false)
                     Timber.e(err)
                     warningMessage.postValue(err.message)
                 }
@@ -270,12 +307,14 @@ class KURCreditViewModel
                         }
                     } else {
                         // not 20x
+                        isLoading.postValue(false)
                         val code = res.code()
                         Timber.w(Throwable("Server Error $code, ${res.message()}"))
                         warningMessage.postValue(res.message())
                     }
                 },
                 { err ->
+                    isLoading.postValue(false)
                     Timber.e(err)
                     warningMessage.postValue(err.message)
                 }
@@ -301,12 +340,14 @@ class KURCreditViewModel
                         }
                     } else {
                         // not 20x
+                        isLoading.postValue(false)
                         val code = res.code()
                         Timber.w(Throwable("Server Error $code, ${res.message()}"))
                         warningMessage.postValue(res.message())
                     }
                 },
                 { err ->
+                    isLoading.postValue(false)
                     Timber.e(err)
                     warningMessage.postValue(err.message)
                 }
@@ -326,12 +367,14 @@ class KURCreditViewModel
                         }
                     } else {
                         // not 20x
+                        isLoading.postValue(false)
                         val code = res.code()
                         Timber.w(Throwable("Server Error $code, ${res.message()}"))
                         warningMessage.postValue(res.message())
                     }
                 },
                 { err ->
+                    isLoading.postValue(false)
                     Timber.e(err)
                     warningMessage.postValue(err.message)
                 }
@@ -354,12 +397,14 @@ class KURCreditViewModel
                         }
                     } else {
                         // not 20x
+                        isLoading.postValue(false)
                         val code = res.code()
                         Timber.w(Throwable("Server Error $code, ${res.message()}"))
                         warningMessage.postValue(res.message())
                     }
                 },
                 { err ->
+                    isLoading.postValue(false)
                     Timber.e(err)
                     warningMessage.postValue(err.message)
                 }
@@ -385,12 +430,14 @@ class KURCreditViewModel
                         }
                     } else {
                         // not 20x
+                        isLoading.postValue(false)
                         val code = res.code()
                         Timber.w(Throwable("Server Error $code, ${res.message()}"))
                         warningMessage.postValue(res.message())
                     }
                 },
                 { err ->
+                    isLoading.postValue(false)
                     Timber.e(err)
                     warningMessage.postValue(err.message)
                 }
@@ -398,6 +445,7 @@ class KURCreditViewModel
     }
 
     fun loadFormJenisKelamin() {
+        isLoading.postValue(true)
         selectedJenisKelamin = null
         jenisKelamins.clear()
         dataManager.formJenisKelamin()
@@ -415,6 +463,7 @@ class KURCreditViewModel
                             loadFormPendidikan()
                         }
                     } else {
+                        isLoading.postValue(false)
                         // not 20x
                         val code = res.code()
                         Timber.w(Throwable("Server Error $code, ${res.message()}"))
@@ -422,6 +471,7 @@ class KURCreditViewModel
                     }
                 },
                 { err ->
+                    isLoading.postValue(false)
                     Timber.e(err)
                     warningMessage.postValue(err.message)
                 }

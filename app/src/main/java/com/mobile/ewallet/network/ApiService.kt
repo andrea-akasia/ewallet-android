@@ -15,6 +15,7 @@ import com.mobile.ewallet.model.api.credit.detailrequest.kur.DetailKURDocument
 import com.mobile.ewallet.model.api.credit.detailrequest.kur.DetailKURFulfillment
 import com.mobile.ewallet.model.api.credit.detailrequest.kur.DetailKURPrescreening
 import com.mobile.ewallet.model.api.credit.preview.KUMPreviewResponse
+import com.mobile.ewallet.model.api.credit.preview.KURPreviewResponse
 import com.mobile.ewallet.model.api.dashboard.DashboardBalance
 import com.mobile.ewallet.model.api.dashboard.TransactionItem
 import com.mobile.ewallet.model.api.detailpokemon.DetailPokemonResponse
@@ -47,6 +48,13 @@ import retrofit2.http.*
 
 
 interface APIService {
+    @FormUrlEncoded
+    @POST("Pendanaan_KUR_Preview.aspx")
+    fun previewKUR(
+        @Field("IDMember") idMember: String,
+        @Field("IDRequest") idRequest: String
+    ): Single<Response<MutableList<KURPreviewResponse>>>
+
     @POST("Versioning.aspx")
     fun versioning(): Single<Response<MutableList<VersioningResponse>>>
 

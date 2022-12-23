@@ -15,6 +15,7 @@ import com.mobile.ewallet.feature.credit.KodePosSearchDialog
 import com.mobile.ewallet.model.api.credit.KodePos
 import com.mobile.ewallet.model.api.credit.LokasiDatill
 import com.mobile.ewallet.util.DatePickerFragment
+import com.mobile.ewallet.util.LoadingDialog
 import com.mobile.ewallet.util.getMaxDateForBirthDate
 
 class KURPrecreeningActivity: BaseActivity<KURCreditViewModel>(), DatePickerFragment.DateListener,
@@ -25,6 +26,7 @@ class KURPrecreeningActivity: BaseActivity<KURCreditViewModel>(), DatePickerFrag
 
     private var searchKodePosDialog: KodePosSearchDialog? = null
     private var searchDatillDialog: DatillSearchDialog? = null
+    private var loadingView: LoadingDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -126,16 +128,19 @@ class KURPrecreeningActivity: BaseActivity<KURCreditViewModel>(), DatePickerFrag
                         ).show()
                         return
                     }
-                    if(viewModel.selectedStatusPernikahan!!.code == "1"){
-                        if(binding.etKtpPasangan.text.toString().length != 16){
-                            Toast.makeText(
-                                this,
-                                "panjang inputan Nomor KTP Pasangan harus berjumlah 16 digit",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            return
+                    viewModel.selectedStatusPernikahan?.let {
+                        if(viewModel.selectedStatusPernikahan!!.code == "1"){
+                            if(binding.etKtpPasangan.text.toString().length != 16){
+                                Toast.makeText(
+                                    this,
+                                    "panjang inputan Nomor KTP Pasangan harus berjumlah 16 digit",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                return
+                            }
                         }
                     }
+
                     if(binding.etNpwp.text.toString().length != 16){
                         Toast.makeText(
                             this,
@@ -185,6 +190,78 @@ class KURPrecreeningActivity: BaseActivity<KURCreditViewModel>(), DatePickerFrag
     }
 
     private fun observeViewModel(){
+        viewModel.onKURPreviewLoaded.observe(this){ data ->
+            binding.etPelaporanName.setText(data.namaPelaporan)
+            binding.etNomorKk.setText(data.nomorKartuKeluarga)
+            binding.etTempatLahir.setText(data.tempatLahir)
+            data.jenisKelamin?.let {
+                binding.spinnerJenisKelamin.setSelection(
+                    viewModel.jenisKelamins.indexOfFirst { it.code == data.jenisKelamin }
+                )
+            }
+            binding.etTanggalLahir.setText(data.tanggalLahir)
+            data.pendidikanTerakhir?.let {
+                binding.spinnerPendidikan.setSelection(
+                    viewModel.pendidikans.indexOfFirst { it.code == data.pendidikanTerakhir }
+                )
+            }
+            binding.etMotherName.setText(data.namaGadisIbuKandung)
+            binding.etPhoneArea.setText(data.telpygdptdihubungiArea)
+            binding.etPhone.setText(data.telpygdptdihubungi)
+
+            binding.etNomorKtp.setText(data.nomorKTP)
+            binding.etKtpName.setText(data.namaSesuaiKTP)
+            binding.etKtpAddress.setText(data.alamat)
+            binding.etKtpKota.setText(data.kotaKTP)
+            binding.etKtpKelurahan.setText(data.kelurahanKTP)
+            binding.etKtpKecamatan.setText(data.kecamatanKTP)
+            binding.etKtpKodepos.setText(data.kodePosKTPTEXT)
+            data.kodePosKTP?.let { viewModel.selectedKodePosKTP = KodePos().apply { code = it } }
+
+            binding.etHomeAddress.setText(data.alamatRumah)
+            binding.etHomeKota.setText(data.kotaAlamatRumah)
+            binding.etHomeKecamatan.setText(data.kecamatanRumah)
+            binding.etHomeKelurahan.setText(data.kelurahanRumah)
+            binding.etHomeKodepos.setText(data.kodePosRumahTEXT)
+            data.kodePosRumah?.let { viewModel.selectedKodePosRumah = KodePos().apply { code = it } }
+            binding.etDatill.setText(data.lokasiDatiIIRumahTEXT)
+            data.lokasiDatiIIRumah?.let { viewModel.selectedLokasiDatill = LokasiDatill().apply { code = it } }
+            binding.etHomeTanggalMenempati.setText(data.mulaiMenempati)
+            data.statusRumah?.let {
+                binding.spinnerStatusRumah.setSelection(
+                    viewModel.statusRumahs.indexOfFirst { it.code == data.statusRumah }
+                )
+            }
+
+            data.statusPernikahan?.let {
+                if(it.isNotEmpty()){
+                    binding.spinnerPernikahan.setSelection(
+                        viewModel.statusPernikahans.indexOfFirst { sp -> sp.code == it }
+                    )
+                }
+            }
+            binding.etKtpPasangan.setText(data.nomorKTPPasangan)
+            binding.etNamaPasangan.setText(data.namaSuamiIstri)
+            binding.etTanggalLahirPasangan.setText(data.tanggalLahirPasangan)
+
+            binding.spinnerJenisKredit.setSelection(
+                viewModel.jenisKredits.indexOfFirst { jenisKredit -> jenisKredit.code == data.jenisKredit }
+            )
+            binding.etLimit.setText(data.limitAwalYangDiminta)
+            binding.etNpwp.setText(data.nPWP)
+            binding.etNorek.setText(data.noRekening)
+        }
+
+        viewModel.isLoading.observe(this){
+            if(it){
+                loadingView = LoadingDialog().newInstance()
+                loadingView?.isCancelable = false
+                loadingView?.show(supportFragmentManager, null)
+            }else{
+                loadingView?.dismiss()
+            }
+        }
+
         viewModel.onPrescreeningSuccess.observe(this){
             startActivity(
                 Intent(this, KURFulfillmentActivity::class.java)
@@ -207,6 +284,12 @@ class KURPrecreeningActivity: BaseActivity<KURCreditViewModel>(), DatePickerFrag
                     }
                     override fun onNothingSelected(parent: AdapterView<*>?) {}
                 }
+            }
+
+            viewModel.previewKURData?.let { data ->
+                binding.spinnerJangkaWaktu.setSelection(
+                    viewModel.jangkaWaktus.indexOfFirst { jw -> jw.code == data.jangkaWaktu }
+                )
             }
         }
 
