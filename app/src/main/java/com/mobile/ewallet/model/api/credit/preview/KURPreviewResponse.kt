@@ -290,5 +290,11 @@ data class KURPreviewResponse(
 	val profesiPasanganTEXT: String? = null,
 
 	@field:SerializedName("Fax")
-	val fax: String? = null
+	val fax: String? = null,
+
+	@field:SerializedName("NoSurat")
+	val noSurat: String? = null,
+
+	@field:SerializedName("NoIjinUsaha")
+	val noIjinUsaha: String? = null
 )

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.mobile.ewallet.base.BaseViewModel
 import com.mobile.ewallet.data.DataManager
 import com.mobile.ewallet.model.api.credit.*
+import com.mobile.ewallet.model.api.credit.preview.KURPreviewResponse
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -12,6 +13,7 @@ import javax.inject.Inject
 class KURFulfillmentViewModel
 @Inject constructor(private val dataManager: DataManager) : BaseViewModel() {
     internal var warningMessage = MutableLiveData<String>()
+    internal var isLoading = MutableLiveData<Boolean>()
 
     internal var onFormKewarganegaraanLoaded = MutableLiveData<MutableList<String>>()
     internal var onFormProfesiLoaded = MutableLiveData<MutableList<String>>()
@@ -25,7 +27,9 @@ class KURFulfillmentViewModel
     internal var onFormKomoditasLoaded = MutableLiveData<MutableList<String>>()
     internal var onFormJenisDebiturLoaded = MutableLiveData<MutableList<String>>()
     internal  var onFulfillmentSuccess = MutableLiveData<Boolean>()
+    internal var onKURPreviewLoaded = MutableLiveData<KURPreviewResponse>()
 
+    var previewKURData: KURPreviewResponse? = null
     var creditRequestId = ""
     var kewarganegaraans = mutableListOf<Kewarganegaraan>()
     var selectedKewarganegaraan: Kewarganegaraan? = null
@@ -54,6 +58,34 @@ class KURFulfillmentViewModel
     var selectedKomoditas: Komoditas? = null
     var jenisDebiturs = mutableListOf<JenisDebitur>()
     var selectedJenisDebitur: JenisDebitur? = null
+
+    private fun loadKURPreview(idRequest: String) {
+        dataManager.previewKUR(idRequest)
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    isLoading.postValue(false)
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            if(response.isNotEmpty()){
+                                previewKURData = response[0]
+                                onKURPreviewLoaded.postValue(response[0])
+                            }
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue("request failed, Server Error $code")
+                    }
+                },
+                { err ->
+                    isLoading.postValue(false)
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun submitFulfillmentKUR(
         phone: String,
@@ -162,15 +194,18 @@ class KURFulfillmentViewModel
                             }
                             onFormJenisDebiturLoaded.postValue(dataString)
 
+                            loadKURPreview(creditRequestId)
                         }
                     } else {
                         // not 20x
+                        isLoading.postValue(false)
                         val code = res.code()
                         Timber.w(Throwable("Server Error $code, ${res.message()}"))
                         warningMessage.postValue(res.message())
                     }
                 },
                 { err ->
+                    isLoading.postValue(false)
                     Timber.e(err)
                     warningMessage.postValue(err.message)
                 }
@@ -196,12 +231,14 @@ class KURFulfillmentViewModel
                         }
                     } else {
                         // not 20x
+                        isLoading.postValue(false)
                         val code = res.code()
                         Timber.w(Throwable("Server Error $code, ${res.message()}"))
                         warningMessage.postValue(res.message())
                     }
                 },
                 { err ->
+                    isLoading.postValue(false)
                     Timber.e(err)
                     warningMessage.postValue(err.message)
                 }
@@ -227,12 +264,14 @@ class KURFulfillmentViewModel
                         }
                     } else {
                         // not 20x
+                        isLoading.postValue(false)
                         val code = res.code()
                         Timber.w(Throwable("Server Error $code, ${res.message()}"))
                         warningMessage.postValue(res.message())
                     }
                 },
                 { err ->
+                    isLoading.postValue(false)
                     Timber.e(err)
                     warningMessage.postValue(err.message)
                 }
@@ -282,12 +321,14 @@ class KURFulfillmentViewModel
                         }
                     } else {
                         // not 20x
+                        isLoading.postValue(false)
                         val code = res.code()
                         Timber.w(Throwable("Server Error $code, ${res.message()}"))
                         warningMessage.postValue(res.message())
                     }
                 },
                 { err ->
+                    isLoading.postValue(false)
                     Timber.e(err)
                     warningMessage.postValue(err.message)
                 }
@@ -341,12 +382,14 @@ class KURFulfillmentViewModel
                         }
                     } else {
                         // not 20x
+                        isLoading.postValue(false)
                         val code = res.code()
                         Timber.w(Throwable("Server Error $code, ${res.message()}"))
                         warningMessage.postValue(res.message())
                     }
                 },
                 { err ->
+                    isLoading.postValue(false)
                     Timber.e(err)
                     warningMessage.postValue(err.message)
                 }
@@ -372,12 +415,14 @@ class KURFulfillmentViewModel
                         }
                     } else {
                         // not 20x
+                        isLoading.postValue(false)
                         val code = res.code()
                         Timber.w(Throwable("Server Error $code, ${res.message()}"))
                         warningMessage.postValue(res.message())
                     }
                 },
                 { err ->
+                    isLoading.postValue(false)
                     Timber.e(err)
                     warningMessage.postValue(err.message)
                 }
@@ -403,12 +448,14 @@ class KURFulfillmentViewModel
                         }
                     } else {
                         // not 20x
+                        isLoading.postValue(false)
                         val code = res.code()
                         Timber.w(Throwable("Server Error $code, ${res.message()}"))
                         warningMessage.postValue(res.message())
                     }
                 },
                 { err ->
+                    isLoading.postValue(false)
                     Timber.e(err)
                     warningMessage.postValue(err.message)
                 }
@@ -434,12 +481,14 @@ class KURFulfillmentViewModel
                         }
                     } else {
                         // not 20x
+                        isLoading.postValue(false)
                         val code = res.code()
                         Timber.w(Throwable("Server Error $code, ${res.message()}"))
                         warningMessage.postValue(res.message())
                     }
                 },
                 { err ->
+                    isLoading.postValue(false)
                     Timber.e(err)
                     warningMessage.postValue(err.message)
                 }
@@ -447,6 +496,7 @@ class KURFulfillmentViewModel
     }
 
     fun loadFormKewarganegaraan() {
+        isLoading.postValue(true)
         selectedKewarganegaraan = null
         kewarganegaraans.clear()
         dataManager.formKewarganegaraan()
@@ -465,12 +515,14 @@ class KURFulfillmentViewModel
                         }
                     } else {
                         // not 20x
+                        isLoading.postValue(false)
                         val code = res.code()
                         Timber.w(Throwable("Server Error $code, ${res.message()}"))
                         warningMessage.postValue(res.message())
                     }
                 },
                 { err ->
+                    isLoading.postValue(false)
                     Timber.e(err)
                     warningMessage.postValue(err.message)
                 }
