@@ -37,25 +37,36 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Upload KTP"
                     android:textColor="@color/colorTextBlack"
                     android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:visibility="gone"
-                    tools:visibility="visible"
                     android:id="@+id/status_ktp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView2"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_check_green" />
+                    app:layout_constraintTop_toTopOf="@+id/textView2"
+                    app:srcCompat="@drawable/ic_check_green"
+                    tools:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/img_ktp"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_150sdp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView2"
+                    tools:visibility="visible" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -69,25 +80,36 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/label_kk"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Upload KK"
                     android:textColor="@color/colorTextBlack"
                     android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:visibility="gone"
-                    tools:visibility="visible"
                     android:id="@+id/status_kk"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/label_kk"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_check_green" />
+                    app:layout_constraintTop_toTopOf="@+id/label_kk"
+                    app:srcCompat="@drawable/ic_check_green"
+                    tools:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/img_kk"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_150sdp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/label_kk"
+                    tools:visibility="visible" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -101,25 +123,36 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/label_selfie"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Upload Selfie Document"
                     android:textColor="@color/colorTextBlack"
                     android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:visibility="gone"
-                    tools:visibility="visible"
                     android:id="@+id/status_selfie"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/label_selfie"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_check_green" />
+                    app:layout_constraintTop_toTopOf="@+id/label_selfie"
+                    app:srcCompat="@drawable/ic_check_green"
+                    tools:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/img_selfie"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_150sdp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/label_selfie"
+                    tools:visibility="visible" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -133,25 +166,38 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/label_surat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Upload Surat Pengajuan (PDF)"
                     android:textColor="@color/colorTextBlack"
                     android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:visibility="gone"
-                    tools:visibility="visible"
                     android:id="@+id/status_surat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/label_surat"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_check_green" />
+                    app:layout_constraintTop_toTopOf="@+id/label_surat"
+                    app:srcCompat="@drawable/ic_check_green"
+                    tools:visibility="visible" />
+
+                <com.mindev.mindev_pdfviewer.MindevPDFViewer
+                    android:id="@+id/pdf_surat"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_250sdp"
+                    app:pdf_animation="false"
+                    app:pdf_direction="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/label_surat"
+                    android:visibility="gone"
+                    tools:visibility="visible"/>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -165,25 +211,36 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/label_npwp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Upload NPWP"
                     android:textColor="@color/colorTextBlack"
                     android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:visibility="gone"
-                    tools:visibility="visible"
                     android:id="@+id/status_npwp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/label_npwp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_check_green" />
+                    app:layout_constraintTop_toTopOf="@+id/label_npwp"
+                    app:srcCompat="@drawable/ic_check_green"
+                    tools:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/img_npwp"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_150sdp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/label_npwp"
+                    tools:visibility="visible" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -196,25 +253,36 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/label_siup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Upload SIUP"
                     android:textColor="@color/colorTextBlack"
                     android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:visibility="gone"
-                    tools:visibility="visible"
                     android:id="@+id/status_siup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/label_siup"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_check_green" />
+                    app:layout_constraintTop_toTopOf="@+id/label_siup"
+                    app:srcCompat="@drawable/ic_check_green"
+                    tools:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/img_siup"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_150sdp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/label_siup"
+                    tools:visibility="visible" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

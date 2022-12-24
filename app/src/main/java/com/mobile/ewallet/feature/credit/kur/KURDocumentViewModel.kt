@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import com.mobile.ewallet.base.BaseViewModel
 import com.mobile.ewallet.data.DataManager
+import com.mobile.ewallet.model.api.credit.preview.KUMPreviewResponse
+import com.mobile.ewallet.model.api.credit.preview.KURPreviewResponse
 import com.mobile.ewallet.util.createMultipartFromImageFile
 import timber.log.Timber
 import java.io.File
@@ -13,18 +15,50 @@ import javax.inject.Inject
 class KURDocumentViewModel
 @Inject constructor(private val dataManager: DataManager) : BaseViewModel() {
     internal var warningMessage = MutableLiveData<String>()
+    internal var isLoading = MutableLiveData<Boolean>()
 
-    internal  var onKTPSuccess = MutableLiveData<Boolean>()
-    internal  var onKKSuccess = MutableLiveData<Boolean>()
-    internal  var onNPWPSuccess = MutableLiveData<Boolean>()
-    internal  var onSelfieSuccess = MutableLiveData<Boolean>()
-    internal  var onSuratSuccess = MutableLiveData<Boolean>()
-    internal  var onSIUPSuccess = MutableLiveData<Boolean>()
-    internal  var onTermsLoaded = MutableLiveData<String>()
-    internal  var onSubmitSuccess = MutableLiveData<Boolean>()
+    internal var onKTPSuccess = MutableLiveData<Boolean>()
+    internal var onKKSuccess = MutableLiveData<Boolean>()
+    internal var onNPWPSuccess = MutableLiveData<Boolean>()
+    internal var onSelfieSuccess = MutableLiveData<Boolean>()
+    internal var onSuratSuccess = MutableLiveData<Boolean>()
+    internal var onSIUPSuccess = MutableLiveData<Boolean>()
+    internal var onTermsLoaded = MutableLiveData<String>()
+    internal var onSubmitSuccess = MutableLiveData<Boolean>()
+    internal var onKURPreviewLoaded = MutableLiveData<KURPreviewResponse>()
 
+    var previewKURData: KURPreviewResponse? = null
     var creditRequestId = ""
     var TAG = ""
+
+    fun loadKURPReview(idRequest: String) {
+        isLoading.postValue(true)
+        dataManager.previewKUR(idRequest)
+            .doOnSubscribe(this::addDisposable)
+            .subscribe(
+                { res ->
+                    isLoading.postValue(false)
+                    if (res.isSuccessful) {
+                        res.body()?.let { response ->
+                            if(response.isNotEmpty()){
+                                previewKURData = response[0]
+                                onKURPreviewLoaded.postValue(response[0])
+                            }
+                        }
+                    } else {
+                        // not 20x
+                        val code = res.code()
+                        Timber.w(Throwable("Server Error $code, ${res.message()}"))
+                        warningMessage.postValue("request failed, Server Error $code")
+                    }
+                },
+                { err ->
+                    isLoading.postValue(false)
+                    Timber.e(err)
+                    warningMessage.postValue(err.message)
+                }
+            )
+    }
 
     fun submitFinal() {
         dataManager.submitFinalCredit(creditRequestId)
@@ -83,14 +117,16 @@ class KURDocumentViewModel
     }
 
     fun uploadSIUP(file: File) {
+        isLoading.postValue(true)
         dataManager.kurDocumentSIUP(creditRequestId, createMultipartFromImageFile(file, "SIUP"))
             .doOnSubscribe(this::addDisposable)
             .subscribe(
                 { res ->
+                    isLoading.postValue(false)
                     if (res.isSuccessful) {
                         res.body()?.let { response ->
                             if(response[0].status == "1"){
-                                onSIUPSuccess.postValue(true)
+                                loadKURPReview(creditRequestId)
                             }else{
                                 warningMessage.postValue(response[0].message!!)
                             }
@@ -103,6 +139,7 @@ class KURDocumentViewModel
                     }
                 },
                 { err ->
+                    isLoading.postValue(false)
                     Timber.e(err)
                     warningMessage.postValue(err.message)
                 }
@@ -110,14 +147,16 @@ class KURDocumentViewModel
     }
 
     fun uploadSurat(file: File) {
+        isLoading.postValue(true)
         dataManager.kurDocumentSurat(creditRequestId, createMultipartFromImageFile(file, "SuratPengajuan"))
             .doOnSubscribe(this::addDisposable)
             .subscribe(
                 { res ->
+                    isLoading.postValue(false)
                     if (res.isSuccessful) {
                         res.body()?.let { response ->
                             if(response[0].status == "1"){
-                                onSuratSuccess.postValue(true)
+                                loadKURPReview(creditRequestId)
                             }else{
                                 warningMessage.postValue(response[0].message!!)
                             }
@@ -130,6 +169,7 @@ class KURDocumentViewModel
                     }
                 },
                 { err ->
+                    isLoading.postValue(false)
                     Timber.e(err)
                     warningMessage.postValue(err.message)
                 }
@@ -137,14 +177,16 @@ class KURDocumentViewModel
     }
 
     fun uploadSelfie(file: File) {
+        isLoading.postValue(true)
         dataManager.kurDocumentSelfie(creditRequestId, createMultipartFromImageFile(file, "PHOTOSELFIE"))
             .doOnSubscribe(this::addDisposable)
             .subscribe(
                 { res ->
+                    isLoading.postValue(false)
                     if (res.isSuccessful) {
                         res.body()?.let { response ->
                             if(response[0].status == "1"){
-                                onSelfieSuccess.postValue(true)
+                                loadKURPReview(creditRequestId)
                             }else{
                                 warningMessage.postValue(response[0].message!!)
                             }
@@ -157,6 +199,7 @@ class KURDocumentViewModel
                     }
                 },
                 { err ->
+                    isLoading.postValue(false)
                     Timber.e(err)
                     warningMessage.postValue(err.message)
                 }
@@ -164,14 +207,16 @@ class KURDocumentViewModel
     }
 
     fun uploadNPWP(file: File) {
+        isLoading.postValue(true)
         dataManager.kurDocumentNPWP(creditRequestId, createMultipartFromImageFile(file, "PHOTONPWP"))
             .doOnSubscribe(this::addDisposable)
             .subscribe(
                 { res ->
+                    isLoading.postValue(false)
                     if (res.isSuccessful) {
                         res.body()?.let { response ->
                             if(response[0].status == "1"){
-                                onNPWPSuccess.postValue(true)
+                                loadKURPReview(creditRequestId)
                             }else{
                                 warningMessage.postValue(response[0].message!!)
                             }
@@ -184,6 +229,7 @@ class KURDocumentViewModel
                     }
                 },
                 { err ->
+                    isLoading.postValue(false)
                     Timber.e(err)
                     warningMessage.postValue(err.message)
                 }
@@ -191,14 +237,16 @@ class KURDocumentViewModel
     }
 
     fun uploadKK(file: File) {
+        isLoading.postValue(true)
         dataManager.kurDocumentKK(creditRequestId, createMultipartFromImageFile(file, "PHOTOKK"))
             .doOnSubscribe(this::addDisposable)
             .subscribe(
                 { res ->
+                    isLoading.postValue(false)
                     if (res.isSuccessful) {
                         res.body()?.let { response ->
                             if(response[0].status == "1"){
-                                onKKSuccess.postValue(true)
+                                loadKURPReview(creditRequestId)
                             }else{
                                 warningMessage.postValue(response[0].message!!)
                             }
@@ -211,6 +259,7 @@ class KURDocumentViewModel
                     }
                 },
                 { err ->
+                    isLoading.postValue(false)
                     Timber.e(err)
                     warningMessage.postValue(err.message)
                 }
@@ -218,14 +267,16 @@ class KURDocumentViewModel
     }
 
     fun uploadKTP(file: File) {
+        isLoading.postValue(true)
         dataManager.kurDocumentKTP(creditRequestId, createMultipartFromImageFile(file, "PHOTOKTP"))
             .doOnSubscribe(this::addDisposable)
             .subscribe(
                 { res ->
+                    isLoading.postValue(false)
                     if (res.isSuccessful) {
                         res.body()?.let { response ->
                             if(response[0].status == "1"){
-                                onKTPSuccess.postValue(true)
+                                loadKURPReview(creditRequestId)
                             }else{
                                 warningMessage.postValue(response[0].message!!)
                             }
@@ -238,6 +289,7 @@ class KURDocumentViewModel
                     }
                 },
                 { err ->
+                    isLoading.postValue(false)
                     Timber.e(err)
                     warningMessage.postValue(err.message)
                 }
