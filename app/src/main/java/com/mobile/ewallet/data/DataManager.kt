@@ -222,8 +222,8 @@ class DataManager
             .observeOn(AndroidSchedulers.mainThread())
     }
 
-    fun kurDocumentSelfie(idRequest: String, file: MultipartBody.Part): Single<Response<MutableList<BaseAPIResponse>>> {
-        return api.kurDocumentSelfie(createStringReqBody(getIdMember()), createStringReqBody(idRequest), file)
+    fun kurSuratKuasa(idRequest: String, file: MultipartBody.Part): Single<Response<MutableList<BaseAPIResponse>>> {
+        return api.kurSuratKuasa(createStringReqBody(getIdMember()), createStringReqBody(idRequest), file)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }
@@ -240,8 +240,8 @@ class DataManager
             .observeOn(AndroidSchedulers.mainThread())
     }
 
-    fun kurDocumentNPWP(idRequest: String, file: MultipartBody.Part): Single<Response<MutableList<BaseAPIResponse>>> {
-        return api.kurDocumentNPWP(createStringReqBody(getIdMember()), createStringReqBody(idRequest), file)
+    fun kurDocumentChecklistVerifikasi(idRequest: String, file: MultipartBody.Part): Single<Response<MutableList<BaseAPIResponse>>> {
+        return api.kurDocumentChecklistVerifikasi(createStringReqBody(getIdMember()), createStringReqBody(idRequest), file)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }

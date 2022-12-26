@@ -100,8 +100,8 @@ data class KURPreviewResponse(
 	@field:SerializedName("Alamat")
 	val alamat: String? = null,
 
-	@field:SerializedName("PhotoSelfie")
-	val photoSelfie: String? = null,
+	@field:SerializedName("SuratKuasa")
+	val suratKuasa: String? = null,
 
 	@field:SerializedName("TempatLahir")
 	val tempatLahir: String? = null,
@@ -205,8 +205,8 @@ data class KURPreviewResponse(
 	@field:SerializedName("JenisKelamin")
 	val jenisKelamin: String? = null,
 
-	@field:SerializedName("PhotoNPWP")
-	val photoNPWP: String? = null,
+	@field:SerializedName("CheckListVerifikasi")
+	val checklistVerifikasi: String? = null,
 
 	@field:SerializedName("PhotoKK")
 	val photoKK: String? = null,

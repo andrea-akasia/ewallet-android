@@ -4,8 +4,8 @@ import com.google.gson.annotations.SerializedName
 
 data class DetailKURDocument(
 
-	@field:SerializedName("PhotoSelfie")
-	val photoSelfie: String,
+	@field:SerializedName("SuratKuasa")
+	val suratKuasa: String = "",
 
 	@field:SerializedName("PhotoKTP")
 	val photoKTP: String,
@@ -13,8 +13,8 @@ data class DetailKURDocument(
 	@field:SerializedName("FileSIUPP")
 	val fileSIUPP: String,
 
-	@field:SerializedName("PhotoNPWP")
-	val photoNPWP: String,
+	@field:SerializedName("ChecklistVerifikasi")
+	val checklistVerifikasi: String,
 
 	@field:SerializedName("PhotoKK")
 	val photoKK: String,

@@ -180,8 +180,8 @@ interface APIService {
     ): Single<Response<MutableList<BaseAPIResponse>>>
 
     @Multipart
-    @POST("Pendanaan_KUR_Document_NPWP.aspx")
-    fun kurDocumentNPWP(
+    @POST("Pendanaan_KUR_Document_ChecklistVerifikasi.aspx")
+    fun kurDocumentChecklistVerifikasi(
         @Part("IDMember") idMember: RequestBody,
         @Part("IDRequest") idRequest: RequestBody,
         @Part file: MultipartBody.Part
@@ -196,8 +196,8 @@ interface APIService {
     ): Single<Response<MutableList<BaseAPIResponse>>>
 
     @Multipart
-    @POST("Pendanaan_KUR_Document_PhotoSelfie.aspx")
-    fun kurDocumentSelfie(
+    @POST("Pendanaan_KUR_Document_SuratKuasa.aspx")
+    fun kurSuratKuasa(
         @Part("IDMember") idMember: RequestBody,
         @Part("IDRequest") idRequest: RequestBody,
         @Part file: MultipartBody.Part

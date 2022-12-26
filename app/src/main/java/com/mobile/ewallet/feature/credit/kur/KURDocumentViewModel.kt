@@ -4,8 +4,8 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import com.mobile.ewallet.base.BaseViewModel
 import com.mobile.ewallet.data.DataManager
-import com.mobile.ewallet.model.api.credit.preview.KUMPreviewResponse
 import com.mobile.ewallet.model.api.credit.preview.KURPreviewResponse
+import com.mobile.ewallet.util.createMultipartFromFile
 import com.mobile.ewallet.util.createMultipartFromImageFile
 import timber.log.Timber
 import java.io.File
@@ -19,8 +19,8 @@ class KURDocumentViewModel
 
     internal var onKTPSuccess = MutableLiveData<Boolean>()
     internal var onKKSuccess = MutableLiveData<Boolean>()
-    internal var onNPWPSuccess = MutableLiveData<Boolean>()
-    internal var onSelfieSuccess = MutableLiveData<Boolean>()
+    internal var onChecklistSuccess = MutableLiveData<Boolean>()
+    internal var onSuratKuasaSuccess = MutableLiveData<Boolean>()
     internal var onSuratSuccess = MutableLiveData<Boolean>()
     internal var onSIUPSuccess = MutableLiveData<Boolean>()
     internal var onTermsLoaded = MutableLiveData<String>()
@@ -148,7 +148,7 @@ class KURDocumentViewModel
 
     fun uploadSurat(file: File) {
         isLoading.postValue(true)
-        dataManager.kurDocumentSurat(creditRequestId, createMultipartFromImageFile(file, "SuratPengajuan"))
+        dataManager.kurDocumentSurat(creditRequestId, createMultipartFromFile(file, "SuratPengajuan"))
             .doOnSubscribe(this::addDisposable)
             .subscribe(
                 { res ->
@@ -176,9 +176,9 @@ class KURDocumentViewModel
             )
     }
 
-    fun uploadSelfie(file: File) {
+    fun uploadSuratKuasa(file: File) {
         isLoading.postValue(true)
-        dataManager.kurDocumentSelfie(creditRequestId, createMultipartFromImageFile(file, "PHOTOSELFIE"))
+        dataManager.kurSuratKuasa(creditRequestId, createMultipartFromFile(file, "SuratKuasa"))
             .doOnSubscribe(this::addDisposable)
             .subscribe(
                 { res ->
@@ -206,9 +206,9 @@ class KURDocumentViewModel
             )
     }
 
-    fun uploadNPWP(file: File) {
+    fun uploadChecklistVerifikasi(file: File) {
         isLoading.postValue(true)
-        dataManager.kurDocumentNPWP(creditRequestId, createMultipartFromImageFile(file, "PHOTONPWP"))
+        dataManager.kurDocumentChecklistVerifikasi(creditRequestId, createMultipartFromFile(file, "ChecklistVerifikasi"))
             .doOnSubscribe(this::addDisposable)
             .subscribe(
                 { res ->

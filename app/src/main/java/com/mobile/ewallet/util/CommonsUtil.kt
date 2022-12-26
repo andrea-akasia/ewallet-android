@@ -9,8 +9,11 @@ import android.net.Uri
 import android.provider.OpenableColumns
 import android.text.Editable
 import android.text.TextWatcher
+import android.webkit.MimeTypeMap
 import android.widget.EditText
 import androidx.exifinterface.media.ExifInterface
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -18,6 +21,7 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import timber.log.Timber
 import java.io.*
+import java.net.URLEncoder
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.text.NumberFormat
@@ -41,6 +45,29 @@ fun createMultipartFromImageFile(file: File, key: String): MultipartBody.Part {
         file.name,
         file.asRequestBody("image/jpeg".toMediaTypeOrNull())
     )
+}
+
+fun createMultipartFromFile(file: File, key: String): MultipartBody.Part {
+    return MultipartBody.Part.createFormData(
+        key,
+        file.name,
+        file.asRequestBody(file.getExtension())
+    )
+}
+
+fun File.getExtension(): MediaType? {
+    var type: String? = null
+    val encoded: String = try {
+        URLEncoder.encode(name, "UTF-8").replace("+", "%20")
+    } catch (e: Exception) {
+        name
+    }
+    val extension = MimeTypeMap.getFileExtensionFromUrl(encoded)
+    if (extension != null) {
+        type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
+    }
+
+    return type?.toMediaType()
 }
 
 @Throws(IOException::class)

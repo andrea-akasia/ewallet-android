@@ -50,22 +50,12 @@ class DetailKURDocumentsFragment: BaseFragment<DetailKURViewModel>() {
                 viewModel.loadDocument(idPendanaan)
             }
         }
-
-        arguments?.getBoolean("SHOWNPWP")?.let {
-            if(it){
-                _binding!!.actionUploadNpwp.visibility = View.VISIBLE
-            }else{
-                _binding!!.actionUploadNpwp.visibility = View.GONE
-            }
-        }
     }
 
     private fun observeViewModel() {
         viewModel.onDocumentLoaded.observe(viewLifecycleOwner) {
             GlideApp.with(this).load(it.photoKTP).into(_binding!!.imgKtp)
             GlideApp.with(this).load(it.photoKK).into(_binding!!.imgKk)
-            GlideApp.with(this).load(it.photoSelfie).into(_binding!!.imgSelfie)
-            GlideApp.with(this).load(it.photoNPWP).into(_binding!!.imgNpwp)
             GlideApp.with(this).load(it.fileSIUPP).into(_binding!!.imgSiup)
 
             if(it.suratPengajuan.contains("nopic", true)){
@@ -75,16 +65,9 @@ class DetailKURDocumentsFragment: BaseFragment<DetailKURViewModel>() {
                     override fun onFail(error: Throwable) {
                         Toast.makeText(activity, error.message, Toast.LENGTH_SHORT).show()
                     }
-
-                    override fun onPageChanged(position: Int, total: Int) {
-                    }
-
-                    override fun onProgressDownload(currentStatus: Int) {
-                    }
-
-                    override fun onStartDownload() {
-                    }
-
+                    override fun onPageChanged(position: Int, total: Int) {}
+                    override fun onProgressDownload(currentStatus: Int) {}
+                    override fun onStartDownload() {}
                     override fun onSuccessDownLoad(path: String) {
                         _binding!!.pdfView.fileInit(path)
                         _binding!!.actionUploadSuratPengajuan.setOnClickListener { _ ->
@@ -94,11 +77,9 @@ class DetailKURDocumentsFragment: BaseFragment<DetailKURViewModel>() {
                             )
                         }
                     }
-
                     override fun unsupportedDevice() {
                         Toast.makeText(activity, "unsupported device", Toast.LENGTH_SHORT).show()
                     }
-
                 })
             }
             if(it.photoKTP.contains("nopic", true)){
@@ -107,11 +88,53 @@ class DetailKURDocumentsFragment: BaseFragment<DetailKURViewModel>() {
             if(it.photoKK.contains("nopic", true)){
                 _binding!!.imgKk.visibility = View.GONE
             }
-            if(it.photoSelfie.contains("nopic", true)){
-                _binding!!.imgSelfie.visibility = View.GONE
+            if(!it.suratKuasa.contains("nopic", true)){
+                _binding!!.pdfSuratKuasa.initializePDFDownloader(it.suratKuasa, object: MindevPDFViewer.MindevViewerStatusListener {
+                    override fun onFail(error: Throwable) {
+                        Toast.makeText(activity, error.message, Toast.LENGTH_SHORT).show()
+                    }
+                    override fun onPageChanged(position: Int, total: Int) {}
+                    override fun onProgressDownload(currentStatus: Int) {}
+                    override fun onStartDownload() {}
+                    override fun onSuccessDownLoad(path: String) {
+                        _binding!!.pdfSuratKuasa.fileInit(path)
+                        _binding!!.actionUploadSuratKuasa.setOnClickListener { _ ->
+                            startActivity(
+                                Intent(activity, PreviewPDFActivity::class.java)
+                                    .putExtra("URL", it.suratKuasa)
+                            )
+                        }
+                    }
+                    override fun unsupportedDevice() {
+                        Toast.makeText(activity, "unsupported device", Toast.LENGTH_SHORT).show()
+                    }
+                })
+            }else{
+                _binding!!.actionUploadSuratKuasa.visibility = View.GONE
             }
-            if(it.photoNPWP.contains("nopic", true)){
-                _binding!!.imgNpwp.visibility = View.GONE
+            if(!it.checklistVerifikasi.contains(other = "nopic", ignoreCase = true)){
+                _binding!!.pdfChecklist.initializePDFDownloader(it.checklistVerifikasi, object: MindevPDFViewer.MindevViewerStatusListener {
+                    override fun onFail(error: Throwable) {
+                        Toast.makeText(activity, error.message, Toast.LENGTH_SHORT).show()
+                    }
+                    override fun onPageChanged(position: Int, total: Int) {}
+                    override fun onProgressDownload(currentStatus: Int) {}
+                    override fun onStartDownload() {}
+                    override fun onSuccessDownLoad(path: String) {
+                        _binding!!.pdfChecklist.fileInit(path)
+                        _binding!!.actionUploadChecklist.setOnClickListener { _ ->
+                            startActivity(
+                                Intent(activity, PreviewPDFActivity::class.java)
+                                    .putExtra("URL", it.checklistVerifikasi)
+                            )
+                        }
+                    }
+                    override fun unsupportedDevice() {
+                        Toast.makeText(activity, "unsupported device", Toast.LENGTH_SHORT).show()
+                    }
+                })
+            }else{
+                _binding!!.actionUploadChecklist.visibility = View.GONE
             }
             if(it.fileSIUPP.contains("nopic", true)){
                 _binding!!.imgSiup.visibility = View.GONE

@@ -1,7 +1,9 @@
 package com.mobile.ewallet.feature.credit.kur
 
 import android.content.Intent
+import android.graphics.pdf.PdfRenderer
 import android.os.Bundle
+import android.os.ParcelFileDescriptor
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
@@ -34,10 +36,6 @@ class KURUploadDocumentsActivity: BaseActivity<KURDocumentViewModel>(),
                 viewModel.uploadKTP(getFile(this, it))
             }else if(viewModel.TAG == "KK"){
                 viewModel.uploadKK(getFile(this, it))
-            }else if(viewModel.TAG == "NPWP"){
-                viewModel.uploadNPWP(getFile(this, it))
-            }else if(viewModel.TAG == "SELFIE"){
-                viewModel.uploadSelfie(getFile(this, it))
             }else if(viewModel.TAG == "SURAT"){
                 viewModel.uploadSurat(getFile(this, it))
             }else if(viewModel.TAG == "SIUP"){
@@ -62,9 +60,10 @@ class KURUploadDocumentsActivity: BaseActivity<KURDocumentViewModel>(),
             pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
 
-        binding.actionUploadNpwp.setOnClickListener {
-            viewModel.TAG = "NPWP"
-            pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        binding.actionUploadChecklist.setOnClickListener {
+            filePicker.pickPdf { result ->
+                result?.second?.let { file -> viewModel.uploadChecklistVerifikasi(file) }
+            }
         }
 
         binding.actionUploadKk.setOnClickListener {
@@ -72,9 +71,10 @@ class KURUploadDocumentsActivity: BaseActivity<KURDocumentViewModel>(),
             pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
 
-        binding.actionUploadSelfie.setOnClickListener {
-            viewModel.TAG = "SELFIE"
-            pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        binding.actionUploadSuratKuasa.setOnClickListener {
+            filePicker.pickPdf { result ->
+                result?.second?.let { file -> viewModel.uploadSuratKuasa(file) }
+            }
         }
 
         binding.actionUploadSuratPengajuan.setOnClickListener {
@@ -120,25 +120,59 @@ class KURUploadDocumentsActivity: BaseActivity<KURDocumentViewModel>(),
                     .fitCenter()
                     .into(binding.imgKk)
             }
-            if(!data.photoSelfie!!.contains("nopic", true)){
-                viewModel.onSelfieSuccess.postValue(true)
-                GlideApp.with(this)
-                    .load(data.photoSelfie)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .skipMemoryCache(true)
-                    .fitCenter()
-                    .into(binding.imgSelfie)
+            if(!data.suratKuasa!!.contains("nopic", true)){
+                viewModel.onSuratKuasaSuccess.postValue(true)
+                binding.pdfSuratKuasa.initializePDFDownloader(data.suratKuasa, object: MindevPDFViewer.MindevViewerStatusListener{
+                    override fun onFail(error: Throwable) {
+                        Toast.makeText(
+                            this@KURUploadDocumentsActivity,
+                            "load pdf failed: ${error.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    override fun onPageChanged(position: Int, total: Int) {}
+                    override fun onProgressDownload(currentStatus: Int) {}
+                    override fun onStartDownload() {}
+                    override fun onSuccessDownLoad(path: String) {
+                        if(binding.pdfSuratKuasa.pdfRendererCore == null){
+                            binding.pdfSuratKuasa.fileInit(path)
+                        }
+                    }
+                    override fun unsupportedDevice() {
+                        Toast.makeText(
+                            this@KURUploadDocumentsActivity,
+                            "load pdf failed: device not supported",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                })
             }
-            if(binding.actionUploadNpwp.visibility == View.VISIBLE){
-                if(!data.photoNPWP!!.contains("nopic", true)){
-                    viewModel.onNPWPSuccess.postValue(true)
-                    GlideApp.with(this)
-                        .load(data.photoNPWP)
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .skipMemoryCache(true)
-                        .fitCenter()
-                        .into(binding.imgNpwp)
-                }
+            if(!data.checklistVerifikasi!!.contains("nopic", true)){
+                viewModel.onChecklistSuccess.postValue(true)
+                binding.pdfChecklist.initializePDFDownloader(data.checklistVerifikasi, object: MindevPDFViewer.MindevViewerStatusListener{
+                    override fun onFail(error: Throwable) {
+                        Toast.makeText(
+                            this@KURUploadDocumentsActivity,
+                            "load pdf failed: ${error.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    override fun onPageChanged(position: Int, total: Int) {}
+                    override fun onProgressDownload(currentStatus: Int) {}
+                    override fun onStartDownload() {}
+                    override fun onSuccessDownLoad(path: String) {
+                        if(binding.pdfChecklist.pdfRendererCore == null){
+                            binding.pdfChecklist.fileInit(path)
+                        }
+                    }
+                    override fun unsupportedDevice() {
+                        Toast.makeText(
+                            this@KURUploadDocumentsActivity,
+                            "load pdf failed: device not supported",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                })
             }
             if(!data.suratPengajuan!!.contains("nopic", true)){
                 viewModel.onSuratSuccess.postValue(true)
@@ -218,16 +252,16 @@ class KURUploadDocumentsActivity: BaseActivity<KURDocumentViewModel>(),
             binding.actionUploadKk.background = ContextCompat.getDrawable(this, R.drawable.green_border_bg)
         }
 
-        viewModel.onNPWPSuccess.observe(this){
-            binding.imgNpwp.visibility = View.VISIBLE
-            binding.statusNpwp.visibility = View.VISIBLE
-            binding.actionUploadNpwp.background = ContextCompat.getDrawable(this, R.drawable.green_border_bg)
+        viewModel.onChecklistSuccess.observe(this){
+            binding.pdfChecklist.visibility = View.VISIBLE
+            binding.statusChecklist.visibility = View.VISIBLE
+            binding.actionUploadChecklist.background = ContextCompat.getDrawable(this, R.drawable.green_border_bg)
         }
 
-        viewModel.onSelfieSuccess.observe(this){
-            binding.imgSelfie.visibility = View.VISIBLE
-            binding.statusSelfie.visibility = View.VISIBLE
-            binding.actionUploadSelfie.background = ContextCompat.getDrawable(this, R.drawable.green_border_bg)
+        viewModel.onSuratKuasaSuccess.observe(this){
+            binding.pdfSuratKuasa.visibility = View.VISIBLE
+            binding.statusSuratKuasa.visibility = View.VISIBLE
+            binding.actionUploadSuratKuasa.background = ContextCompat.getDrawable(this, R.drawable.green_border_bg)
         }
 
         viewModel.onSuratSuccess.observe(this){
