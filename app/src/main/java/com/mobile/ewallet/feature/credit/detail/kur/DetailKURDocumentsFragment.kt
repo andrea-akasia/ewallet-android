@@ -56,7 +56,6 @@ class DetailKURDocumentsFragment: BaseFragment<DetailKURViewModel>() {
         viewModel.onDocumentLoaded.observe(viewLifecycleOwner) {
             GlideApp.with(this).load(it.photoKTP).into(_binding!!.imgKtp)
             GlideApp.with(this).load(it.photoKK).into(_binding!!.imgKk)
-            GlideApp.with(this).load(it.fileSIUPP).into(_binding!!.imgSiup)
 
             if(it.suratPengajuan.contains("nopic", true)){
                 _binding!!.actionUploadSuratPengajuan.visibility = View.GONE
@@ -137,7 +136,26 @@ class DetailKURDocumentsFragment: BaseFragment<DetailKURViewModel>() {
                 _binding!!.actionUploadChecklist.visibility = View.GONE
             }
             if(it.fileSIUPP.contains("nopic", true)){
-                _binding!!.imgSiup.visibility = View.GONE
+                _binding!!.pdfSiup.initializePDFDownloader(it.fileSIUPP, object: MindevPDFViewer.MindevViewerStatusListener {
+                    override fun onFail(error: Throwable) {
+                        Toast.makeText(activity, error.message, Toast.LENGTH_SHORT).show()
+                    }
+                    override fun onPageChanged(position: Int, total: Int) {}
+                    override fun onProgressDownload(currentStatus: Int) {}
+                    override fun onStartDownload() {}
+                    override fun onSuccessDownLoad(path: String) {
+                        _binding!!.pdfSiup.fileInit(path)
+                        _binding!!.actionUploadSiup.setOnClickListener { _ ->
+                            startActivity(
+                                Intent(activity, PreviewPDFActivity::class.java)
+                                    .putExtra("URL", it.fileSIUPP)
+                            )
+                        }
+                    }
+                    override fun unsupportedDevice() {
+                        Toast.makeText(activity, "unsupported device", Toast.LENGTH_SHORT).show()
+                    }
+                })
             }
         }
 

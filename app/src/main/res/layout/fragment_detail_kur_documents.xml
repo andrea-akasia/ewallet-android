@@ -167,6 +167,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/action_upload_siup"
             android:layout_marginTop="@dimen/_10sdp"
             android:padding="@dimen/_8sdp"
             android:background="@drawable/profile_name_bg"
@@ -177,21 +178,22 @@
                 android:id="@+id/tv_siup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SIUP"
+                android:text="Surat Izin Usaha (PDF)"
                 android:textColor="@color/colorTextBlack"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/img_siup"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:scaleType="fitCenter"
+            <com.mindev.mindev_pdfviewer.MindevPDFViewer
+                android:id="@+id/pdf_siup"
                 android:layout_marginTop="@dimen/_6sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_250sdp"
+                app:pdf_animation="false"
+                app:pdf_direction="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_siup" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_siup"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

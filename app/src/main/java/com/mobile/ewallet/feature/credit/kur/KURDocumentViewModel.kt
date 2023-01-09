@@ -118,7 +118,7 @@ class KURDocumentViewModel
 
     fun uploadSIUP(file: File) {
         isLoading.postValue(true)
-        dataManager.kurDocumentSIUP(creditRequestId, createMultipartFromImageFile(file, "SIUP"))
+        dataManager.kurDocumentSIUP(creditRequestId, createMultipartFromFile(file, "SIUP"))
             .doOnSubscribe(this::addDisposable)
             .subscribe(
                 { res ->

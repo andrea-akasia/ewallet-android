@@ -1,9 +1,7 @@
 package com.mobile.ewallet.feature.credit.kur
 
 import android.content.Intent
-import android.graphics.pdf.PdfRenderer
 import android.os.Bundle
-import android.os.ParcelFileDescriptor
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
@@ -38,8 +36,6 @@ class KURUploadDocumentsActivity: BaseActivity<KURDocumentViewModel>(),
                 viewModel.uploadKK(getFile(this, it))
             }else if(viewModel.TAG == "SURAT"){
                 viewModel.uploadSurat(getFile(this, it))
-            }else if(viewModel.TAG == "SIUP"){
-                viewModel.uploadSIUP(getFile(this, it))
             }
         }
     }
@@ -84,8 +80,9 @@ class KURUploadDocumentsActivity: BaseActivity<KURDocumentViewModel>(),
         }
 
         binding.actionUploadSiup.setOnClickListener {
-            viewModel.TAG = "SIUP"
-            pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+            filePicker.pickPdf { result ->
+                result?.second?.let { file -> viewModel.uploadSIUP(file) }
+            }
         }
 
         binding.btnContinue.setOnClickListener {
@@ -206,12 +203,33 @@ class KURUploadDocumentsActivity: BaseActivity<KURDocumentViewModel>(),
             }
             if(!data.photoSIUP!!.contains("nopic", true)){
                 viewModel.onSIUPSuccess.postValue(true)
-                GlideApp.with(this)
-                    .load(data.photoSIUP)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .skipMemoryCache(true)
-                    .fitCenter()
-                    .into(binding.imgSiup)
+                binding.pdfSiup.pdfRendererCore?.clear()
+                binding.pdfSiup.initializePDFDownloader(data.photoSIUP, object: MindevPDFViewer.MindevViewerStatusListener{
+                    override fun onFail(error: Throwable) {
+                        Toast.makeText(
+                            this@KURUploadDocumentsActivity,
+                            "load pdf failed: ${error.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    override fun onPageChanged(position: Int, total: Int) {}
+                    override fun onProgressDownload(currentStatus: Int) {}
+                    override fun onStartDownload() {}
+                    override fun onSuccessDownLoad(path: String) {
+                        if(binding.pdfSiup.pdfRendererCore == null){
+                            binding.pdfSiup.fileInit(path)
+                        }
+                    }
+
+                    override fun unsupportedDevice() {
+                        Toast.makeText(
+                            this@KURUploadDocumentsActivity,
+                            "load pdf failed: device not supported",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                })
             }
         }
 
@@ -271,7 +289,7 @@ class KURUploadDocumentsActivity: BaseActivity<KURDocumentViewModel>(),
         }
 
         viewModel.onSIUPSuccess.observe(this){
-            binding.imgSiup.visibility = View.VISIBLE
+            binding.pdfSiup.visibility = View.VISIBLE
             binding.statusSiup.visibility = View.VISIBLE
             binding.actionUploadSiup.background = ContextCompat.getDrawable(this, R.drawable.green_border_bg)
         }
